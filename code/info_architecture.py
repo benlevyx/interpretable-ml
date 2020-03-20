@@ -14,7 +14,6 @@ class InfoArchTree:
         root = arr2tree(arr, 1., None)
         return InfoArchTree(root, height=height, width=width)
 
-
     @staticmethod
     def from_components(self, components: list):
         """
