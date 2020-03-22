@@ -45,6 +45,7 @@ class InfoArchTree:
                            columns=['value', 'size', 'orientation', 'depth'])
         res['orientation'] = res['orientation'].apply(lambda x: 1 if x == 'v' else 0)
         res['depth'] = res['depth'] / res['depth'].max()
+        res['priority'] = (res.index.values + 1) / (len(res))
         return res
 
     def to_array(self):
@@ -200,6 +201,10 @@ def arr2tree(arr, size, orientation):
             right_size = 1. - left_size
             left_child = arr2tree(arr[:r1 + 1, :], left_size, orientation)
             right_child = arr2tree(arr[r1 + 1:, :], right_size, orientation)
+
+        if left_child.value and right_child.value:
+            right_child.size = 1.
+            right_child = Node(None, right_size, orientation, left=right_child, right=None)
 
         root = Node(None, size, orientation, left=left_child, right=right_child)
         return root
