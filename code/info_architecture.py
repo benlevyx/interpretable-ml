@@ -4,15 +4,16 @@ import matplotlib.pyplot as plt
 
 
 class InfoArchTree:
-    def __init__(self, root, height=12, width=12):
+    def __init__(self, id_, root, height=12, width=12):
+        self.id = id_
         self.root = root
         self.height = height
         self.width = width
 
     @staticmethod
-    def from_array(arr, height=12, width=12):
+    def from_array(id_, arr, height=12, width=12):
         root = arr2tree(arr, 1., None)
-        return InfoArchTree(root, height=height, width=width)
+        return InfoArchTree(id_, root, height=height, width=width)
 
     @staticmethod
     def from_components(self, components: list):
@@ -48,6 +49,12 @@ class InfoArchTree:
         res['priority'] = (res.index.values + 1) / (len(res))
         return res
 
+    def get_feature_vector(self, components=None):
+        feats = self.get_features()
+        if components is not None:
+            feats = self._fill_to_components(feats, components)
+        return feats.values.ravel()
+
     def to_array(self):
         """Get the treemap representation for this IA (in np.ndarray format)"""
         return self.root.to_array(self.height, self.width)
@@ -80,6 +87,8 @@ class InfoArchTree:
 
     @staticmethod
     def _fill_to_components(feats, comps):
+        if type(comps) == np.ndarray:
+            comps = pd.Series(comps, name='value')
         return (pd.merge(feats, comps, on='value', how='outer')
                 .fillna(0)
                 .sort_values('value')
@@ -279,13 +288,3 @@ def _generate_treemap(arr, components, min_height, min_width):
         else:
             res = np.vstack((left_tiled, right_tiled))
         return res
-
-
-def plot_treemap(arr, cmap='Paired', ax=None, **kwargs):
-    if ax is None:
-        plotter = plt
-    else:
-        plotter = ax
-    if 'vmax' not in kwargs:
-        kwargs.update({'vmax': 12})
-    return plotter.imshow(arr, cmap=cmap, **kwargs)

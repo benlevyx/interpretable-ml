@@ -14,6 +14,12 @@ def plot_approximation(gpr, X, Y, X_sample, Y_sample, X_next=None, show_legend=F
     plt.plot(X, Y, 'y--', lw=1, label='Noise-free objective')
     plt.plot(X, mu, 'b-', lw=1, label='Surrogate function')
     plt.plot(X_sample, Y_sample, 'kx', mew=3, label='Noisy samples')
+
+    max_idx = Y.argmax()
+    Y_max_true = Y[max_idx]
+    X_max_true = X[max_idx]
+    plt.plot(X_max_true, Y_max_true, '+', mew=2, ms=8, color='green', label='True optimum')
+
     if X_next:
         plt.axvline(x=X_next, ls='--', c='k', lw=1)
     if show_legend:
@@ -46,3 +52,13 @@ def plot_convergence(X_sample, Y_sample, n_init=2):
     plt.xlabel('Iteration')
     plt.ylabel('Best Y')
     plt.title('Value of best selected sample')
+
+
+def plot_treemap(arr, cmap='Paired', ax=None, **kwargs):
+    if ax is None:
+        plotter = plt
+    else:
+        plotter = ax
+    if 'vmax' not in kwargs:
+        kwargs.update({'vmax': 12})
+    return plotter.imshow(arr, cmap=cmap, **kwargs)

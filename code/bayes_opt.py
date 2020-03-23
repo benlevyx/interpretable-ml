@@ -23,7 +23,7 @@ def expected_improvement(X, X_samp, Y_samp, gpr, xi=1e-2, eps=1e-6):
     return ei
 
 
-def propose_next(acquisition_fn, X_samp, Y_samp, gpr, bounds, n_restarts=10):
+def propose_next(acquisition_fn, X_samp, Y_samp, gpr, bounds=None, n_restarts=10):
     """Propose the next sample point by optimizing `acquisition_fn`.
     """
     d = X_samp.shape[1]
