@@ -1,9 +1,12 @@
-"""Plotting utilities, from
+"""Plotting utilities, partially from
 https://github.com/krasserm/bayesian-machine-learning/blob/master/bayesian_optimization_util.py
 """
 import numpy as np
-
 import matplotlib.pyplot as plt
+import matplotlib.cm as mcm
+
+import networkx as nx
+
 
 def plot_approximation(gpr, X, Y, X_sample, Y_sample, X_next=None, show_legend=False):
     mu, std = gpr.predict(X, return_std=True)
@@ -62,3 +65,19 @@ def plot_treemap(arr, cmap='Paired', ax=None, **kwargs):
     if 'vmax' not in kwargs:
         kwargs.update({'vmax': 12})
     return plotter.imshow(arr, cmap=cmap, **kwargs)
+
+
+def plot_tree_graph(info_arch, **kwargs):
+    """Plot an information architecture as a tree
+    """
+    G = nx.DiGraph()
+    nodes, edges = info_arch.get_nodes_and_edges()
+    G.add_nodes_from(nodes)
+    G.add_edges_from(edges)
+    G = nx.convert_node_labels_to_integers(G)
+    pos = nx.drawing.nx_agraph.graphviz_layout(G, prog='dot')
+
+    node_colors = [n.value if n.value else mcm.Paired.N - 1 for n in nodes]
+
+    nx.draw(G, pos, node_color=node_colors, cmap=mcm.Paired, with_labels=False, node_size=1000)
+    return G

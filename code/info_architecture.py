@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+from plotting import plot_treemap
+
 
 class InfoArchTree:
     def __init__(self, id_, root, height=12, width=12):
@@ -62,9 +64,7 @@ class InfoArchTree:
     def plot(self):
         """Plot the IA"""
         arr = self.root.to_array(self.height, self.width)
-        im = plt.imshow(arr, cmap='Paired', vmax=12)
-        plt.colorbar(im)
-        return im
+        return plot_treemap(arr)
 
     def distance(self, other, distance_func=None, args=None):
         """Compute the similarity between this and `other`"""
@@ -93,6 +93,9 @@ class InfoArchTree:
                 .fillna(0)
                 .sort_values('value')
                 .drop('value', axis=1))
+
+    def get_nodes_and_edges(self):
+        return self.root.get_nodes_and_edges()
 
 
 class Node:
@@ -139,8 +142,11 @@ class Node:
                 right_size = (height - left_size[0], width)
                 concat_axis = 0
             left_arr = self.left.to_array(*left_size)
-            right_arr = self.right.to_array(*right_size)
-            arr = np.concatenate((left_arr, right_arr), axis=concat_axis)
+            if self.right:
+                right_arr = self.right.to_array(*right_size)
+                arr = np.concatenate((left_arr, right_arr), axis=concat_axis)
+            else:
+                arr = left_arr
         return arr
 
     def get_features(self, height, width, depth):
@@ -169,19 +175,49 @@ class Node:
                 feats.extend(right_feats)
             return feats
 
+    def get_nodes_and_edges(self):
+        if self.value:
+            return [self], []
+        else:
+            nodes = [self]
+            edges, child_edges = [], []
+            if self.left:
+                edges.append((self, self.left))
+                child_nodes, left_child_edges = self.left.get_nodes_and_edges()
+                nodes.extend(child_nodes)
+                child_edges.extend(left_child_edges)
+            if self.right:
+                edges.append((self, self.right))
+                child_nodes, right_child_edges = self.right.get_nodes_and_edges()
+                nodes.extend(child_nodes)
+                child_edges.extend(right_child_edges)
+            edges.extend(child_edges)
+            return nodes, edges
+
     def __str__(self):
         if self.left is None and self.right is None:
             return f'{self.value}, {self.size:.2f}, {self.orientation}'
         else:
             lines = [f'[], {self.size:.2f}']
             for child in (self.left, self.right):
-                childstr = str(child)
+                if child is None:
+                    continue
+                childstr = child.__str__()
                 for i, line in enumerate(childstr.split('\n')):
                     if i == 0:
                         lines.append(f'|----{line}')
                     else:
                         lines.append(f'|    {line}')
             return '\n'.join(lines)
+
+    # def __str__(self):
+    #     return self.__repr__()
+
+    def __repr__(self):
+        if self.value:
+            return f'Node [{self.value}]'
+        else:
+            return f'Node []'
 
 
 def arr2tree(arr, size, orientation):
