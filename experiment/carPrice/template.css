@@ -1,0 +1,84 @@
+/**
+ * LabintheWild study template
+ *
+ * authors: Krzysztof Gajos
+ */
+
+/* remove callout menu functionality */
+* {
+    -webkit-touch-callout: none;
+}
+
+body {
+    margin: 5px;
+    padding: 0;
+    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 22px;
+    color: #222;
+}
+
+a:link, a:visited, a:hover {
+    text-decoration:none;
+    color:#0099cc;
+}
+
+a:active {
+    color: #003b4e;
+}
+
+.logo { float: left; margin-top: 30px; margin-bottom: 15px; }
+
+.share_text { float:right; margin-top:15px; font-size: 13px; color:#888; }
+.share_this { clear:right; float: right; margin-top: 5px; }
+
+.separator {
+    margin-top: 31px;
+    margin-bottom: 20px;
+    height: 10px;
+    clear: both;
+    display: block;
+    width: 100%;
+    border-top: 2px dotted #366;
+}
+
+img, a img {
+    border: none;
+}
+
+.page {
+    display: block;
+}
+
+.header {
+    display: block;
+}
+
+.w800 {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#demographics_page label {
+    font-weight: normal;
+}
+
+#comments_page label {
+    font-weight: normal;
+}
+
+.likert input[type=radio] {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.likert label {
+    font-weight: normal;
+    font-style: italic;
+}
+
+.option-set-header {
+    font-weight: bold;
+    margin-top: 24px;
+}

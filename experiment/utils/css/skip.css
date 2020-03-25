@@ -1,0 +1,11 @@
+.skip-widget { 
+  cursor: pointer;
+}
+
+.close { 
+  cursor: pointer;
+}
+
+.popover{
+    width:400px;  
+}
