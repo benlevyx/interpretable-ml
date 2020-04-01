@@ -31,18 +31,18 @@ class BayesianOptimizer():
     """Class for performing Bayesian optimization using a gaussian process as
     a proxy function.
     """
-    def __init__(self, sigma=1., kernel='rbf',
+    def __init__(self, sigma=1., kernel='rbf', nu=1.5,
                  acquisition_fn='expected_improvement', length_scale=1.,
                  n_restarts=10, xi=1e-2, kappa=.1):
         self.sigma = sigma
         self.length_scale = length_scale
+        self.nu = nu
         self.n_restarts = n_restarts
         self.xi = xi
         self.kappa = kappa
 
         if type(kernel) == str:
             kernel = self._get_kernel(kernel)
-            kernel = kernel(length_scale=length_scale)
 
         self.gpr = GaussianProcessRegressor(kernel=kernel, alpha=self.sigma ** 2)
         self.X_obs = None
@@ -53,16 +53,16 @@ class BayesianOptimizer():
 
     def _get_kernel(self, kernel):
         if kernel == 'rbf':
-            return RBF
+            return RBF(length_scale=self.length_scale)
         elif kernel == 'matern':
-            return Matern
+            return Matern(length_scale=self.length_scale, nu=self.nu)
         elif kernel == 'constant':
-            return ConstantKernel
+            return ConstantKernel()
         else:
             raise ValueError(f"No kernel matching '{kernel}'")
 
     def _get_acquisition_fn(self, acquisition_fn):
-        if acquisition_fn == 'expected_improvement':
+        if acquisition_fn in ('expected_improvement', 'ei'):
             return ExpectedImprovement(self.gpr, self.xi)
         elif acquisition_fn == 'lcb':
             return LowerConfidenceBound(self.gpr, self.kappa)
