@@ -300,28 +300,25 @@ require_once("survey.php");
 
     <h1>The model classified this car as "UNACCEPTABLE"</h1>
     <div>
-    <p>The model has the following features:</p>
-    <ul>
-        <li>BUYING PRICE: v.high</li>
-        <li>MAINTENANCE: v.high</li>
-        <li>DOORS: 2</li>
-        <li>PERSONS: 2</li>
-        <li>LUGGAGE: small</li>
-        <li>SAFETY: low</li>
-    </ul>
-    <p id="viz"> Placeholder</p>
-    <img src="car.png" height="500" width="500"> </img>
+        <p>The model has the following features:</p>
+        <p id="viz"> Placeholder</p>
+        <div id="dynamicIA" class="d-flex flex-nowrap">
+            <div id="v1">1</div>
+            <div id="v2">2</div>
+            <div id="v3">3</div>
+            <div id="v4">4</div>
+            <div id="v5">5</div>
+        </div>
+
     </div>
 
     <p> Do you agree?</p>
     <div class="container">
-        <button>Agree</button>
-        <button>Disagree</button>
+        <button id="agreeBtt" class="decisionBtt">Agree
+        </button>
+        <button id="disagreeBtt" class="decisionBtt">Disagree</button>
     </div>
     
-    <p align="right"><button class="btn btn-primary btn-lg" id="experiment2_button">
-                Done! <span class="material-icons">navigate_next</span>
-    </button> </p>
 
 </div>
 

@@ -9,11 +9,13 @@ var debug = 1;
 
 // global progress bar variable (could be made private)
 var progressBar = null;
+var currentCar = 0;
+var maxCars = 20;
 
 function sampleTest() {
 
     var initializeUI = function() {
-
+        
         // TODO configure progress bar
         progressBar = progress(); // creating progressBar object
         // defining the steps in the study and the page IDs that they correspond to
@@ -56,6 +58,36 @@ function sampleTest() {
             $("#progressBar").slideUp(2000);
         });
 
+        $(".decisionBtt").click(
+            function() {
+                var response = false;
+                if($(this).attr('id') == "agreeBtt"){
+                    response = true;
+                if(currentCar <= maxCars){
+                    currentCar += 1;
+                    displayVis();
+                    console.log(currentCar);
+                    // send to python
+                    $.ajax({
+                        url : "./optimizer.php",
+                        type : "POST",
+                        data: {
+                            data: JSON.stringify(
+                                {
+                                    cur: currentCar,
+                                    response: response
+                                })
+                            },
+                        success: function(result) {
+                            console.log(result);
+                        }
+                    });
+                } else{
+                    viewPage("#comments_page");
+                };
+            }
+        }
+        );
         onViewPage( 
             function() {
                 displayVis($("#visualization_form").val());
@@ -63,7 +95,11 @@ function sampleTest() {
 
     };
 
+    var displayVis = function(){
+        $("#viz").text(currentCar);
 
+
+    };
     return {
         initializeUI: function() {initializeUI()}
     }
