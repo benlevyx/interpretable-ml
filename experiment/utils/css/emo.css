@@ -1,0 +1,29 @@
+.circle {
+    -moz-border-radius: 59px/59px;
+    -webkit-border-radius: 59px 59px;
+    border-radius: 59px/59px;
+    border:solid 2px #fff;
+    background-color: #87CEFA;
+    width:67px;
+    height:67px; 
+    text-align: center;
+    display: table;
+}
+
+#emotionwrapper {
+  width: 500px;
+  height: 500px;
+  position: relative;
+  margin: 0 auto;
+}
+
+#emotiontext {
+    display: table-cell; 
+    vertical-align: middle;
+    font-size:13px;
+}
+
+.emocontainer {
+  display: flex;
+  justify-content: space-between;
+}
