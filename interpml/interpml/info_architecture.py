@@ -86,6 +86,8 @@ class InfoArchTree:
         feats2 = self._fill_to_components(feats2, all_comps)
 
         if distance_func:
+            if type(distance_func) == str:
+                distance_func = _get_distance_func(distance_func)
             return distance_func(feats1.values, feats2.values, *args)
         else:
             diff = np.abs(feats1.values - feats2.values)
@@ -352,3 +354,20 @@ def spec2arr(spec, height=12, width=12, n_components=8):
         r1, c1, h, w = spec_i
         arr[r1:r1 + h, c1:c1 + w] = comp
     return arr
+
+
+def _get_distance_func(distance_func_str: str) -> callable:
+    """
+    Get the distance function if it is a known string
+
+    :param distance_func_str: The name of the distance func
+    :return: 'distance_func'
+    """
+    distance_funcs = {
+        'euclidean': lambda x1, x2: np.linalg.norm(x1 - x2),
+        'cosine': lambda x1, x2: 1 - (np.dot(x1, x2) / (np.linalg.norm(x1) * np.linalg.norm(x2)))
+    }
+    try:
+        return distance_funcs[distance_func_str]
+    except KeyError:
+        raise KeyError(f"{distance_func_str} is not a valid distance function.")
