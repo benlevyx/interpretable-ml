@@ -1,6 +1,4 @@
 <?php 
-
-
 if(!session_id())
 {
     session_start();
@@ -8,7 +6,10 @@ if(!session_id())
 
 $dataJSON = $_REQUEST["data"];
 $dat = json_decode($dataJSON, true);
-$output = shell_exec("python test.py " . strval($dat["cur"]) .  strval($dat["response"]));
-echo($output);
+echo("current". $dat["cur"]);
+
+echo("response". $dat["r"]);
+//$output = shell_exec("python test.py " . strval($dat["cur"]) .  strval($dat["response"]));
+//echo($output);
 
 ?>

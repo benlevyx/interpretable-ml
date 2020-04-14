@@ -68,6 +68,14 @@ require_once("survey.php");
     <!-- code for social media sharing -->
     <script src="http://www.labinthewild.org/share/share.js"></script>
 
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
+
+    <!-- Modules and vis components -->
+    <script src="../../vis/js/utils.js"></script>
+
+    <!-- Main JS -->
+    <script src="../../vis/js/main.js" type="module"></script>
     <?php
     // initialize our analytics software for tracking participant behavior
     embeddedSessionFlowStart();
@@ -142,7 +150,6 @@ require_once("survey.php");
     <div class="separator2"></div>
 
     <h1><!-- TODO --> Determining car prices</h1>
-    <p></p>
 
     <p><em>Please read the following information carefully before proceeding.</em></p>
 
@@ -253,12 +260,12 @@ require_once("survey.php");
                         sessionFlow.setParticipantID(participantID);
                     if (debug)
                         console.log("received response from the server for demographics: " + data);
+
                 }
             })
         })
     </script>
-</div><!-- end of demographics_page -->
-
+</div>
 
 <!-- ********************* INSTRUCTIONS PAGE *********************** -->
 <div id="instructions_page" class="page w800">
@@ -268,30 +275,31 @@ require_once("survey.php");
     <h1>Instructions</h1>
     <p></p>
 
+    <svg> 
+    <circle class="target" style="fill: #69b3a2" stroke="black" cx=50 cy=50 r=40></circle>
+        testing d3
+    </svg>
+    <script>
+        d3
+        .select(".target")  // select the elements that have the class 'target'
+        .style("stroke-width", 8) // change their style: stroke width is not equal to 8 pixels
+        .style("opacity", 0.5) // change their style: stroke width is not equal to 8 pixels
+    
+    </script>
+
+
     <!-- TODO instructions for your experiment go here -->
 
-    <p align="right"><button class="btn btn-primary btn-lg" id="instructions_button">
-            Got it.  Let's start! <span class="material-icons">navigate_next</span>
-        </button> </p>
+    <p align="right">
+        <button class="btn btn-primary btn-lg" id="instructions_button">
+            Got it.  Let&apos;s start! <span class="material-icons">navigate_next</span>
+        </button> 
+        
+    </p>
 </div>
 
 
 <!-- ********************* EXPERIMENT PAGE *********************** -->
-<div id="experiment_page" class="page w800">
-    <div class="separator2"></div>
-
-    <!-- TODO this is entirely yours to fill out, but here is an example of a survey page -->
-
-
-    <h1>Type in the form of visualizations</h1>
-    <p>Imagine this as some kind of HTTP get from the Python backend. We recieve a string representation of the Information Architecture.</p>
-    <input id="visualization_form"></input>
-    <p align="right"><button class="btn btn-primary btn-lg" id="experiment_button">
-                Done! <span class="material-icons">navigate_next</span>
-    </button> </p>
-
-</div>
-<!-- ********************* EXPERIMENT PAGE 2 *********************** -->
 <div id="experiment2_page" class="page w800">
     <div class="separator2"></div>
 
@@ -304,6 +312,7 @@ require_once("survey.php");
         <p id="viz"> Placeholder</p>
         <div id="dynamicIA" class="d-flex flex-nowrap">
             <div id="v1">1</div>
+                <div class="vis-container" id="feat-importance-vis"></div>
             <div id="v2">2</div>
             <div id="v3">3</div>
             <div id="v4">4</div>

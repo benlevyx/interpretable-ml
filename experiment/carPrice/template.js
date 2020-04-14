@@ -11,9 +11,12 @@ var debug = 1;
 var progressBar = null;
 var currentCar = 0;
 var maxCars = 20;
+var arrangements = {};
+var taskTime = {};
+var variant = ((Math.random() > 0.5) ? 1 : 0); // randomize experiment variable
 
 function sampleTest() {
-
+    var startTime;
     var initializeUI = function() {
         
         // TODO configure progress bar
@@ -38,14 +41,11 @@ function sampleTest() {
             viewPage("#instructions_page")
         });
         $("#instructions_button").click(function () {
-            viewPage("#experiment_page");
-            // visually show that progress has been made through "The test" step on the progress bar
-            progressBar.incrementStepProgress();
-        });
-        $("#experiment_button").click(function () {
             viewPage("#experiment2_page");
+            startTime = new Date();
             // visually show that progress has been made through "The test" step on the progress bar
             progressBar.incrementStepProgress();
+
         });
         $("#experiment2_button").click(function () {
             viewPage("#comments_page");
@@ -59,10 +59,15 @@ function sampleTest() {
         });
 
         $(".decisionBtt").click(
+
             function() {
-                var response = false;
-                if($(this).attr('id') == "agreeBtt"){
-                    response = true;
+                var time = new Date() - startTime;
+                startTime = new Date()
+                var r = 0;
+                //console.log($(this).attr('id') === "agreeBtt");
+                if($(this).attr('id') === "agreeBtt"){
+                    r = 1;
+                }
                 if(currentCar <= maxCars){
                     currentCar += 1;
                     displayVis();
@@ -75,18 +80,38 @@ function sampleTest() {
                             data: JSON.stringify(
                                 {
                                     cur: currentCar,
-                                    response: response
+                                    r: r
                                 })
                             },
                         success: function(result) {
                             console.log(result);
                         }
                     });
+
+                    // send to PHP
+                    $.ajax({
+                        url : "./data.php",
+                        type : "POST",
+                        data: {
+                            data: JSON.stringify(
+                                {
+                                    participant_id: participantID,
+                                    question_id: currentCar,
+                                    time_spent: time,
+                                    choice: r,
+                                    arrangement: "123",
+                                    variant: variant
+                                })
+                            },
+                        success: function(result) {
+                            console.log(result);
+                        }
+                    });
+                    
                 } else{
                     viewPage("#comments_page");
                 };
             }
-        }
         );
         onViewPage( 
             function() {
