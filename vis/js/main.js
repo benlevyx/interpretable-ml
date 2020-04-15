@@ -1,4 +1,5 @@
 // Imports
+// Here we import each component from this folder (no need to add a script tag for each one
 import FeatImportanceVis from './feat-importance-vis.js';
 
 // Defining globals
