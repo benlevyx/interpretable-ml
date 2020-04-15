@@ -8,20 +8,24 @@ import FeatImportanceVis from './feat-importance-vis.js';
 var data = {},
     visComps = {};
 
-// LOADING DATA
+// ******************** LOADING DATA ******************** //
+
 d3.csv('../data/feature_ranking.csv').then(function(featureRanking) {
   featureRanking.forEach(d => {
     d.value = +d.value;
     d.std = +d.std;
   });
 
-  // Save the data in a global
+  // Save the data in a global. This is to minimize the number of times we need
+  // to load the data. If it's loaded once, it's accessible by all functions.
   data.featureRanking = featureRanking;
 
+  // Call the relevant function
   drawFeatureImportanceVis();
 });
 
-// FUNCTIONS TO RENDER VIS
+// ******************** FUNCTIONS TO RENDER VIS ******************** //
+
 // To add yours, declare a new function called draw<VIS-NAME> and pass in the data,
 // div ID, and an optional config
 function drawFeatureImportanceVis() {
