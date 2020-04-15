@@ -3,11 +3,13 @@
 import FeatImportanceVis from './feat-importance-vis.js';
 
 // Defining globals
+// This way, all data and visualization components can be accessed from any scope
+// once declared
 var data = {},
-    featImportanceVis;
+    visComps = {};
 
 // LOADING DATA
-d3.csv('../../vis/js/data/feature_ranking.csv').then(function(featureRanking) {
+d3.csv('../data/feature_ranking.csv').then(function(featureRanking) {
   featureRanking.forEach(d => {
     d.value = +d.value;
     d.std = +d.std;
@@ -20,7 +22,12 @@ d3.csv('../../vis/js/data/feature_ranking.csv').then(function(featureRanking) {
 });
 
 // FUNCTIONS TO RENDER VIS
+// To add yours, declare a new function called draw<VIS-NAME> and pass in the data,
+// div ID, and an optional config
 function drawFeatureImportanceVis() {
+  // The config can contain manually chosen margins, height, width,
+  // and more. E.g. you can specify the index of a point to highlight,
+  // which is then used in the vis to select/highlight elements
   var config = {
     'margin': {
       'bottom': 90,
@@ -29,5 +36,8 @@ function drawFeatureImportanceVis() {
       'right': 10
     }
   };
-  featImportanceVis = new FeatImportanceVis('feat-importance-vis', data.featureRanking, config);
+
+  // Then create the vis and store it in the global `visComps` so that it can
+  // be accessed in other scopes.
+  visComps.featImportanceVis = new FeatImportanceVis('feat-importance-vis', data.featureRanking, config);
 }
