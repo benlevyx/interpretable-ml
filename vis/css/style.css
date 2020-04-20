@@ -2,3 +2,264 @@ div.vis-container {
     height: 500px;
     width: 500px;
 }
+
+/************** ZEPLIN/FIGMA STYLES ***************/
+/** colors **/
+:root {
+    --unacceptable: #fc3466;
+    --good: #ffda9f;
+    --acceptable: #fea410;
+    --user-card: #06124f;
+    --button-default: #fbf7f6;
+    --button-selected: #fff8b6;
+    --greenblue: #21cb8a;
+    --white: #ffffff;
+    --dark-slate-blue: #242e66;
+    --dark-slate-blue-two: #1d275b;
+    --white-two: #f0f0f0;
+    --navy: #020d42;
+    --pinkish-grey: #bababa;
+    --lipstick: #e63366;
+    --dark-pink: #d13366;
+    --dark-pink-two: #bb3266;
+    --light-burgundy: #a63266;
+    --unacceptable-30: rgba(252, 52, 102, 0.3);
+    --dirt-brown: #91693b;
+    --leather: #a77532;
+    --brownish-orange: #bd812a;
+    --brownish-orange-two: #d28d21;
+    --squash: #e89818;
+    --dark-indigo: #091550;
+    --pale: #fee9c7;
+    --beige: #e9c99a;
+    --very-light-brown: #d3b894;
+    --mushroom: #bda78e;
+    --stone: #a79588;
+    --warm-grey: #918483;
+    --greenblue-90: rgba(33, 203, 138, 0.9);
+    --greenblue-80: rgba(33, 203, 138, 0.8);
+    --greenblue-70: rgba(33, 203, 138, 0.7);
+    --greenblue-60: rgba(33, 203, 138, 0.6);
+    --greenblue-50: rgba(33, 203, 138, 0.5);
+    --greyish: #a3a3a3;
+    --light-burgundy-two: #a32f62;
+    --dark-pink-three: #b93063;
+    --dark-pink-four: #cf3164;
+    --lipstick-two: #e63365;
+    --butterscotch: #f9b13a;
+}
+
+.MacBook-Pro---8 {
+    width: 1440px;
+    height: 900px;
+    background-color: var(--dark-slate-blue-two);
+}
+.Rectangle-14 {
+    width: 236px;
+    height: 600px;
+    opacity: 0.88;
+    border-radius: 20px;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    background-color: var(--user-card);
+}
+.This-car-is-classified-by-the-model-as {
+    width: 195px;
+    height: 37px;
+    font-family: Karla;
+    font-size: 20px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.05;
+    letter-spacing: normal;
+    color: #f0f0f0;
+}
+.UNACCEPTABLE {
+    width: 96px;
+    height: 16px;
+    font-family: Karla;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.23;
+    letter-spacing: 0.39px;
+    color: #ffffff;
+}
+.ACCEPTABLE {
+    width: 77px;
+    height: 16px;
+    opacity: 0.1;
+    font-family: Karla;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.23;
+    letter-spacing: 0.39px;
+    color: #ffffff;
+}
+.GOOD {
+    width: 35px;
+    height: 15px;
+    opacity: 0.1;
+    font-family: Karla;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.23;
+    letter-spacing: 0.39px;
+    color: #ffffff;
+}
+.VERY-GOOD {
+    width: 70px;
+    height: 15px;
+    opacity: 0.1;
+    font-family: Karla;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.23;
+    letter-spacing: 0.39px;
+    color: #ffffff;
+}
+.According-to-the-car-features {
+    width: 156px;
+    height: 38px;
+    font-family: Karla;
+    font-size: 20px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.05;
+    letter-spacing: normal;
+    color: #f0f0f0;
+}
+.ESTIMATED-SAFETY {
+    width: 74px;
+    height: 31px;
+    font-family: Karla;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.23;
+    letter-spacing: 0.39px;
+    color: #ffffff;
+}
+.Ellipse-1 {
+    width: 7px;
+    height: 6px;
+    background-color: var(--button-default);
+}
+.High {
+    width: 29px;
+    height: 15px;
+    font-family: Karla;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.23;
+    letter-spacing: 0.39px;
+    color: #ffffff;
+}
+.Rectangle-33 {
+    width: 183px;
+    height: 43px;
+    border-radius: 3px;
+    background-color: var(--button-default);
+}
+.AGREE {
+    width: 40px;
+    height: 16px;
+    font-family: Karla;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.23;
+    letter-spacing: 0.39px;
+    color: #020d42;
+}
+
+.Rectangle-9 {
+    width: 183px;
+    height: 9px;
+    border-radius: 3px;
+    background-color: var(--unacceptable);
+}
+.Rectangle-11 {
+    width: 183px;
+    height: 10px;
+    opacity: 0.1;
+    border-radius: 3px;
+    background-color: var(--acceptable);
+}
+.Rectangle-12 {
+    width: 183px;
+    height: 10px;
+    opacity: 0.1;
+    border-radius: 3px;
+    background-color: var(--good);
+}
+.Rectangle-13 {
+    width: 183px;
+    height: 10px;
+    opacity: 0.1;
+    border-radius: 3px;
+    background-color: var(--greenblue);
+}
+
+.Rectangle-35 {
+    width: 723.8px;
+    height: 411.5px;
+    border-radius: 20px;
+    background-color: var(--component-card);
+}
+.Rectangle-1 {
+    width: 645px;
+    height: 412px;
+    border-radius: 20px;
+    box-shadow: 0 4px 9px 0 rgba(0, 0, 0, 0.1);
+}
+.DECISION-PROCESS-How-the-features-contributed-to-t {
+    width: 419px;
+    height: 31px;
+    font-family: Karla;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.23;
+    letter-spacing: 0.39px;
+    color: #f0f0f0;
+}
+.Line_4 {
+    width: 615.8px;
+    height: 255.7px;
+    border: solid 2px var(--unacceptable);
+}
+.Pie_6 {
+    width: 271px;
+    height: 271px;
+    opacity: 0.5;
+    background-color: var(--unacceptable);
+}
+.Area_6 {
+    width: 338.4px;
+    height: 256.1px;
+    background-color: rgba(252, 52, 102, 0.3);
+}
+.Bar_1_1 {
+    width: 52px;
+    height: 78.1px;
+    background-color: var(--unacceptable);
+}
+.Bar_1_6 {
+    width: 52px;
+    height: 15.6px;
+    background-color: #a63266;
+}
