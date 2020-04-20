@@ -1,3 +1,10 @@
+/**
+ * makeSvg - initialize the SVG element for this vis. Assumes that the vis
+ *           already has attributes `height`, `width`, and `margin` set.
+ * @param vis -- The visualization object
+ * @returns {*|jQuery} -- A d3 selection to the `g` element within the SVG
+ *                        (following the d3 margin convention)
+ */
 function makeSvg(vis) {
   return d3.select('#' + vis.parentElement)
       .append('div')
@@ -9,6 +16,10 @@ function makeSvg(vis) {
       .attr('transform', 'translate(' + vis.margin.left + ',' + vis.margin.top + ')');
 }
 
+/**
+ * initVis - Unpack the `config` attribute, set height and width, call makeSvg.
+ * @param vis -- The visualization object.
+ */
 function initVis(vis) {
   vis.margin = vis.config.margin || {'top': 10, 'bottom': 40, 'left': 40, 'right': 10};
 
@@ -19,6 +30,13 @@ function initVis(vis) {
   vis.svg = makeSvg(vis)
 }
 
+/**
+ * wrap - Utility function to wrap long pieces of text into a fixed width.
+ *        Note: converts text into an array of `tspan` objects, which might
+ *        be harder to position.
+ * @param text  -- A d3 selector to the text annotation
+ * @param width -- The number of pixels to limit the width to.
+ */
 function wrap(text, width) {
   text.each(function() {
     var text = d3.select(this),
@@ -44,6 +62,13 @@ function wrap(text, width) {
   });
 }
 
+/**
+ * Utility function for cutting of a number if it is outside a specified range.
+ * @param n   -- The number to be clamped
+ * @param min -- Floor
+ * @param max -- Ceiling
+ * @returns {number}
+ */
 function clamp(n, min, max) {
   return Math.min(Math.max(n, min), max);
 }

@@ -77,7 +77,7 @@ def plot_tree_graph(info_arch, **kwargs):
     G = nx.convert_node_labels_to_integers(G)
     pos = nx.drawing.nx_agraph.graphviz_layout(G, prog='dot')
 
-    node_colors = [n.value if n.value else mcm.Paired.N - 1 for n in nodes]
+    node_colors = [n.value if n.value else mcm.Set1.N - 1 for n in nodes]
 
-    nx.draw(G, pos, node_color=node_colors, cmap=mcm.Paired, with_labels=False, node_size=1000)
+    nx.draw(G, pos, node_color=node_colors, cmap=mcm.Set1, with_labels=False, node_size=1000)
     return G

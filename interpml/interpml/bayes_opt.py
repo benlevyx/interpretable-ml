@@ -98,7 +98,7 @@ class BayesianOptimizer():
         self._fit_gpr()
 
     def propose_next(self, X: np.ndarray):
-        """Propose the next point given the data oberved and the acquisition
+        """Propose the next point given the data observed and the acquisition
         function.
 
         Arguments:
