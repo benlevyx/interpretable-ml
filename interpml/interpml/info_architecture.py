@@ -30,6 +30,34 @@ class InfoArchTree:
         """
         raise NotImplementedError()
 
+    @staticmethod
+    def from_json(jsondict):
+        """Create an InfoArchTree from a json-like dictionary
+
+        :param jsondict: dict
+        :return: InfoArchTree
+        """
+        root = Node.from_json(jsondict.get('components'))
+        infoarch = InfoArchTree(jsondict.get('id'), root,
+                                height=jsondict.get('height'),
+                                width=jsondict.get('width'))
+        return infoarch
+
+
+    def to_json(self):
+        """Convert the InfoArchTree to a json-like dictionary
+
+        :return:
+        """
+        components = self.root.to_json()
+        res = {
+            'id': self.id,
+            'height': self.height,
+            'width': self.width,
+            'components': components
+        }
+        return res
+
     def get_features(self):
         """Get the corresponding feature matrix for this IA.
         Fields:
@@ -207,11 +235,66 @@ class Node:
             edges.extend(child_edges)
             return nodes, edges
 
+    def to_json(self):
+        """
+        Return a JSON-like dict representation of the tree
+        :return: 'jsondict'
+        """
+        value = self.value if self.value else -1
+        if self.orientation == 'v':
+            height = 1
+            width = self.size
+        else:
+            height = self.size
+            width = 1
+        left, right = {}, {}
+        if self.left:
+            left = self.left.to_json()
+        if self.right:
+            right = self.right.to_json()
+        res = {
+            'id': value,
+            'height': height,
+            'width': width,
+            'orientation': self.orientation,
+            'left_child': left,
+            'right_child': right
+        }
+        return res
+
+    @staticmethod
+    def from_json(jsondict):
+        """
+        Return a Node (tree) from a JSON-like dict representation
+        :param jsondict:
+        :return: 'root'
+        """
+        id_ = jsondict.get('id', None)
+        if int(id_) == -1:
+            id_ = None
+        height = jsondict.get('height', 1.)
+        width = jsondict.get('width', 1.)
+        orientation = jsondict.get('orientation', 'v')
+        if orientation == 'v':
+            size = width
+        else:
+            size = height
+        left = jsondict.get('left_child', {})
+        left_child = None
+        if left != {}:
+            left_child = Node.from_json(left)
+        right = jsondict.get('right_child', {})
+        right_child = None
+        if right != {}:
+            right_child = Node.from_json(right)
+        root = Node(id_, size, orientation, left=left_child, right=right_child)
+        return root
+
     def __str__(self):
         if self.left is None and self.right is None:
             return f'{self.value}, {self.size:.2f}, {self.orientation}'
         else:
-            lines = [f'[], {self.size:.2f}']
+            lines = [f'[], {self.size:.2f}, {self.orientation}']
             for child in (self.left, self.right):
                 if child is None:
                     continue

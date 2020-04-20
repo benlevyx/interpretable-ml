@@ -44,4 +44,5 @@ function drawFeatureImportanceVis() {
   // Then create the vis and store it in the global `visComps` so that it can
   // be accessed in other scopes.
   visComps.featImportanceVis = new FeatImportanceVis('feat-importance-vis', data.featureRanking, config);
+
 }
