@@ -72,10 +72,10 @@ require_once("survey.php");
 
 
     <!-- Modules and vis components -->
-    <script src="../../vis/js/utils.js"></script>
+    <script src="../js/utils.js"></script>
 
     <!-- Main JS -->
-    <script src="../../vis/js/main.js" type="module"></script>
+    <script src="../js/main.js" type="module"></script>
     <?php
     // initialize our analytics software for tracking participant behavior
     embeddedSessionFlowStart();

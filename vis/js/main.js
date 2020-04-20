@@ -8,9 +8,8 @@ import FeatImportanceVis from './feat-importance-vis.js';
 var data = {},
     visComps = {};
 
-// ******************** LOADING DATA ******************** //
-
-d3.csv('../data/feature_ranking.csv').then(function(featureRanking) {
+// LOADING DATA
+d3.csv('data/feature_ranking.csv').then(function(featureRanking) {
   featureRanking.forEach(d => {
     d.value = +d.value;
     d.std = +d.std;

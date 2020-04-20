@@ -6,7 +6,7 @@ var data = {},
     featImportanceVis;
 
 // LOADING DATA
-d3.csv('../../vis/js/data/feature_ranking.csv').then(function(featureRanking) {
+d3.csv('../data/feature_ranking.csv').then(function(featureRanking) {
   featureRanking.forEach(d => {
     d.value = +d.value;
     d.std = +d.std;
