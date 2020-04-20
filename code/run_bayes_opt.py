@@ -61,8 +61,8 @@ from interpml import info_architecture as ia
 from interpml import bayes_opt as bo
 
 
-X = np.loadtxt(config.ia_feats_file)
-info_archs = json.load(config.ia_layouts_file)
+X = np.loadtxt(config.ia_feats_file, delimiter=',')
+info_archs = json.load(config.ia_layouts_file.open('r'))['architectures']
 
 
 def get_features(info_arch_jsons, n_components):
@@ -89,7 +89,7 @@ def pack_next(next_ias):
 
 def random_init(n=config.n_init):
     idxs = np.random.choice(len(info_archs), size=n)
-    return list([info_archs[i].to_json() for i in idxs])
+    return list([info_archs[i] for i in idxs])
 
 
 def propose_next(X_obs, y_obs):
@@ -114,14 +114,14 @@ if __name__ == '__main__':
                         help='A JSON-like dict with all observed architectures and scores')
     args = parser.parse_args()
 
-    input_ = args['input']
+    input_ = args.input
 
     if input_ is None:
         # Random initialization
         res = pack_next(random_init())
     else:
         # get next
-        obs = json.loads(args['input'])
+        obs = json.loads(args.input)
         X_obs = get_features(obs['architectures'], n_components=obs['meta'].get('n_components', config.n_components))
         y_obs = obs['scores']
 

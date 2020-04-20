@@ -85,7 +85,7 @@ class InfoArchTree:
             self._features = res
             return res
 
-    def get_feature_vector(self, components=None, weights=config.weights):
+    def get_feature_vector(self, components=config.n_components, weights=config.weights):
         feats = self.get_features()
         if components is not None:
             feats = self._fill_to_components(feats, components).values
