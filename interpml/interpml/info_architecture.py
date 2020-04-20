@@ -16,7 +16,7 @@ class InfoArchTree:
 
     @staticmethod
     def from_array(id_, arr, height=12, width=12):
-        root = arr2tree(arr, 1., None)
+        root = arr2tree(arr, 1., 'v')
         return InfoArchTree(id_, root, height=height, width=width)
 
     @staticmethod
@@ -326,27 +326,28 @@ def arr2tree(arr, size, orientation):
         return Node(comp1_val, size, orientation)
     else:
         c1 = _find_sep(arr, axis=1)
+        child_orientation = None
         if c1:
             # Vertical
-            orientation = 'v'
+            child_orientation = 'v'
             r1 = arr.shape[0]
             left_size = (c1 + 1) / arr.shape[1]
             right_size = 1. - left_size
-            left_child = arr2tree(arr[:, :c1 + 1], left_size, orientation)
-            right_child = arr2tree(arr[:, c1 + 1:], right_size, orientation)
+            left_child = arr2tree(arr[:, :c1 + 1], left_size, child_orientation)
+            right_child = arr2tree(arr[:, c1 + 1:], right_size, child_orientation)
         else:
             # Horizontal
-            orientation = 'h'
+            child_orientation = 'h'
             r1 = _find_sep(arr, axis=0)
             c1 = arr.shape[1]
             left_size = (r1 + 1) / arr.shape[0]
             right_size = 1. - left_size
-            left_child = arr2tree(arr[:r1 + 1, :], left_size, orientation)
-            right_child = arr2tree(arr[r1 + 1:, :], right_size, orientation)
+            left_child = arr2tree(arr[:r1 + 1, :], left_size, child_orientation)
+            right_child = arr2tree(arr[r1 + 1:, :], right_size, child_orientation)
 
         if left_child.value and right_child.value:
             right_child.size = 1.
-            right_child = Node(None, right_size, orientation, left=right_child, right=None)
+            right_child = Node(None, right_size, child_orientation, left=right_child, right=None)
 
         root = Node(None, size, orientation, left=left_child, right=right_child)
         return root

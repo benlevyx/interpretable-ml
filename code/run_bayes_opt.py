@@ -61,7 +61,8 @@ from interpml import info_architecture as ia
 from interpml import bayes_opt as bo
 
 
-X, info_archs = utils.load_architectures(config.architectures_file)
+X = np.loadtxt(config.ia_feats_file)
+info_archs = json.load(config.ia_layouts_file)
 
 
 def get_features(info_arch_jsons, n_components):
@@ -91,6 +92,20 @@ def random_init(n=config.n_init):
     return list([info_archs[i].to_json() for i in idxs])
 
 
+def propose_next(X_obs, y_obs):
+    """Run the BayesOpt procedure to get the next proposed architecture
+
+    :param X_obs: Observed info architecture feature vectors
+    :param y_obs: Observed user scores
+    :return: 'ia_next' -- The next info architecture (in json format) to try
+    """
+    bayes_opt = bo.BayesianOptimizer(**config.bayes_opt_params)
+    bayes_opt.update(X_obs, y_obs)
+    idx_next, X_next, score_next = bayes_opt.propose_next(X)
+    ia_next = info_archs[idx_next]
+    return ia_next
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='run_bayes_opt. Compute the next best information architecture to try.')
@@ -110,10 +125,7 @@ if __name__ == '__main__':
         X_obs = get_features(obs['architectures'], n_components=obs['meta'].get('n_components', config.n_components))
         y_obs = obs['scores']
 
-        bayes_opt = bo.BayesianOptimizer(**config.bayes_opt_params)
-        bayes_opt.update(X_obs, y_obs)
-        idx_next, X_next, score_next = bayes_opt.propose_next(X)
-        ia_next = info_archs[idx_next]
+        ia_next = propose_next(X_obs, y_obs)
 
         res = pack_next(ia_next.to_json())
 

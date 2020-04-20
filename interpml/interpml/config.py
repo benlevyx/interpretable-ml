@@ -6,7 +6,9 @@ root = Path(__file__).parent.parent.parent
 figs = root / 'figs'
 notebooks = root / 'notebooks'
 data = root / 'data'
-architectures_file = data / 'all_architectures.csv'
+ia_feats_file = data / 'ia_feats.csv'
+ia_layouts_file = data / 'ia_layouts.json'
+
 
 weights = np.array([5., 1, 5., 1.])
 n_components = 8
