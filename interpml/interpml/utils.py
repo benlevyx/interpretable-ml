@@ -10,3 +10,12 @@ def compute_distances(info_archs, distance_func=None, args=None):
                 distances[i, j] = info_archs[i].distance(info_archs[j], distance_func=distance_func, args=args)
                 pbar.update()
     return distances
+
+
+def load_architectures(architectures_file):
+    """Load all architecture feature vectors
+
+    :param architectures_file: csv file of info architectures
+    :return: np.ndarray
+    """
+    return np.loadtxt(architectures_file, delimiter=',')

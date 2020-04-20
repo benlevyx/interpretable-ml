@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from .plotting import plot_treemap
+from . import config
 
 
 class InfoArchTree:
@@ -84,7 +85,7 @@ class InfoArchTree:
             self._features = res
             return res
 
-    def get_feature_vector(self, components=None, weights=None):
+    def get_feature_vector(self, components=None, weights=config.weights):
         feats = self.get_features()
         if components is not None:
             feats = self._fill_to_components(feats, components).values
