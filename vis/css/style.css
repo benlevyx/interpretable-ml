@@ -1,4 +1,54 @@
 div.vis-container {
-    height: 500px;
-    width: 500px;
+  height: 500px;
+  width: 500px;
+}
+
+/* COLORS*/
+
+:root {
+  --acceptable: #fea410;
+  --good: #ffda9f;
+  --unacceptable: #fc3466;
+  --vgood: #21cb8a;
+  --button-default: #fbf7f6;
+  --button-selected: #fff8b6;
+  --component-card: #242e66;
+  --user-card: #06124f;
+  --grid: #7d7d7d;
+  --labels: #bababa;
+}
+
+/* TEXT STYLES */
+@import url("https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap");
+
+/* big titles */
+.title {
+  font-family: "Karla", sans-serif;
+  font-size: 20px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.05;
+  letter-spacing: normal;
+}
+/* all the texts */
+.dida {
+  font-family: "Karla", sans-serif;
+  font-size: 13px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.23;
+  letter-spacing: 0.39px;
+}
+/* components labels and numbers */
+.labels {
+  font-family: "Karla", sans-serif;
+  font-size: 10px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.1;
+  letter-spacing: normal;
+  color: --labels;
 }
