@@ -1,25 +1,93 @@
 <!DOCTYPE html>
 <!-- For testing out visualizations -->
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Test</title>
 
     <!-- Boostrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
 
     <!-- Main stylesheet -->
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <div class="container">
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="interface-container">
+      <div class="left-container">
+        <div class="car-card">
+          <div class="title">This car is classified by the model as:</div>
+          <div class="class-list-container first">
+            <div class="class-item">
+              <div class="dida">unacceptable</div>
+              <div class="class-bar unacceptable"></div>
+            </div>
+            <div class="class-item">
+              <div class="dida">acceptable</div>
+              <div class="class-bar acceptable"></div>
+            </div>
+            <div class="class-item">
+              <div class="dida">good</div>
+              <div class="class-bar good"></div>
+            </div>
+            <div class="class-item">
+              <div class="dida">very good</div>
+              <div class="class-bar vgood"></div>
+            </div>
+          </div>
+          <div class="title">According to the car features:</div>
+          <div class="class-list-container">
+            <div class="class-item">
+              <div class="dida">ESTIMATED SAFETY</div>
+            </div>
+            <div class="class-item">
+              <div class="dida">CAPACITY (PERSONS)</div>
+            </div>
+            <div class="class-item">
+              <div class="dida">BUYING PRICE</div>
+            </div>
+            <div class="class-item">
+              <div class="dida">MAINTENANCE PRICE</div>
+            </div>
+            <div class="class-item">
+              <div class="dida">LUGGAGE BOOT SIZE</div>
+            </div>
+            <div class="class-item">
+              <div class="dida">DOORS</div>
+            </div>
+          </div>
+        </div>
+        <div class="answer-card">
+          <div class="title">What do you think about the model prediction?</div>
+          <div class="button first"><div class="dida">agree</div></div>
+          <div class="button"><div class="dida">disagree</div></div>
+        </div>
+      </div>
+      <div class="right-container">
         <div class="vis-container" id="feat-importance-vis"></div>
+      </div>
     </div>
 
     <!-- Javascript libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
 
     <!-- D3.js -->
     <script src="https://d3js.org/d3.v5.min.js"></script>
@@ -29,5 +97,5 @@
 
     <!-- Main JS -->
     <script src="js/main.js" type="module"></script>
-</body>
+  </body>
 </html>
