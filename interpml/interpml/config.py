@@ -10,6 +10,7 @@ architectures_file = data / 'all_architectures.csv'
 
 weights = np.array([5., 1, 5., 1.])
 n_components = 8
+n_init = 3
 
 bayes_opt_params = dict(sigma=1,
                         kernel='rbf',

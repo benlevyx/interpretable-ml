@@ -61,6 +61,9 @@ from interpml import info_architecture as ia
 from interpml import bayes_opt as bo
 
 
+X, info_archs = utils.load_architectures(config.architectures_file)
+
+
 def get_features(info_arch_jsons, n_components):
     """Get the feature vectors for the trees associated with the JSON-like
     objects in `info_arch_jsons`
@@ -83,25 +86,35 @@ def pack_next(next_ias):
     return json.dumps({"architectures": next_ias})
 
 
+def random_init(n=config.n_init):
+    idxs = np.random.choice(len(info_archs), size=n)
+    return list([info_archs[i].to_json() for i in idxs])
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='run_bayes_opt. Compute the next best information architecture to try.')
 
-    parser.add_argument('obs', type=str, nargs=1,
+    parser.add_argument('-i', '--input', type=str, nargs=1, default=None,
                         help='A JSON-like dict with all observed architectures and scores')
     args = parser.parse_args()
 
-    obs = json.loads(args['obs'])
-    X_obs = get_features(obs['architectures'], n_components=obs['meta'].get('n_components', config.n_components))
-    y_obs = obs['scores']
+    input_ = args['input']
 
-    X, info_archs = utils.load_architectures(config.architectures_file)
+    if input_ is None:
+        # Random initialization
+        res = pack_next(random_init())
+    else:
+        # get next
+        obs = json.loads(args['input'])
+        X_obs = get_features(obs['architectures'], n_components=obs['meta'].get('n_components', config.n_components))
+        y_obs = obs['scores']
 
-    bayes_opt = bo.BayesianOptimizer(**config.bayes_opt_params)
-    bayes_opt.update(X_obs, y_obs)
-    idx_next, X_next, score_next = bayes_opt.propose_next(X)
-    ia_next = info_archs[idx_next]
+        bayes_opt = bo.BayesianOptimizer(**config.bayes_opt_params)
+        bayes_opt.update(X_obs, y_obs)
+        idx_next, X_next, score_next = bayes_opt.propose_next(X)
+        ia_next = info_archs[idx_next]
 
-    res = pack_next(ia_next.to_json())
+        res = pack_next(ia_next.to_json())
 
     sys.stdout.write(res)
