@@ -6,6 +6,7 @@ root = Path(__file__).parent.parent.parent
 figs = root / 'figs'
 notebooks = root / 'notebooks'
 data = root / 'data'
+code = root / 'code'
 ia_feats_file = data / 'ia_feats.csv'
 ia_layouts_file = data / 'ia_layouts.json'
 

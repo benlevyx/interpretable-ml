@@ -121,12 +121,12 @@ if __name__ == '__main__':
         res = pack_next(random_init())
     else:
         # get next
-        obs = json.loads(args.input)
+        obs = json.loads(input_[0])
         X_obs = get_features(obs['architectures'], n_components=obs['meta'].get('n_components', config.n_components))
         y_obs = obs['scores']
 
         ia_next = propose_next(X_obs, y_obs)
 
-        res = pack_next(ia_next.to_json())
+        res = pack_next(ia_next)
 
     sys.stdout.write(res)
