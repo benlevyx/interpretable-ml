@@ -35,7 +35,9 @@ function drawSingleGridLevel(elem, data, isRow) {
     elem.append('div').attr('class', `vis-container vis-container-${data.id}`)
   }
   else {
-    var orient = data.orientation;
+    var orient = data.orientation,
+        left,
+        right;
 
     if (orient === 'v') {
       // Two new rows; stack the children on top of one another
@@ -46,7 +48,7 @@ function drawSingleGridLevel(elem, data, isRow) {
             .attr('class', 'col')
             .attr('width', '100%');
       }
-      var left = elem.append('div')
+      left = elem.append('div')
           .attr('class', 'row')
           .attr('width', convertToPercentage(data.left_child.width))
           .attr('height', convertToPercentage(data.left_child.height));
@@ -54,22 +56,22 @@ function drawSingleGridLevel(elem, data, isRow) {
       drawSingleGridLevel(left, data.left_right, true);
 
       if (data.right_child !== {}) {
-        var right = elem.append('div')
+        right = elem.append('div')
             .attr('class', 'row')
             .attr('width', convertToPercentage(data.right_child.width))
-            .attr('height', convertToPercentage(data.right_child.height))
+            .attr('height', convertToPercentage(data.right_child.height));
 
         drawSingleGridLevel(right, data.right_child, true);
       }
     } else {
       // Two new cols, in the same row
-      var left = elem.append('div')
+      left = elem.append('div')
           .attr('class', 'col')
           .attr('width', convertToPercentage(data.left_child.width));
 
       drawSingleGridLevel(left, elem.left_child, false);
       if (data.right_child !== {}) {
-        var right = elem.append('div')
+        right = elem.append('div')
             .attr('class', 'col')
             .attr('width', convertToPercentage(data.right_child.width));
 
