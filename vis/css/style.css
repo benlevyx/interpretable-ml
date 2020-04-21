@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap");
 /* COLORS*/
 
 :root {
@@ -18,7 +19,6 @@
 }
 
 /* TEXT STYLES */
-@import url("https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap");
 
 /* big titles */
 .title {
@@ -154,7 +154,7 @@ div.vis-container {
 /******** VIZ ELEMENTS *********/
 .grid {
   color: var(--grid);
-  stroke: 0.5px;
+  stroke-width: 0.5px;
 }
 
 /************** ZEPLIN/FIGMA STYLES ***************/
