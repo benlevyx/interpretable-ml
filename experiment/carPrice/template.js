@@ -164,8 +164,10 @@ function displayVis(form) {
  */
 function makeGrid(spec, _parentElem) {
     var container = d3.select('#' + _parentElem)
+        .html("")
         .append('div')
         .attr('class', 'container db-container');
+
     drawSingleGridLevel(container, spec, false);
   }
   
@@ -178,8 +180,7 @@ function makeGrid(spec, _parentElem) {
    *                 hierarchy here)
    */
 function drawSingleGridLevel(elem, data, isRow) {
-    console.log(data.id);
-    if (data.left_child === {} && data.right_child === {}) {
+    if (data.id !== -1) {
         // Leaf node
         elem.append('div').attr('class', `vis-container vis-container-${data.id}`)
     }
@@ -189,48 +190,48 @@ function drawSingleGridLevel(elem, data, isRow) {
             right;
 
         if (orient === 'v') {
-        // Two new rows; stack the children on top of one another
+            // Two new rows; stack the children on top of one another
 
-        if (isRow) {
-            // First, add a new col
-            elem = elem.append('div')
-                .attr('class', 'col')
-                .attr('width', '100%');
-        }
-        left = elem.append('div')
-            .attr('class', 'row')
-            .attr('width', convertToPercentage(data.left_child.width))
-            .attr('height', convertToPercentage(data.left_child.height));
-
-        drawSingleGridLevel(left, data.right_child, true);
-
-        if (data.right_child !== {}) {
-            right = elem.append('div')
+            if (isRow) {
+                // First, add a new col
+                elem = elem.append('div')
+                    .attr('class', 'col')
+                    .attr('width', '100%');
+            }
+            left = elem.append('div')
                 .attr('class', 'row')
-                .attr('width', convertToPercentage(data.right_child.width))
-                .attr('height', convertToPercentage(data.right_child.height));
+                .attr('width', convertToPercentage(data.left_child.width))
+                .attr('height', convertToPercentage(data.left_child.height));
 
-            drawSingleGridLevel(right, data.right_child, true);
-        }
+            drawSingleGridLevel(left, data.right_child, true);
+            // Object.keys(myObject).length == 0
+            if (Object.keys(data.right_child).length !== 0) {
+                right = elem.append('div')
+                    .attr('class', 'row')
+                    .attr('width', convertToPercentage(data.right_child.width))
+                    .attr('height', convertToPercentage(data.right_child.height));
+
+                drawSingleGridLevel(right, data.right_child, true);
+            }
         } else {
         // Two new cols, in the same row
-        console.log(JSON.stringify(data));
-        left = elem.append('div')
-            .attr('class', 'col')
-            .attr('width', convertToPercentage(data.left_child.width));
-
-        drawSingleGridLevel(left, elem.left_child, false);
-        if (data.right_child !== {}) {
-            right = elem.append('div')
+            console.log(JSON.stringify(data));
+            left = elem.append('div')
                 .attr('class', 'col')
-                .attr('width', convertToPercentage(data.right_child.width));
+                .attr('width', convertToPercentage(data.left_child.width));
 
-            drawSingleGridLevel(right, elem.right_child, false);
-        }
+            drawSingleGridLevel(left, elem.left_child, false);
+            if (Object.keys(data.right_child).length !== 0) {
+                right = elem.append('div')
+                    .attr('class', 'col')
+                    .attr('width', convertToPercentage(data.right_child.width));
+
+                drawSingleGridLevel(right, elem.right_child, false);
+            }
         }
     }
 }
 
 function convertToPercentage(n) {
-    return `${Math.round(n * 100000) / 100}%`
+    return `${Math.round(n * 1000000) / 10000}%`
 }

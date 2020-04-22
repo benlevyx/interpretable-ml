@@ -30,7 +30,7 @@ export default function makeGrid(spec, _parentElem) {
  *                 hierarchy here)
  */
 function drawSingleGridLevel(elem, data, isRow) {
-  if (data.left_child === {} && data.right_child === {}) {
+  if (data.id !== -1) {
     // Leaf node
     elem.append('div').attr('class', `vis-container vis-container-${data.id}`)
   }
