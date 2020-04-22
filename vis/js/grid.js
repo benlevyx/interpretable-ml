@@ -18,64 +18,63 @@ export default function makeGrid(spec, _parentElem) {
   var container = d3.select('#' + _parentElem)
       .append('div')
       .attr('class', 'container db-container');
-  drawSingleGridLevel(container, spec.components, false);
+  drawSingleGridLevel(spec.components, container);
 }
 
 /**
  * drawSingleGridLevel -- Recursively draw the grid
- * @param elem  -- A d3 selector to a div element
  * @param data  -- A JS object containing the data to be rendered
- * @param isRow -- true if the element is a row
- *                 (can't draw another row inside, can't end the
- *                 hierarchy here)
+ * @param elem  -- An HTML selection (parent element)
  */
-function drawSingleGridLevel(elem, data, isRow) {
+function drawSingleGridLevel(data, elem) {
   if (data.id !== -1) {
     // Leaf node
     elem.append('div').attr('class', `vis-container vis-container-${data.id}`)
   }
   else {
     var orient = data.orientation,
+        elemBbox = elem.node().getBoundingClientRect(),
+        width = elemBbox.width,
+        height = elemBbox.height,
         left,
         right;
 
     if (orient === 'v') {
       // Two new rows; stack the children on top of one another
-
-      if (isRow) {
-        // First, add a new col
-        elem = elem.append('div')
-            .attr('class', 'col')
-            .attr('width', '100%');
-      }
       left = elem.append('div')
-          .attr('class', 'row')
-          .attr('width', convertToPercentage(data.left_child.width))
-          .attr('height', convertToPercentage(data.left_child.height));
+          .attr('class', 'container inner-node')
+          .attr('top', 0)
+          .attr('left', 0)
+          .attr('width', width * data.left_child.width)
+          .attr('height', height * data.left_child.height);
 
-      drawSingleGridLevel(left, data.left_child, true);
+      drawSingleGridLevel(data.left_child, left);
 
       if (data.right_child !== {}) {
         right = elem.append('div')
-            .attr('class', 'row')
-            .attr('width', convertToPercentage(data.right_child.width))
-            .attr('height', convertToPercentage(data.right_child.height));
+            .attr('class', 'container inner-node')
+            .attr('top', height * data.left_child.height)  // Offset by the sibling height
+            .attr('width', width * data.right_child.width)
+            .attr('height', height * data.right_child.height);
 
-        drawSingleGridLevel(right, data.right_child, true);
+        drawSingleGridLevel(data.right_child, right);
       }
     } else {
       // Two new cols, in the same row
       left = elem.append('div')
-          .attr('class', 'col')
-          .attr('width', convertToPercentage(data.left_child.width));
+          .attr('class', 'container inner-node')
+          .attr('width', width * data.left_child.width)
+          .attr('height', height * data.left_child.height);
 
-      drawSingleGridLevel(left, elem.left_child, false);
+      drawSingleGridLevel(elem.left_child, left);
       if (data.right_child !== {}) {
         right = elem.append('div')
-            .attr('class', 'col')
-            .attr('width', convertToPercentage(data.right_child.width));
+            .attr('class', 'container inner-node')
+            .attr('left', width * data.left_child.width)
+            .attr('width', width * data.right_child.width)
+            .attr('height', height * data.right_child.height);
 
-        drawSingleGridLevel(right, elem.right_child, false);
+        drawSingleGridLevel(elem.right_child, right);
       }
     }
   }
