@@ -39,47 +39,30 @@ function drawSingleGridLevel(data, elem) {
         left,
         right;
 
-    if (orient === 'v') {
-      // Two new rows; stack the children on top of one another
-      left = elem.append('div')
-          .attr('class', 'container inner-node')
-          .attr('top', 0)
-          .attr('left', 0)
-          .attr('width', width * data.left_child.width)
-          .attr('height', height * data.left_child.height);
+    left = elem.append('div')
+        .call(setChildAttrs, width, height, data.left_child);
 
-      drawSingleGridLevel(data.left_child, left);
+    drawSingleGridLevel(data.left_child, left);
 
-      if (data.right_child !== {}) {
-        right = elem.append('div')
-            .attr('class', 'container inner-node')
-            .attr('top', height * data.left_child.height)  // Offset by the sibling height
-            .attr('width', width * data.right_child.width)
-            .attr('height', height * data.right_child.height);
+    if (data.right_child !== {}) {
+      right = elem.append('div')
+          .call(setChildAttrs, width, height, data.right_child, orient);
 
-        drawSingleGridLevel(data.right_child, right);
-      }
-    } else {
-      // Two new cols, in the same row
-      left = elem.append('div')
-          .attr('class', 'container inner-node')
-          .attr('width', width * data.left_child.width)
-          .attr('height', height * data.left_child.height);
-
-      drawSingleGridLevel(elem.left_child, left);
-      if (data.right_child !== {}) {
-        right = elem.append('div')
-            .attr('class', 'container inner-node')
-            .attr('left', width * data.left_child.width)
-            .attr('width', width * data.right_child.width)
-            .attr('height', height * data.right_child.height);
-
-        drawSingleGridLevel(elem.right_child, right);
-      }
+      drawSingleGridLevel(data.right_child, right);
     }
   }
 }
 
-function convertToPercentage(n) {
-  return `${Math.round(n * 100000) / 100}%`
+function setChildAttrs(e, width, height, child, orientation) {
+  e.attr('class', 'container inner-node')
+      .attr('width', width * child.width)
+      .attr('height', height * child.height);
+
+  if (orientation !== undefined) {
+    if (orientation === 'v') {
+      e.attr('left', width * (1 - child.width));
+    } else {
+      e.attr('top', height * (1 - child.height));
+    }
+  }
 }
