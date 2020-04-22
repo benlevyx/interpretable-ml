@@ -53,7 +53,7 @@ function drawSingleGridLevel(elem, data, isRow) {
           .attr('width', convertToPercentage(data.left_child.width))
           .attr('height', convertToPercentage(data.left_child.height));
 
-      drawSingleGridLevel(left, data.left_right, true);
+      drawSingleGridLevel(left, data.left_child, true);
 
       if (data.right_child !== {}) {
         right = elem.append('div')
