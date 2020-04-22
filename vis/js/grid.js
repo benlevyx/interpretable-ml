@@ -18,7 +18,7 @@ export default function makeGrid(spec, _parentElem) {
   var container = d3.select('#' + _parentElem)
       .append('div')
       .attr('class', 'container db-container');
-  drawSingleGridLevel(spec.components, container);
+  drawSingleGridLevel(spec, container);
 }
 
 /**
@@ -29,7 +29,8 @@ export default function makeGrid(spec, _parentElem) {
 function drawSingleGridLevel(data, elem) {
   if (data.id !== -1) {
     // Leaf node
-    elem.append('div').attr('class', `vis-container vis-container-${data.id}`)
+    elem.append('div').attr('class', 'vis-container')
+        .attr('id', `vis-container-${data.id}`);
   }
   else {
     var orient = data.orientation,
@@ -65,5 +66,7 @@ function setChildAttrs(e, width, height, child, orientation) {
     } else {
       e.attr('top', height * (1 - child.height));
     }
+  } else {
+    e.attr('top', 0).attr('left', 0);
   }
 }
