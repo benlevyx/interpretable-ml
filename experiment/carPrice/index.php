@@ -320,6 +320,11 @@ require_once("survey.php");
 
 
         <div id="dynamicIA" class="d-flex flex-nowrap">
+            <div id="v1">1</div>
+            <div id="v2">2</div>	
+            <div id="v3">3</div>	
+            <div id="v4">4</div>	
+            <div id="v5">5</div>
 
         </div>
 

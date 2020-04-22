@@ -16,6 +16,8 @@ var arrangements = {};
 var taskTime = {};
 var variant = ((Math.random() > 0.5) ? 1 : 0); // randomize experiment variable
 
+IAHistory = {};
+
 function sampleTest() {
     var startTime;
     var initializeUI = function() {
@@ -119,6 +121,20 @@ function sampleTest() {
         onViewPage(
             function() {
                 displayVis($("#visualization_form").val());
+
+                // generate first architecture
+                $.ajax({
+                    url : "./optimizer.php",
+                    type : "POST",
+                    data: {
+                        },
+                    success: function(result) {
+                        var structure = JSON.parse(result)["architectures"][0]["components"];
+                        console.log(result);
+                        makeGrid(structure, "dynamicIA");
+                    }
+                });
+
             }, "#experiment2_page");
 
     };
@@ -138,14 +154,6 @@ $(function() {
     test.initializeUI();
 });
 
-function displayVis(form) {
-    // display viz according to form
-    console.log(form);
-    $("#viz").text(form);
-}
-
-
-
 /**
  * makeGrid -- Render a bootstrap grid to the DOM following the specification in `spec`
  * @param spec -- specification for the grid (nested JSON)
@@ -162,76 +170,70 @@ function displayVis(form) {
  *      }
  *
  */
-function makeGrid(spec, _parentElem) {
-    var container = d3.select('#' + _parentElem)
-        .html("")
-        .append('div')
-        .attr('class', 'container db-container');
-
-    drawSingleGridLevel(container, spec, false);
-  }
+    function makeGrid(spec, _parentElem) {
+        var container = d3.select('#' + _parentElem)
+        .html("");
+        var elemBbox = container.node().getBoundingClientRect(),
+        w = elemBbox.width,
+        h = elemBbox.height;
+        drawSingleGridLevel(spec, container, w, h, 0, 0);
+    }
   
   /**
    * drawSingleGridLevel -- Recursively draw the grid
-   * @param elem  -- A d3 selector to a div element
    * @param data  -- A JS object containing the data to be rendered
-   * @param isRow -- true if the element is a row
-   *                 (can't draw another row inside, can't end the
-   *                 hierarchy here)
+   * @param elem  -- An HTML selection (parent element)
    */
-function drawSingleGridLevel(elem, data, isRow) {
-    if (data.id !== -1) {
-        // Leaf node
-        elem.append('div').attr('class', `vis-container vis-container-${data.id}`)
+function drawSingleGridLevel(data, elem, w, h, left, top) {
+
+    if(Object.keys(data.left_child).length !== 0) {
+            // check left child
+        // if an inner node, continue
+        // if a leaf, then set it's appearance
+        if (data.left_child.id === -1) {
+            drawSingleGridLevel(data.left_child, elem, data.left_child.width * w, data.left_child.height * h, left, top);
+        }
+        else {
+            elem.append('div')
+            .call(setChildAttrs, data.left_child.width * w, data.left_child.height * h, left, top, data.left_child.id);
+        }
     }
-    else {
-        var orient = data.orientation,
-            left,
-            right;
 
-        if (orient === 'v') {
-            // Two new rows; stack the children on top of one another
-
-            if (isRow) {
-                // First, add a new col
-                elem = elem.append('div')
-                    .attr('class', 'col')
-                    .attr('width', '100%');
+    if(Object.keys(data.right_child).length !== 0) {
+    // check right child
+    // if an inner node, continue
+    // if a leaf, then append div and set it's appearance
+        if(data.right_child.id === -1) {
+            if(data.right_child.orientation === 'v') {
+                drawSingleGridLevel(data.right_child, elem, data.right_child.width * w, data.right_child.height * h, left + data.left_child.width * w, top);
             }
-            left = elem.append('div')
-                .attr('class', 'row')
-                .attr('width', convertToPercentage(data.left_child.width))
-                .attr('height', convertToPercentage(data.left_child.height));
-
-            drawSingleGridLevel(left, data.right_child, true);
-            // Object.keys(myObject).length == 0
-            if (Object.keys(data.right_child).length !== 0) {
-                right = elem.append('div')
-                    .attr('class', 'row')
-                    .attr('width', convertToPercentage(data.right_child.width))
-                    .attr('height', convertToPercentage(data.right_child.height));
-
-                drawSingleGridLevel(right, data.right_child, true);
+            else {
+                drawSingleGridLevel(data.right_child, elem, data.right_child.width * w, data.right_child.height * h, left, top + data.left_child.height * h);
             }
-        } else {
-        // Two new cols, in the same row
-            console.log(JSON.stringify(data));
-            left = elem.append('div')
-                .attr('class', 'col')
-                .attr('width', convertToPercentage(data.left_child.width));
-
-            drawSingleGridLevel(left, elem.left_child, false);
-            if (Object.keys(data.right_child).length !== 0) {
-                right = elem.append('div')
-                    .attr('class', 'col')
-                    .attr('width', convertToPercentage(data.right_child.width));
-
-                drawSingleGridLevel(right, elem.right_child, false);
+        }
+        else {
+            if (data.right_child.orientation === 'v') {
+                elem.append('div')
+            .call(setChildAttrs, data.right_child.width * w, data.right_child.height * h, left + data.left_child.width * w, top, data.right_child.id);
+            }
+            else {
+                elem.append('div')
+            .call(setChildAttrs, data.right_child.width * w, data.right_child.height * h, left, top + data.left_child.height * h, data.right_child.id);
             }
         }
     }
-}
 
-function convertToPercentage(n) {
-    return `${Math.round(n * 1000000) / 10000}%`
+}
+function setChildAttrs(e, width, height, left, top, id) {
+    width = Math.floor(width) + 'px';
+    height = Math.floor(height) + 'px';
+    left = Math.floor(left) + 'px';
+    top = Math.floor(top) + 'px';
+    e.style('position', 'absolute')
+        .attr('class', `vis-container vis-container-${id}`)
+        .style('width', width)
+        .style('height', height)
+        .style('left', left)
+        .style('top',  top)
+        .style('border', "3px solid");
 }
