@@ -55,6 +55,7 @@ function drawSingleGridLevel(data, elem) {
 
 function setChildAttrs(e, width, height, child, orientation) {
   e.attr('class', 'container inner-node')
+      .style('position', 'absolute')
       .attr('width', width * child.width)
       .attr('height', height * child.height);
 
