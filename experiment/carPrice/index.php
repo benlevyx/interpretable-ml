@@ -72,10 +72,11 @@ require_once("survey.php");
 
 
     <!-- Modules and vis components -->
-    <script src="../js/utils.js"></script>
+    <script src="../../vis/js/utils.js"></script>
 
     <!-- Main JS -->
-    <script src="../js/main.js" type="module"></script>
+    <script src="../../vis/js/main.js" type="module"></script>
+    
     <?php
     // initialize our analytics software for tracking participant behavior
     embeddedSessionFlowStart();
@@ -305,18 +306,21 @@ require_once("survey.php");
 
     <!-- TODO this is entirely yours to fill out, but here is an example of a survey page -->
 
-
+    <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
     <h1>The model classified this car as "UNACCEPTABLE"</h1>
     <div>
         <p>The model has the following features:</p>
         <p id="viz"> Placeholder</p>
+
+
+
+
         <div id="dynamicIA" class="d-flex flex-nowrap">
-            <div id="v1">1</div>
-                <div class="vis-container" id="feat-importance-vis"></div>
-            <div id="v2">2</div>
-            <div id="v3">3</div>
-            <div id="v4">4</div>
-            <div id="v5">5</div>
+
         </div>
 
     </div>

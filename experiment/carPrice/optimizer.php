@@ -6,10 +6,7 @@ if(!session_id())
 
 $dataJSON = $_REQUEST["data"];
 $dat = json_decode($dataJSON, true);
-echo("current". $dat["cur"]);
+$output = exec('../../code/run_bayes_opt.py 2>&1');
 
-echo("response". $dat["r"]);
-//$output = shell_exec("python test.py " . strval($dat["cur"]) .  strval($dat["response"]));
-//echo($output);
-
+echo($output);
 ?>

@@ -9,12 +9,12 @@ var data = {},
     visComps = {};
 
 // LOADING DATA
-d3.csv('data/feature_ranking.csv').then(function(featureRanking) {
+d3.csv('../../vis/data/feature_ranking.csv').then(function(featureRanking) {
   featureRanking.forEach(d => {
     d.value = +d.value;
     d.std = +d.std;
   });
-
+  
   // Save the data in a global. This is to minimize the number of times we need
   // to load the data. If it's loaded once, it's accessible by all functions.
   data.featureRanking = featureRanking;
