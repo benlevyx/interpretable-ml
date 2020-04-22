@@ -18,7 +18,7 @@ export default function makeGrid(spec, _parentElem) {
   var container = d3.select('#' + _parentElem)
       .append('div')
       .attr('class', 'container db-container');
-  drawSingleGridLevel(container, spec, false);
+  drawSingleGridLevel(container, spec.components, false);
 }
 
 /**
