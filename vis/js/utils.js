@@ -72,3 +72,12 @@ function wrap(text, width) {
 function clamp(n, min, max) {
   return Math.min(Math.max(n, min), max);
 }
+
+/**
+ * Utility function to capitalize the first letter of a string.
+ * @param s -- String to be capitalized
+ * @returns {string}
+ */
+function capitalizeFirstLetter(s) {
+  return s.replace(/^\w/, c => c.toUpperCase());
+}

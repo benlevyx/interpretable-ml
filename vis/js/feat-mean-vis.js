@@ -1,3 +1,5 @@
+//TODO: Flip this vis so that it becomes "of all cars with the same class as the predicted car,
+// what is the average value for each of the features?
 /**
  * FeatMeanVis. Object constructor function
  *
@@ -31,20 +33,24 @@ FeatMeanVis.prototype.initVis = function() {
   // the syntax `vis.config.<var-name>`
   initVis(vis);
 
-  // Initialize the scales using new D3 v4 syntax (no more scale.band...)
-  vis.x = d3.scaleBand().rangeRound([0, vis.width], .05).padding(.05);
-  vis.y = d3.scaleLinear().range([vis.height, 0]);
+  console.log(vis.data.features.length);
+  vis.x = d3.scalePoint()
+      .domain(vis.data.features.map((d, i) => i))
+      .range([0, vis.width]);
 
-  // Set the domains. Can also be done later
-  vis.x.domain(vis.data.map(function(d) { return d.feature; }));
-  vis.y.domain([0, d3.max(vis.data, function(d) { return d.value; })]);
+  vis.y = d3.scaleLinear()
+      .domain([0, 3])  // Number of classes
+      .range([vis.height, 0]);
 
-  // Initialize the axis generating functions
-  vis.xAxis = d3.axisBottom()
-      .scale(vis.x);
   vis.yAxis = d3.axisLeft()
       .scale(vis.y)
-      .ticks(10);
+      .ticks(4)
+      .tickFormat((d, i) => classLabs[i]);
+
+  vis.line = d3.line()
+      .curve(d3.curveNatural)
+      .x((d, i) => vis.x(i))
+      .y(d => vis.y(d));
 
   // Call the function to generate DOM elements
   vis.renderVis();
@@ -62,32 +68,96 @@ FeatMeanVis.prototype.initVis = function() {
 FeatMeanVis.prototype.renderVis = function() {
   var vis = this;
 
-  vis.svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + vis.height + ")")
-      .call(vis.xAxis)
-      .selectAll("text")
-      .style("text-anchor", "end")
-      .attr("dx", "-.8em")
-      .attr("dy", "-.55em")
-      .attr("transform", "rotate(-90)" );
+  // Axes
+  // var lines = vis.svg.append('g')
+  //     .attr('class', 'lines')
+  //     .selectAll('line.axis')
+  //     .data(vis.data.features)
+  //     .enter()
+  //     .append('line')
+  //     .attr('class', 'axis')
+  //     .attr('x1', (d, i) => vis.x(i))
+  //     .attr('x2', (d, i) => vis.x(i))
+  //     .attr('y1', 0)
+  //     .attr('y2', vis.height)
+  //     .style('stroke', 'var(--grid)')
+  //     .style('stroke-width', 1);
+console.log(vis.data.features);
+  var axes = vis.svg.append('g')
+      .attr('class', 'axes')
+      .selectAll('g.axis')
+      .data(vis.data.features)
+      .enter()
+      .append('g')
+      .attr('transform', (d, i) => `translate(${vis.x(i)}, 0)`)
+      .attr('class', 'axis grid')
+      .each(function(d, i) { drawAxis(d3.select(this), vis, i); })
+      .append('text')
+      .style('text-anchor', 'middle')
+      .attr('y', vis.height)
+      .attr('x', 0)
+      .attr('transform', 'translate(0, 7)')
+      .text(d => capitalizeFirstLetter(d))
+      .style('fill', 'var(--labels)')
+      .call(wrap, 20);
 
-  vis.svg.append("g")
-      .attr("class", "y axis")
-      .call(vis.yAxis)
-      .append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 6)
-      .attr("dy", ".71em")
-      .style("text-anchor", "end")
-      .text("feature importance");
+  vis.svg.selectAll('g.tick > text')
+      .attr('text-anchor', 'end')
+      .attr('fill', 'var(--labels)');
 
-  vis.svg.selectAll("bar")
-      .data(vis.data)
-      .enter().append("rect")
-      .style("fill", "steelblue")
-      .attr("x", function(d) { return vis.x(d.feature); })
-      .attr("width", vis.x.bandwidth())
-      .attr("y", function(d) { return vis.y(d.value); })
-      .attr("height", function(d) { return vis.height - vis.y(d.value); });
+  var dataLine = vis.svg
+      .append('path')
+      .datum(vis.data.values)
+      .attr('class', 'data')
+      .attr('d', d => {
+        console.log(d);
+        return vis.line(d);
+      })
+      .style('stroke', 'var(--labels)')
+      .style('fill', 'none')
+      .style('opacity', 0.4);
+
+  var markers = vis.svg.append('g')
+      .attr('class', 'markers')
+      .selectAll('circle.marker')
+      .data(vis.data.values)
+      .enter()
+      .append('circle')
+      .attr('class', 'marker')
+      .attr('cx', (d, i) => vis.x(i))
+      .attr('cy', d => vis.y(d))
+      .attr('stroke', 'none')
+      .attr('fill', 'var(--labels)')
+      .attr('r', 3)
+      .style('opacity', 0.4);
+
+  vis.annotate();
 };
+FeatMeanVis.prototype.annotate = function() {
+  var vis = this;
+
+  if (vis.config.selected) {
+    vis.svg.append('line')
+        .attr('class', 'annotation')
+        .attr('x1', 0)
+        .attr('x2', vis.width)
+        .attr('y1', vis.y(vis.config.selected.value))
+        .attr('y2', vis.y(vis.config.selected.value));
+
+    vis.svg.append('text')
+        .attr('x', vis.width)
+        .attr('y', vis.y(vis.config.selected.value))
+        .attr('transform', 'translate(4, -2)')
+        .attr('class', 'annotation')
+        .text(vis.config.selected.label)
+        .call(wrap, vis.margin.right);
+  }
+};
+
+
+function drawAxis(elem, vis, i) {
+  if (i > 0) {
+    vis.yAxis.tickFormat("");
+  }
+  elem.call(vis.yAxis);
+}

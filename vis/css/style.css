@@ -156,6 +156,16 @@ div.vis-container {
   color: var(--grid);
   stroke-width: 0.5px;
 }
+text.annotation {
+  fill: var(--unacceptable);
+  font-size: 10px;
+  text-anchor: start;
+}
+line.annotation {
+  stroke: var(--unacceptable);
+  fill: none;
+  stroke-dasharray: 4, 4;
+}
 
 /************** ZEPLIN/FIGMA STYLES ***************/
 
