@@ -23,18 +23,18 @@
 /* big titles */
 .title {
   font-family: "Karla", sans-serif;
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 400;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.05;
+  line-height: 1.3;
   letter-spacing: normal;
   color: white;
 }
 /* all the texts */
 .dida {
   font-family: "Karla", sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 400;
   font-stretch: normal;
   font-style: normal;
@@ -69,7 +69,7 @@
   background: var(--vgood);
 }
 
-/******** INTERFACE ELEMENTS *********/
+/****************** INTERFACE ELEMENTS *******************/
 
 .interface-container {
   height: 100vh;
@@ -79,7 +79,7 @@
   display: flex;
 }
 
-/* LEFT SIDE */
+/************ LEFT SIDE ************/
 .left-container {
   width: 20%;
   height: 100%;
@@ -88,36 +88,69 @@
 .car-card {
   width: 100%;
   background: var(--user-card);
-  border-radius: 20px;
+  border-radius: 15px;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   margin-bottom: 10px;
-  padding: 20px;
+  padding: 15px 20px;
 }
-.answer-card {
-  width: 100%;
-  background: var(--user-card);
-  border-radius: 20px;
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-  padding: 20px;
-}
+
+/****** CLASS SECTION ******/
 .class-list-container.first {
   margin-bottom: 25px;
 }
 .class-item {
-  margin-top: 10px;
+  margin-top: 8px;
 }
 .class-bar {
   width: 100%;
-  height: 9px;
+  height: 7px;
   border-radius: 3px;
   margin-top: 3px;
 }
+/****** FEATURES SECTION ******/
+.feature-item {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.feature-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.points-container {
+  display: flex;
+  margin-bottom: 3px;
+}
+.point {
+  height: 7px;
+  width: 7px;
+  border-radius: 50%;
+  border: solid 1px white;
+  margin-left: 3px;
+}
+.point.active {
+  background: white;
+}
+.feature-value {
+  text-transform: capitalize !important;
+}
+
+/****** ANSWER CARD ******/
+.answer-card {
+  width: 100%;
+  background: var(--user-card);
+  border-radius: 15px;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  padding: 15px 20px;
+}
 .answer-card .title {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .button {
   width: 100%;
-  height: 43px;
+  height: 35px;
   border-radius: 3px;
   background-color: var(--button-default);
   display: flex;
@@ -130,13 +163,13 @@
   color: var(--user-card);
 }
 .button.first {
-  margin-bottom: 10px;
+  margin-bottom: 7px;
 }
 .button:hover {
   background: var(--button-selected);
 }
 
-/* RIGHT SIDE */
+/************ RIGHT SIDE ************/
 .right-container {
   display: flex;
   flex-direction: row;
@@ -145,13 +178,13 @@
 div.vis-container {
   height: 50%;
   width: 500px;
-  border-radius: 20px;
+  border-radius: 15px;
   background-color: var(--component-card);
-  padding: 20px;
+  padding: 15px 20px;
   box-shadow: 0 4px 9px 0 rgba(0, 0, 0, 0.1);
 }
 
-/******** VIZ ELEMENTS *********/
+/******************  VIZ ELEMENTS *******************/
 .grid {
   color: var(--grid);
   stroke-width: 0.5px;
