@@ -108,7 +108,7 @@
 .feature-item {
   display: flex;
   justify-content: space-between;
-  margin-top: 17px;
+  margin-top: 16px;
 }
 
 .feature-container {
@@ -140,14 +140,14 @@
   background: var(--user-card);
   border-radius: 15px;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-  padding: 15px 20px;
+  padding: 15px 18px;
 }
 .answer-card .title {
   margin-bottom: 10px;
 }
 .button {
   width: 100%;
-  height: 38px;
+  height: 37px;
   border-radius: 3px;
   background-color: var(--button-default);
   display: flex;
@@ -177,7 +177,7 @@ div.vis-container {
   width: 500px;
   border-radius: 15px;
   background-color: var(--component-card);
-  padding: 15px 20px;
+  padding: 15px 18px;
   box-shadow: 0 4px 9px 0 rgba(0, 0, 0, 0.1);
 }
 
