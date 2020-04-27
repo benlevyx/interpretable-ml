@@ -13,8 +13,8 @@
   --button-selected: #fff8b6;
   --component-card: #242e66;
   --user-card: #06124f;
-  --grid: #7d7d7d;
-  --labels: #bababa;
+  --grid: #6d6d6d;
+  --labels: #b3b3b3;
   --background: #1d275b;
 }
 
@@ -46,13 +46,10 @@
 /* components labels and numbers */
 .labels {
   font-family: "Karla", sans-serif;
-  font-size: 10px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
+  font-size: 9px;
   line-height: 1.1;
-  letter-spacing: normal;
   color: var(--labels);
+  text-transform: uppercase;
 }
 
 /* GLOBAL CLASSES */
@@ -111,7 +108,7 @@
 .feature-item {
   display: flex;
   justify-content: space-between;
-  margin-top: 15px;
+  margin-top: 17px;
 }
 
 .feature-container {
@@ -124,8 +121,8 @@
   margin-bottom: 3px;
 }
 .point {
-  height: 7px;
-  width: 7px;
+  height: 6px;
+  width: 6px;
   border-radius: 50%;
   border: solid 1px white;
   margin-left: 3px;
@@ -150,7 +147,7 @@
 }
 .button {
   width: 100%;
-  height: 35px;
+  height: 38px;
   border-radius: 3px;
   background-color: var(--button-default);
   display: flex;
@@ -185,85 +182,24 @@ div.vis-container {
 }
 
 /******************  VIZ ELEMENTS *******************/
+/****** global ******/
 .grid {
   color: var(--grid);
   stroke-width: 0.5px;
 }
+.data-line {
+  stroke-width:  1.5px;
+}
+
+/****** feat-mean vis ******/
 text.annotation {
-  fill: var(--unacceptable);
-  font-size: 10px;
+  fill: var(--unacceptable) !important;
   text-anchor: start;
 }
 line.annotation {
   stroke: var(--unacceptable);
   fill: none;
   stroke-dasharray: 4, 4;
+  stroke-width: 1.5px;
 }
 
-/************** ZEPLIN/FIGMA STYLES ***************/
-
-/** colors **/
-:root {
-  --lipstick: #e63366;
-  --dark-pink: #d13366;
-  --dark-pink-two: #bb3266;
-  --light-burgundy: #a63266;
-  --unacceptable-30: rgba(141, 58, 79, 0.3);
-  --dirt-brown: #91693b;
-  --leather: #a77532;
-  --brownish-orange: #bd812a;
-  --brownish-orange-two: #d28d21;
-  --squash: #e89818;
-  --dark-indigo: #091550;
-  --pale: #fee9c7;
-  --beige: #e9c99a;
-  --very-light-brown: #d3b894;
-  --mushroom: #bda78e;
-  --stone: #a79588;
-  --warm-grey: #918483;
-  --greenblue-90: rgba(33, 203, 138, 0.9);
-  --greenblue-80: rgba(33, 203, 138, 0.8);
-  --greenblue-70: rgba(33, 203, 138, 0.7);
-  --greenblue-60: rgba(33, 203, 138, 0.6);
-  --greenblue-50: rgba(33, 203, 138, 0.5);
-  --greyish: #a3a3a3;
-  --light-burgundy-two: #a32f62;
-  --dark-pink-three: #b93063;
-  --dark-pink-four: #cf3164;
-  --lipstick-two: #e63365;
-  --butterscotch: #f9b13a;
-}
-
-.Rectangle-1 {
-  width: 645px;
-  height: 412px;
-  border-radius: 20px;
-  box-shadow: 0 4px 9px 0 rgba(0, 0, 0, 0.1);
-}
-
-.Line_4 {
-  width: 615.8px;
-  height: 255.7px;
-  border: solid 2px var(--unacceptable);
-}
-.Pie_6 {
-  width: 271px;
-  height: 271px;
-  opacity: 0.5;
-  background-color: var(--unacceptable);
-}
-.Area_6 {
-  width: 338.4px;
-  height: 256.1px;
-  background-color: rgba(252, 52, 102, 0.3);
-}
-.Bar_1_1 {
-  width: 52px;
-  height: 78.1px;
-  background-color: var(--unacceptable);
-}
-.Bar_1_6 {
-  width: 52px;
-  height: 15.6px;
-  background-color: #a63266;
-}
