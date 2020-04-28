@@ -38,6 +38,8 @@ class InfoArchTree:
         :param jsondict: dict
         :return: InfoArchTree
         """
+        #print(jsondict)
+        print(jsondict)
         root = Node.from_json(jsondict.get('components'))
         infoarch = InfoArchTree(jsondict.get('id'), root,
                                 height=jsondict.get('height'),
@@ -456,3 +458,5 @@ def _get_distance_func(distance_func_str: str) -> callable:
         return distance_funcs[distance_func_str]
     except KeyError:
         raise KeyError(f"{distance_func_str} is not a valid distance function.")
+
+

@@ -114,7 +114,6 @@ if __name__ == '__main__':
     parser.add_argument('-i', '--input', type=str, nargs=1, default=None,
                         help='A JSON-like dict with all observed architectures and scores')
     args = parser.parse_args()
-
     input_ = args.input
 
     if input_ is None:

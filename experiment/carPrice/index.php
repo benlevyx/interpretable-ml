@@ -42,6 +42,10 @@ require_once("survey.php");
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="introjs.css"/>
+
+    <link rel="stylesheet" href="../../vis/css/style.css"/>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
     <!-- we use the following library to submit form contents asynchronously -->
@@ -70,6 +74,10 @@ require_once("survey.php");
 
     <script src="https://d3js.org/d3.v5.min.js"></script>
 
+    <!-- library for tutorials  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.9.3/intro.min.js"></script>
+
+    <script src="https://kit.fontawesome.com/72212d619e.js" crossorigin="anonymous"></script>
 
     <!-- Modules and vis components -->
     <script src="../../vis/js/utils.js"></script>
@@ -301,44 +309,66 @@ require_once("survey.php");
 
 
 <!-- ********************* EXPERIMENT PAGE *********************** -->
-<div id="experiment2_page" class="page w800">
-    <div class="separator2"></div>
 
     <!-- TODO this is entirely yours to fill out, but here is an example of a survey page -->
-
-    <div class="d-flex justify-content-center">
-            <div class="spinner-border" role="status">
-                <span class="sr-only">Loading...</span>
+    <div id="experiment2_page" class="page">
+        <div class="interface-container">
+            <!-- left side interface -->
+        <div class="left-container">
+            <div class="car-card">
+            <div class="title">This car is classified by the model as:</div>
+            <div id="prediction" class="class-list-container first">
+                <div  class="class-item">
+                <div class="dida">unacceptable</div>
+                <div class="class-bar unacceptable"></div>
+                </div>
+                <div class="class-item">
+                <div class="dida">acceptable</div>
+                <div class="class-bar acceptable"></div>
+                </div>
+                <div class="class-item">
+                <div class="dida">good</div>
+                <div class="class-bar good"></div>
+                </div>
+                <div class="class-item">
+                <div class="dida">very good</div>
+                <div class="class-bar vgood"></div>
+                </div>
+            </div>
+            <div class="title">According to the car features:</div>
+            <div id="features" class="class-list-container">
+                <div class="class-item">
+                <div class="dida">ESTIMATED SAFETY</div>
+                </div>
+                <div class="class-item">
+                <div class="dida">CAPACITY (PERSONS)</div>
+                </div>
+                <div class="class-item">
+                <div class="dida">BUYING PRICE</div>
+                </div>
+                <div class="class-item">
+                <div class="dida">MAINTENANCE PRICE</div>
+                </div>
+                <div class="class-item">
+                <div class="dida">LUGGAGE BOOT SIZE</div>
+                </div>
+                <div class="class-item">
+                <div class="dida">DOORS</div>
+                </div>
+            </div>
+            </div>
+            <div id="decisions" class="answer-card">
+            <div class="title">What do you think about the model prediction?</div>
+            <div id="agreeBtt" class="button first decisionBtt"><div class="dida">agree</div></div>
+            <div id="disagreeBtt" class="button decisionBtt"><div class="dida">disagree</div></div>
             </div>
         </div>
-    <h1>The model classified this car as "UNACCEPTABLE"</h1>
-    <div>
-        <p>The model has the following features:</p>
-        <p id="viz"> Placeholder</p>
-
-
-
-
-        <div id="dynamicIA" class="d-flex flex-nowrap">
-            <div id="v1">1</div>
-            <div id="v2">2</div>	
-            <div id="v3">3</div>	
-            <div id="v4">4</div>	
-            <div id="v5">5</div>
+        <!-- right side interface -->
+            <div id="dynamicIA" class="d-flex flex-nowrap">
+            </div>
 
         </div>
-
     </div>
-
-    <p> Do you agree?</p>
-    <div class="container">
-        <button id="agreeBtt" class="decisionBtt">Agree
-        </button>
-        <button id="disagreeBtt" class="decisionBtt">Disagree</button>
-    </div>
-    
-
-</div>
 
 <!-- ********************* COMMENTS PAGE *********************** -->
 <div id="comments_page" class="page w800">

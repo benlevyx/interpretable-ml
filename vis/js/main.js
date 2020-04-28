@@ -1,12 +1,12 @@
 // Imports
 // Here we import each component from this folder (no need to add a script tag for each one
 import FeatImportanceVis from './feat-importance-vis.js';
-
+console.log("main javascript");
 // Defining globals
 // This way, all data and visualization components can be accessed from any scope
 // once declared
-var data = {},
-    visComps = {};
+window.data = {},
+    window.visComps = {};
 
 // LOADING DATA
 d3.csv('../../vis/data/feature_ranking.csv').then(function(featureRanking) {
@@ -18,7 +18,7 @@ d3.csv('../../vis/data/feature_ranking.csv').then(function(featureRanking) {
   // Save the data in a global. This is to minimize the number of times we need
   // to load the data. If it's loaded once, it's accessible by all functions.
   data.featureRanking = featureRanking;
-
+  console.log(data.featureRanking);
   // Call the relevant function
   drawFeatureImportanceVis();
 });

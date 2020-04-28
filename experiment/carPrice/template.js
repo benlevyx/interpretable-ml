@@ -16,12 +16,47 @@ var arrangements = {};
 var taskTime = {};
 var variant = ((Math.random() > 0.5) ? 1 : 0); // randomize experiment variable
 
-IAHistory = {};
+var IAHistory = {
+    "meta": {
+        "height": 10,
+        "width": 12,
+        "n_architectures": 1,
+        "n_components": 8
+    },
+    "architectures": [],
+    "scores":[]
+}
 
 function sampleTest() {
     var startTime;
     var initializeUI = function() {
-        
+        var intro = introJs();
+        intro.setOptions({
+          steps: [
+            {
+                element: "#prediction",
+                intro: "Here is the AI's prediction."
+            },    
+            {
+                element: "#features",
+                intro: "Here are the features of this car."
+              },       
+            {
+                element: "#dynamicIA",
+                intro: "You will decide based on this dashboard design that entails how the AI makes these decisions. This dashboard may change depends on how you and the AI system perform in this task."
+            },  
+            {
+                element: "#decisions",
+                intro: "Indicate your choices here."
+            },
+            { 
+                intro: "Have fun :)"
+              },
+    
+          ],
+          showStepNumbers:false
+        });
+    
         // TODO configure progress bar
         progressBar = progress(); // creating progressBar object
         // defining the steps in the study and the page IDs that they correspond to
@@ -71,24 +106,27 @@ function sampleTest() {
                 if($(this).attr('id') === "agreeBtt"){
                     r = 1;
                 }
+
+                IAHistory.scores.push(r);
                 if(currentCar <= maxCars){
                     currentCar += 1;
                     displayVis();
-                    console.log(currentCar);
+                    console.log(IAHistory);
                     // send to python
                     $.ajax({
                         url : "./optimizer.php",
                         type : "POST",
                         data: {
                             data: JSON.stringify(
-                                {
-                                    cur: currentCar,
-                                    r: r
-                                })
+                                IAHistory
+                                )
                             },
                         success: function(result) {
-                            var structure = JSON.parse(result)["architectures"][0]["components"];
-                            console.log(result);
+                            var structure = JSON.parse(result)["architectures"][0];
+                            IAHistory.architectures.push(structure);
+                            //console.log(IAHistory);
+                            structure = structure['components'];
+
                             makeGrid(structure, "dynamicIA");
                         }
                     });
@@ -104,7 +142,7 @@ function sampleTest() {
                                     question_id: currentCar,
                                     time_spent: time,
                                     choice: r,
-                                    arrangement: "123",
+                                    arrangement: IAHistory.architectures[IAHistory.architectures.length - 1],
                                     variant: variant
                                 })
                             },
@@ -121,6 +159,9 @@ function sampleTest() {
         onViewPage(
             function() {
                 displayVis($("#visualization_form").val());
+                $("#progressBar").hide();
+                // start tutorial
+                intro.start();
 
                 // generate first architecture
                 $.ajax({
@@ -132,12 +173,19 @@ function sampleTest() {
                         var structure = JSON.parse(result)["architectures"][0]["components"];
                         console.log(result);
                         makeGrid(structure, "dynamicIA");
+                        IAHistory.architectures.push(JSON.parse(result)["architectures"][0]);
                     }
                 });
 
             }, "#experiment2_page");
 
     };
+
+        onViewPage(
+            function() {
+                $("#progressBar").show();
+            }, "#comments_page"
+        );
 
     var displayVis = function(){
         $("#viz").text(currentCar);
@@ -177,6 +225,8 @@ $(function() {
         w = elemBbox.width,
         h = elemBbox.height;
         drawSingleGridLevel(spec, container, w, h, 0, 0);
+
+
     }
   
   /**
@@ -235,5 +285,8 @@ function setChildAttrs(e, width, height, left, top, id) {
         .style('height', height)
         .style('left', left)
         .style('top',  top)
-        .style('border', "3px solid");
+        .style('border', "1px solid #FFF");
+
+
 }
+
