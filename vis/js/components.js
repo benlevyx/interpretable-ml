@@ -1,6 +1,7 @@
-import FeatImportanceVis from "./feat-importance-vis";
+import FeatImportanceVis from "./feat-importance-vis.js";
+import FeatMeanVis from "./feat-mean-vis.js";
 
-var components = [
+export var components = [
   {
     id: 0,
     name: 'feature-importance',
@@ -8,8 +9,13 @@ var components = [
   },
   {
     id: 1,
-    name: 'pie-chart',
-    draw: drawPieChartVis
+    name: 'parallel-coordinates',
+    draw: drawParallelCoordinatesVis
+  },
+  {
+    id: 2,
+    name: 'feature-mean',
+    draw: drawFeatureMeanVis
   }
 ];
 
@@ -33,6 +39,22 @@ function drawFeatureImportanceVis() {
 
 }
 
-function drawPieChartVis() {
+
+function drawFeatureMeanVis() {
+  var selected = {value: 2.1, label: 'Selected car' },
+      margin = {
+        bottom: 40,
+        left: 70,
+        top: 10,
+        right: 50
+      },
+      config = {
+        margin: margin,
+        selected: selected
+      };
+  window.visComps.featMeanVis = new FeatMeanVis('feat-mean-vis', window.data.featureMeans, config);
+}
+
+function drawParallelCoordinatesVis() {
 
 }
