@@ -1,5 +1,6 @@
 import FeatImportanceVis from "./feat-importance-vis.js";
 import FeatMeanVis from "./feat-mean-vis.js";
+import ParallelCoordsVis from "./parallel-coords-vis.js";
 
 export var components = [
   {
@@ -56,5 +57,16 @@ function drawFeatureMeanVis() {
 }
 
 function drawParallelCoordinatesVis() {
-
+  var selected = 101,
+      margin = {
+        bottom: 40,
+        left: 70,
+        top: 10,
+        right: 50
+      },
+      config = {
+        margin: margin,
+        selected: selected
+      };
+  window.visComps.parallelCoordsVis = new ParallelCoordsVis('parallel-coords-vis', window.data.carData, config);
 }

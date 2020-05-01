@@ -31,7 +31,7 @@ ParallelCoordsVis.prototype.initVis = function () {
 
   vis.x = d3
     .scalePoint()
-    .domain(vis.data.columns.map((d, i) => i))
+    .domain(features.map((d, i) => i))
     .range([0, vis.width]);
 
   vis.yScales = [];
@@ -54,7 +54,7 @@ ParallelCoordsVis.prototype.initVis = function () {
     .line()
     .curve(d3.curveNatural)
     .x((d, i) => vis.x(i))
-    .y((d) => vis.y(d));
+    .y((d, i) => vis.yScales[i](d));
 
   // Call the function to generate DOM elements
   vis.wrangleData();
@@ -64,18 +64,16 @@ ParallelCoordsVis.prototype.wrangleData = function() {
   var vis = this;
 
   // Find the class of the selected datum
-  var selected = vis.data.find((d, i) => i === vis.selected);
-  selected.selected = true;
+  var selected = vis.data.find((d, i) => i === vis.selected),
+      selectedIndivData = features.map(f => selected[f]);
 
   // Filter the data
-  var selectedClassData = vis.data
-      .filter(d => d.class === selected.class),
-      selectedClassMeans = {selected: false};
-  features.forEach(f => {
-    selectedClassMeans[f] = d3.mean(selectedClassData, d => d[f]);
-  });
+  var selectedClassData = vis.data.filter(d => d.class === selected.class);
+  console.log(selectedClassData);
+  var selectedClassMeans = features.map(f => d3.mean(selectedClassData, d => d[f]));
+
   vis.displayData = [
-      selected,
+      selectedIndivData,
       selectedClassMeans
   ];
 
@@ -89,103 +87,61 @@ ParallelCoordsVis.prototype.updateVis = function () {
   var vis = this;
 
   // Axes
-  // var lines = vis.svg.append('g')
-  //     .attr('class', 'lines')
-  //     .selectAll('line.axis')
-  //     .data(vis.data.features)
-  //     .enter()
-  //     .append('line')
-  //     .attr('class', 'axis')
-  //     .attr('x1', (d, i) => vis.x(i))
-  //     .attr('x2', (d, i) => vis.x(i))
-  //     .attr('y1', 0)
-  //     .attr('y2', vis.height)
-  //     .style('stroke', 'var(--grid)')
-  //     .style('stroke-width', 1);
-  console.log(vis.data.features);
-  var axes = vis.svg
-    .append("g")
-    .attr("class", "axes")
-    .selectAll("g.axis")
-    .data(vis.data.features)
-    .enter()
-    .append("g")
-    .attr("transform", (d, i) => `translate(${vis.x(i)}, 0)`)
-    .attr("class", "axis grid")
-    .each(function (d, i) {
-      drawAxis(d3.select(this), vis, i);
-    })
-    .append("text")
-    .style("text-anchor", "middle")
-    .attr("y", vis.height)
-    .attr("x", 0)
-    .attr("transform", "translate(0, 7)")
-    .text((d) => capitalizeFirstLetter(d))
-    .style("fill", "var(--labels)")
-    .call(wrap, 20)
-    .attr("class", "labels");
+  var axes = vis.svg.append('g')
+      .attr('class', 'axes y-axes')
+      .selectAll('g.axis.y-axis')
+      .data(vis.yAxes)
+      .enter()
+      .append('g')
+      .attr('class', 'axis y-axis grid')
+      .attr('transform', (d, i) => `translate(${vis.x(i)}, 0)`)
+      .call(d => d)
+      .append('text')
+      .style('text-anchor', 'middle')
+      .attr('y', vis.height)
+      .attr('x', 0)
+      .attr('transform', 'translate(0, 7)')
+      .text((d, i) => capitalizeFirstLetter(features[i]))
+      .call(wrap, 20)
+      .attr('class', 'labels');
 
   vis.svg
     .selectAll("g.tick > text")
     .attr("class", "labels")
     .attr("text-anchor", "end");
 
-  var dataLine = vis.svg
-    .append("path")
-    .datum(vis.data.values)
-    .attr("class", "data-line")
-    .attr("d", (d) => {
-      console.log(d);
-      return vis.line(d);
-    })
-    .style("stroke", "var(--white)")
-    .style("fill", "none")
-    .style("opacity", 0.8);
+  var lines = vis.svg.append('g')
+      .attr('class', 'data-lines')
+      .selectAll('path.line')
+      .data(vis.displayData)
+      .enter()
+      .append('path')
+      .attr('class', 'line')
+      .attr('d', d => vis.line(d))
+      .classed('selected', (d ,i) => i === 0);
 
   var markers = vis.svg
-    .append("g")
-    .attr("class", "markers")
-    .selectAll("circle.marker")
-    .data(vis.data.values)
-    .enter()
-    .append("circle")
-    .attr("class", "marker-line")
-    .attr("cx", (d, i) => vis.x(i))
-    .attr("cy", (d) => vis.y(d))
-    .attr("stroke", "none")
-    .attr("fill", "var(--white)")
-    .attr("r", 3)
-    .style("opacity", 0.8);
-
-  vis.annotate();
-};
-ParallelCoordsVis.prototype.annotate = function () {
-  var vis = this;
-
-  if (vis.config.selected) {
-    vis.svg
-      .append("line")
-      .attr("class", "annotation")
-      .attr("x1", 0)
-      .attr("x2", vis.width)
-      .attr("y1", vis.y(vis.config.selected.value))
-      .attr("y2", vis.y(vis.config.selected.value));
-
-    vis.svg
-      .append("text")
-      .attr("x", vis.width)
-      .attr("y", vis.y(vis.config.selected.value))
-      .attr("transform", "translate(4, -2)")
-      .attr("class", "annotation")
-      .attr("class", "labels annotation")
-      .text(vis.config.selected.label)
-      .call(wrap, vis.margin.right);
-  }
+      .append('g')
+      .attr('class', 'markers')
+      .selectAll('g.marker-group')
+      .data(vis.displayData)
+      .enter()
+      .append('g')
+      .attr('class', 'marker-group')
+      .classed('selected', (d, i) => i === 0)
+      .selectAll('circle.marker')
+      .data(d => d)
+      .enter()
+      .append('circle')
+      .attr('class', 'marker')
+      .attr('cx', (d, i) => vis.x(i))
+      .attr('cy', (d, i) => vis.yScales[i](d));
 };
 
-function drawAxis(elem, vis, i) {
-  if (i > 0) {
-    vis.yAxis.tickFormat("");
+function objToArr(obj) {
+  var copy = Object.assign({}, obj);
+  if (copy.selected !== undefined) {
+    delete copy.selected;
   }
-  elem.call(vis.yAxis);
+  return Object.entries(copy);
 }

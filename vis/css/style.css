@@ -203,3 +203,20 @@ line.annotation {
   stroke-width: 1.5px;
 }
 
+/****** Parallel Coords Vis ******/
+circle.marker {
+  r: 4px;
+  stroke: none;
+  fill: var(--unacceptable);
+  opacity: 0.8;
+}
+path.line {
+  stroke-width: 1px;
+  stroke: var(--unacceptable);
+  fill: none;
+  opacity: 0.8;
+}
+circle.marker.selected,
+path.line.selected {
+  opacity: 1;
+}

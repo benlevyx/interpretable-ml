@@ -13,6 +13,21 @@ window.data = {};
 window.visComps = {};
 
 // // LOADING DATA
+// Load all data once, then call the vis constructors
+Promise.all([
+    d3.csv('data/feature_ranking.csv'),
+    d3.csv('data/car.data')
+]).then(function(datasets) {
+  var featRankings = datasets[0],
+      allData = datasets[1];
+
+  window.data.featRankings = featRankings;
+  window.data.carData = allData;
+
+  components[1].draw()
+});
+
+
 // d3.csv('data/feature_ranking.csv').then(function(featureRanking) {
 //   featureRanking.forEach(d => {
 //     d.value = +d.value;
@@ -37,7 +52,7 @@ d3.csv('data/feature_ranking.csv').then(function(featureRanking) {
   data.featureRanking = featureRanking;
 
   // Call the relevant function
-  drawFeatureImportanceBubble();
+  // drawFeatureImportanceBubble();
 });
 
 
