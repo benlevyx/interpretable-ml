@@ -49,6 +49,7 @@
   font-size: 9px;
   line-height: 1.1;
   color: var(--labels);
+  fill: var(--labels);
   text-transform: uppercase;
 }
 
@@ -225,4 +226,7 @@ g.selected circle.marker,
 path.line.selected {
   opacity: 1;
   stroke-dasharray: 0, 0;
+}
+text.data-label:not(.selected) {
+  opacity: 0.8;
 }

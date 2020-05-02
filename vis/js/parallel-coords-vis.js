@@ -69,10 +69,11 @@ ParallelCoordsVis.prototype.wrangleData = function() {
 
   // Find the class of the selected datum
   var selected = vis.data.find((d, i) => i === vis.selected);
+  vis.selectedClass = selected.class;
   var selectedIndivData = features.map(f => selected[f]);
 
   // Filter the data
-  var selectedClassData = vis.data.filter(d => d.class === selected.class);
+  var selectedClassData = vis.data.filter(d => d.class === vis.selectedClass);
   var selectedClassMeans = features.map(f => d3.mean(selectedClassData, d => d[f]));
 
   vis.displayData = [
@@ -100,15 +101,20 @@ ParallelCoordsVis.prototype.updateVis = function () {
       .attr('transform', (d, i) => `translate(${vis.x(i)}, 0)`)
       .each(function(d) {
         d3.select(this).call(d)
-      })
+      });
+
+  var axisLabels = vis.svg.append('g')
+      .attr('class', 'axis-labels')
+      .selectAll('text.axis-label')
+      .data(features)
+      .enter()
       .append('text')
+      .attr('class', 'labels')
+      .text(d => d)
       .style('text-anchor', 'middle')
-      .attr('y', vis.height)
-      .attr('x', 0)
-      .attr('transform', 'translate(0, 7)')
-      .text((d, i) => capitalizeFirstLetter(features[i]))
-      .call(wrap, 20)
-      .attr('class', 'label');
+      .attr('x', (d, i) => vis.x(i))
+      .attr('y', vis.height + 7)
+      .call(wrap, 10);
 
   vis.svg
     .selectAll("g.tick > text")
@@ -141,12 +147,19 @@ ParallelCoordsVis.prototype.updateVis = function () {
       .attr('class', 'marker')
       .attr('cx', (d, i) => vis.x(i))
       .attr('cy', (d, i) => vis.yScales[i](d));
-};
 
-function objToArr(obj) {
-  var copy = Object.assign({}, obj);
-  if (copy.selected !== undefined) {
-    delete copy.selected;
-  }
-  return Object.entries(copy);
-}
+  var dataLabs = vis.svg.append('g')
+      .attr('class', 'data-labels')
+      .selectAll('text.data-label')
+      .data(['Selected car', `All ${classLabs[vis.selectedClass]} cars`])
+      .enter()
+      .append('text')
+      .attr('class', 'data-label labels')
+      .classed('selected', (d, i) => i === 0)
+      .attr('x', vis.width)
+      .attr('y', (d, i) => vis.yScales[5](vis.displayData[i][5]))
+      .style('fill', 'var(--unacceptable)')
+      .attr('transform', 'translate(5, -5)')
+      .text(d => d)
+      .call(wrap, 5);
+};
