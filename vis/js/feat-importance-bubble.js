@@ -55,7 +55,9 @@ FeatImportanceBubble.prototype.initVis = function () {
 
   vis.diameter = 600;
 //   vis.color = d3.scaleOrdinal(d3.schemeCategory20);
-  vis.bubble = d3.pack(data).size([vis.diameter, vis.diameter]).padding(1.5);
+  vis.bubble = d3.pack()
+      .size([vis.width, vis.height])
+      .padding(1.5);
 
   // Call the function to generate DOM elements
   vis.renderVis();
@@ -73,23 +75,17 @@ FeatImportanceBubble.prototype.initVis = function () {
 FeatImportanceBubble.prototype.renderVis = function () {
   var vis = this;
 
-    vis.svg = d3.select("body")
-        .append("svg")
-        .attr("width", vis.diameter)
-        .attr("height", vis.diameter)
-        .attr("class", "bubble");
+  console.log("Rendering bubble vis");
 
-  vis.nodes = d3.hierarchy(data).sum(function (d) {
+  vis.nodes = d3.hierarchy({children: vis.data}).sum(function (d) {
     return d.value;
   });
+  vis.bubble(vis.nodes);
 
  vis.node = vis.svg
-    .selectAll(".node")
-    .data(vis.bubble(vis.nodes).descendants())
+    .selectAll("g.node")
+    .data(vis.nodes.children)
     .enter()
-    .filter(function (d) {
-      return !d.children;
-    })
     .append("g")
     .attr("class", "node")
     .attr("transform", function (d) {
@@ -97,33 +93,36 @@ FeatImportanceBubble.prototype.renderVis = function () {
     });
 
     vis.node.append("title").text(function (d) {
-    return d.feature + ": " + d.value;
-  });
+      return d.feature + ": " + d.value;
+    });
 
-//   vis.node
-//     .append("circle")
-//     .attr("r", function (d) {
-//       return d.r;
-//     })
-//     .style("fill", "red");
+    vis.node
+      .append("circle")
+      .attr("r", function (d) {
+        return d.r;
+      })
+      .style("fill", "var(--unacceptable)");
 
-//   vis.node
-//     .append("text")
-//     .attr("dy", ".2em")
-//     .style("text-anchor", "middle")
-//     .text(function (d) {
-//       return d.data.feature.substring(0, d.r / 3);
-//     })
-//     .attr("class", "labels")
+  vis.node
+    .append("text")
+    .attr("dy", ".2em")
+    .style("text-anchor", "middle")
+    .text(function (d) {
+      return d.data.feature.substring(0, d.r / 3);
+    })
+    .attr("class", "labels")
+      .style('fill', 'black');
 
-//   vis.node
-//     .append("text")
-//     .attr("dy", "1.3em")
-//     .style("text-anchor", "middle")
-//     .text(function (d) {
-//       return d.data.value;
-//     })
-//     .attr("class", "labels")
+  vis.node
+    .append("text")
+    .attr("dy", "1.3em")
+    .style("text-anchor", "middle")
+    .text(function (d) {
+      return format2d(d.data.value);
+    })
+    .attr("class", "labels")
+      .style('fill', 'black');
 
-//   d3.select(self.frameElement).style("height", diameter + "px");
+  // d3.select(self.frameElement).style("height", diameter + "px");
 };
+

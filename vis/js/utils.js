@@ -81,3 +81,5 @@ function clamp(n, min, max) {
 function capitalizeFirstLetter(s) {
   return s.replace(/^\w/, c => c.toUpperCase());
 }
+
+var format2d = d3.format(".2f");
