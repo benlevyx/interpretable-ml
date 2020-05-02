@@ -37,10 +37,14 @@ ParallelCoordsVis.prototype.initVis = function () {
   vis.yScales = [];
   vis.yAxes = [];
   features.forEach(column => {
-    var y = d3.scaleOrdinal()
-            .domain(levels[column])
-            .range([vis.height, 0]),
-        yAxis = d3.axisLeft()
+    var y = d3.scaleLinear()
+            .range([vis.height, 0]);
+    if (column === 'doors' || column === 'capacity (persons)') {
+      y.domain([2, 5])
+    } else {
+      y.domain([0, levels[column].length - 1])
+    }
+    var yAxis = d3.axisLeft()
             .scale(y)
             .ticks(levels[column].length)
             .tickFormat((d, i) => levels[column][i]);
@@ -52,7 +56,7 @@ ParallelCoordsVis.prototype.initVis = function () {
   // Change y accessor after doing the grouping.
   vis.line = d3
     .line()
-    .curve(d3.curveNatural)
+    .curve(d3.curveMonotoneX)
     .x((d, i) => vis.x(i))
     .y((d, i) => vis.yScales[i](d));
 
@@ -64,12 +68,11 @@ ParallelCoordsVis.prototype.wrangleData = function() {
   var vis = this;
 
   // Find the class of the selected datum
-  var selected = vis.data.find((d, i) => i === vis.selected),
-      selectedIndivData = features.map(f => selected[f]);
+  var selected = vis.data.find((d, i) => i === vis.selected);
+  var selectedIndivData = features.map(f => selected[f]);
 
   // Filter the data
   var selectedClassData = vis.data.filter(d => d.class === selected.class);
-  console.log(selectedClassData);
   var selectedClassMeans = features.map(f => d3.mean(selectedClassData, d => d[f]));
 
   vis.displayData = [
@@ -95,7 +98,9 @@ ParallelCoordsVis.prototype.updateVis = function () {
       .append('g')
       .attr('class', 'axis y-axis grid')
       .attr('transform', (d, i) => `translate(${vis.x(i)}, 0)`)
-      .call(d => d)
+      .each(function(d) {
+        d3.select(this).call(d)
+      })
       .append('text')
       .style('text-anchor', 'middle')
       .attr('y', vis.height)
@@ -103,7 +108,7 @@ ParallelCoordsVis.prototype.updateVis = function () {
       .attr('transform', 'translate(0, 7)')
       .text((d, i) => capitalizeFirstLetter(features[i]))
       .call(wrap, 20)
-      .attr('class', 'labels');
+      .attr('class', 'label');
 
   vis.svg
     .selectAll("g.tick > text")

@@ -202,21 +202,27 @@ line.annotation {
   stroke-dasharray: 4, 4;
   stroke-width: 1.5px;
 }
+.label tspan {
+  color: black;
+  size: 12px;
+}
 
 /****** Parallel Coords Vis ******/
 circle.marker {
   r: 4px;
   stroke: none;
   fill: var(--unacceptable);
-  opacity: 0.8;
+  opacity: 0.5;
 }
 path.line {
   stroke-width: 1px;
   stroke: var(--unacceptable);
   fill: none;
-  opacity: 0.8;
+  opacity: 0.5;
+  stroke-dasharray: 4, 2;
 }
-circle.marker.selected,
+g.selected circle.marker,
 path.line.selected {
   opacity: 1;
+  stroke-dasharray: 0, 0;
 }
