@@ -2,6 +2,7 @@ import FeatImportanceVis from "./feat-importance-vis.js";
 import FeatMeanVis from "./feat-mean-vis.js";
 import ParallelCoordsVis from "./parallel-coords-vis.js";
 import FeatImportanceBubble from "./feat-importance-bubble.js";
+import ConfusionMatrix from "./confusion-matrix.js";
 
 export var components = [
   {
@@ -18,6 +19,11 @@ export var components = [
     id: 2,
     name: 'feature-importance-bubble',
     draw: drawFeatureImportanceBubble
+  },
+  {
+    id: 3,
+    name: 'confusion-matrix',
+    draw: drawConfusionMatrix
   }
 ];
 
@@ -76,4 +82,18 @@ function drawFeatureImportanceBubble() {
   // Then create the vis and store it in the global `visComps` so that it can
   // be accessed in other scopes.
   window.visComps.featImportanceBubble = new FeatImportanceBubble('test-vis', window.data.featureRanking, config);
+}
+
+function drawConfusionMatrix() {
+
+  var config = {
+    'margin': {
+      'bottom': 10,
+      'left': 10,
+      'top': 10,
+      'right': 10
+    }
+  };
+
+  window.visComps.confusionMatrix = new ConfusionMatrix('test-vis', window.data.confMat, config);
 }
