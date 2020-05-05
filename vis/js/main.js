@@ -11,6 +11,13 @@ import {components} from './components.js';
 // once declared
 window.data = {};
 window.visComps = {};
+window.selected = {
+  class: null,
+  obs: null
+};
+
+// Simulating a randomly drawn car
+
 
 // // LOADING DATA
 // Load all data once, then call the vis constructors
@@ -35,6 +42,17 @@ Promise.all([
   window.data.featureRanking = featRanking;
   window.data.carData = allData;
 
-  // components[1].draw()
-  components[2].draw();
+  // Simulating a randomly drawn car
+  var nCars = window.data.carData.length,
+      idx = Math.floor(Math.random() * nCars);
+
+
+  window.selected.obs = window.data.carData[idx];
+  window.selected.class = window.selected.obs.class;
+
+  // Setting the left panel
+  updateLeftPanel(window.selected.obs);
+
+  components[1].draw()
+  // components[2].draw();
 });

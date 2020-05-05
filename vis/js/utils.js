@@ -83,3 +83,12 @@ function capitalizeFirstLetter(s) {
 }
 
 var format2d = d3.format(".2f");
+
+/**
+ * Convert a class id number (0, 1, 2, 3) to a color string (defined in constants.js)
+ * @param cls -- Class ID number
+ * @returns {string}
+ */
+function classColor(cls) {
+  return `var(--${classLevels[cls]})`;
+}

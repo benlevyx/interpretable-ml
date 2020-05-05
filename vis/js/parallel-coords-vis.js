@@ -53,7 +53,6 @@ ParallelCoordsVis.prototype.initVis = function () {
     vis.yAxes.push(yAxis);
   });
 
-  // Change y accessor after doing the grouping.
   vis.line = d3
     .line()
     .curve(d3.curveMonotoneX)
@@ -68,9 +67,8 @@ ParallelCoordsVis.prototype.wrangleData = function() {
   var vis = this;
 
   // Find the class of the selected datum
-  var selected = vis.data.find((d, i) => i === vis.selected);
-  vis.selectedClass = selected.class;
-  var selectedIndivData = features.map(f => selected[f]);
+  vis.selectedClass = vis.selected.class;
+  var selectedIndivData = features.map(f => vis.selected[f]);
 
   // Filter the data
   var selectedClassData = vis.data.filter(d => d.class === vis.selectedClass);
@@ -121,6 +119,8 @@ ParallelCoordsVis.prototype.updateVis = function () {
     .attr("class", "labels")
     .attr("text-anchor", "end");
 
+  var color = classColor(vis.selected.class);
+
   var lines = vis.svg.append('g')
       .attr('class', 'data-lines')
       .selectAll('path.line')
@@ -129,6 +129,7 @@ ParallelCoordsVis.prototype.updateVis = function () {
       .append('path')
       .attr('class', 'line')
       .attr('d', d => vis.line(d))
+      .style('stroke', color)
       .classed('selected', (d ,i) => i === 0);
 
   var markers = vis.svg
@@ -146,7 +147,8 @@ ParallelCoordsVis.prototype.updateVis = function () {
       .append('circle')
       .attr('class', 'marker')
       .attr('cx', (d, i) => vis.x(i))
-      .attr('cy', (d, i) => vis.yScales[i](d));
+      .attr('cy', (d, i) => vis.yScales[i](d))
+      .style('fill', color);
 
   var dataLabs = vis.svg.append('g')
       .attr('class', 'data-labels')
@@ -158,7 +160,7 @@ ParallelCoordsVis.prototype.updateVis = function () {
       .classed('selected', (d, i) => i === 0)
       .attr('x', vis.width)
       .attr('y', (d, i) => vis.yScales[5](vis.displayData[i][5]))
-      .style('fill', 'var(--unacceptable)')
+      .style('fill', color)
       .attr('transform', 'translate(5, -5)')
       .text(d => d)
       .call(wrap, 5);

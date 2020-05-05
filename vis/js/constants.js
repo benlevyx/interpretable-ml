@@ -4,6 +4,12 @@ const classLabs = [
     "Good",
     "Very good"
 ];
+const classLevels = [
+    "unacceptable",
+    "acceptable",
+    "good",
+    "vgood"
+];
 const features = [
     'buying price',
     'maintanence price',
@@ -20,4 +26,21 @@ const levels = {
     'class': ['unacc', 'acc', 'good', 'vgood'],
     'doors': ['2', '3', '4', '5more'],
     'capacity (persons)': ['2', '4', 'more']
+};
+const encodedLevels = {
+    'buying price': [0, 1, 2, 3],
+    'maintanence price': [0, 1, 2, 3],
+    'luggage boot size': [0, 1, 2],
+    'estimated safety': [0, 1, 2],
+    'doors': [2, 3, 4, 5],
+    'capacity (persons)': [2, 4, 5]
+};
+const levelNames = {
+    med: 'medium',
+    vhigh: 'very high',
+    acc: 'acceptable',
+    unacc: 'unacceptable',
+    vgood: 'very good',
+    '5more': '5+',
+    'more': '5+'
 };

@@ -42,13 +42,12 @@ function drawFeatureImportanceVis() {
 
   // Then create the vis and store it in the global `visComps` so that it can
   // be accessed in other scopes.
-  window.visComps.featImportanceVis = FeatImportanceVis('feature-importance-vis', window.data.featureRanking, config);
+  window.visComps.featImportanceVis = FeatImportanceVis('test-vis', window.data.featureRanking, config);
 
 }
 
 function drawParallelCoordinatesVis() {
-  var selected = 101,
-      margin = {
+  var margin = {
         bottom: 40,
         left: 70,
         top: 10,
@@ -56,9 +55,9 @@ function drawParallelCoordinatesVis() {
       },
       config = {
         margin: margin,
-        selected: selected
+        selected: window.selected.obs
       };
-  window.visComps.parallelCoordsVis = new ParallelCoordsVis('parallel-coords-vis', window.data.carData, config);
+  window.visComps.parallelCoordsVis = new ParallelCoordsVis('test-vis', window.data.carData, config);
 }
 
 function drawFeatureImportanceBubble() {
