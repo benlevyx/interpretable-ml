@@ -90,7 +90,7 @@ function drawConfusionMatrix() {
     'margin': {
       'bottom': 10,
       'left': 10,
-      'top': 10,
+      'top': 20,
       'right': 10
     }
   };

@@ -4,6 +4,12 @@ const classLabs = [
     "Good",
     "Very good"
 ];
+const classLabsAbbrev = [
+    "Unacc.",
+    "Acc.",
+    "Good",
+    "V. good"
+];
 const classLevels = [
     "unacceptable",
     "acceptable",

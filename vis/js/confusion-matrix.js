@@ -18,9 +18,17 @@ ConfusionMatrix.prototype.initVis = function() {
   initVis(vis);
 
   // Ensuring square (is this necessary)
-  var length = d3.min([vis.height, vis.width]);
+  var height = vis.height,
+      width = vis.width,
+      length = d3.min([height, width]);
   vis.width = length;
   vis.height = length;
+
+  // Translating it to the middle of the block
+  var xOff = (width - length) / 2,
+      yOff = (height - length) / 2;
+  vis.svg = vis.svg.append('g')
+      .attr('transform', `translate(${xOff}, ${yOff})`);
 
   vis.padding = vis.config.padding || 0.2;
 
@@ -32,7 +40,7 @@ ConfusionMatrix.prototype.initVis = function() {
 
 
   // Confirm whether this should be linear... is opacity perceptually linear?
-  vis.opacity = d3.scaleLinear()
+  vis.opacity = d3.scaleSqrt()
       .range([0, 1]);
 
   vis.wrangleData();
@@ -73,4 +81,76 @@ ConfusionMatrix.prototype.updateVis = function() {
       .attr('height', vis.y.bandwidth())
       .attr('width', vis.x.bandwidth())
       .style('fill', classColor(window.selected.class));
+
+  cells.append('text')
+      .attr('class', 'labels')
+      .attr('x', vis.x.bandwidth() / 2)
+      .attr('y', vis.y.bandwidth() / 2)
+      .text(d => d)
+      .style('text-anchor', 'middle')
+      .style('fill', function(d) {
+        var col = 'white';
+        if (window.selected.class == 2) {
+          if (vis.opacity(d) === 1) {
+            col = 'black';
+          }
+        }
+        return col;
+      });
+
+  // Adding labels
+  var labels = vis.svg.append('g')
+      .attr('class', 'labels');
+
+  // True labels (columns)
+  labels.append('g')
+      .attr('class', 'true-labels')
+      .attr('transform', `translate(${vis.x.bandwidth() / 2}, 0)`)
+      .selectAll('text.label')
+      .data(classLabsAbbrev)
+      .enter()
+      .append('text')
+      .attr('class', 'label')
+      .text(d => d)
+      .attr('x', (d, i) => vis.x(i))
+      .style('text-anchor', 'middle');
+
+  // Predicted labels (rows)
+  labels.append('g')
+      .attr('class', 'pred-labels')
+      .attr('transform', `translate(0, ${vis.y.bandwidth() / 2})`)
+      .selectAll('text.label')
+      .data(classLabs)
+      .enter()
+      .append('text')
+      .attr('class', 'label')
+      .text(d => d)
+      .attr('y', (d, i) => vis.y(i))
+      .style('text-anchor', 'end');
+
+  // Axis labels
+  var gAxisLabs = vis.svg.append('g')
+      .attr('class', 'labels');
+  gAxisLabs.append('text')
+      .text("True class")
+      .attr('x', vis.width / 2)
+      .attr('y', -12)
+      .attr('class', 'axis-label')
+      .style('text-anchor', 'middle');
+  gAxisLabs.append('text')
+      .text("Predicted class")
+      .attr('y', -60)
+      .attr('x', -vis.height / 2)
+      .style('text-anchor', 'middle')
+      .attr('class', 'axis-label')
+      .attr('transform', 'rotate(-90)');
+
+  // Drawing box around predicted class of selected car
+  var selectedBox = vis.svg.append('rect')
+      .attr('class', 'box-outline')
+      .attr('y', vis.y(window.selected.class) - vis.y.bandwidth() * vis.y.padding() / 2)
+      .attr('x', 3)
+      .attr('height', vis.y.bandwidth() * (1 + vis.y.padding()))
+      .attr('width', vis.width - 3 * 2)
+      .style('stroke', classColor(window.selected.class));
 };

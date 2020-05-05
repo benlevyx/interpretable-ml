@@ -231,3 +231,13 @@ path.line.selected {
 text.data-label:not(.selected) {
   opacity: 0.8;
 }
+
+/******* Confusion Matrix ******/
+.axis-label {
+    font-size: 12px;
+    opacity: 1;
+}
+rect.box-outline {
+    stroke-width: 1px;
+    fill: none;
+}
