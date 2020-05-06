@@ -11,11 +11,12 @@ var debug = 1;
 // global progress bar variable (could be made private)
 var progressBar = null;
 var currentCar = 0;
-var maxCars = 20;
+var maxCars = 40;
+var REWARD_INTERVAL = 5;
 var arrangements = {};
 var taskTime = {};
 var variant = ((Math.random() > 0.5) ? 1 : 0); // randomize experiment variable
-
+var decisionBatch = []; // array of user decisions of a certain length. When reaching the length the reward is calculated as the mean and this array will be empty again. 
 var IAHistory = {
 };
 
@@ -100,29 +101,34 @@ function sampleTest() {
                     r = 1;
                 }
 
-                IAHistory.scores.push(r);
+
+                decisionBatch.push(r);
                 if(currentCar <= maxCars){
                     currentCar += 1;
-                    displayVis();
-                    //console.log(IAHistory);
-                    // send to python
-                    $.ajax({
-                        url : "./optimizer.php",
-                        type : "POST",
-                        data: {
-                            data: JSON.stringify(
-                                IAHistory
-                                )
-                            },
-                        success: function(result) {
-                            var structure = JSON.parse(result)["architectures"][0];
-                            IAHistory.architectures.push(structure);
-                            //console.log(IAHistory);
-                            structure = structure['components'];
 
-                            makeGrid(structure, "dynamicIA");
-                        }
-                    });
+                    // update only every X number of questions. 
+                    if(currentCar% REWARD_INTERVAL === 0){
+                        console.log("updating IA.");
+                        IAHistory.scores.push(d3.mean(decisionBatch));
+                        decisionBatch = [];
+
+                        $.ajax({
+                            url : "./optimizer.php",
+                            type : "POST",
+                            data: {
+                                data: JSON.stringify(
+                                    IAHistory
+                                    )
+                                },
+                            success: function(result) {
+                                var structure = JSON.parse(result)["architectures"][0];
+                                IAHistory.architectures.push(structure);
+    
+                                makeGrid(structure["components"], "dynamicIA");
+                            }
+                        });
+                    }
+
 
                     // send to PHP
                     $.ajax({
@@ -151,7 +157,6 @@ function sampleTest() {
         );
         onViewPage(
             function() {
-                displayVis($("#visualization_form").val());
                 $("#progressBar").hide();
                 // start tutorial
                 intro.start();
@@ -163,10 +168,25 @@ function sampleTest() {
                     data: {
                         },
                     success: function(result) {
-                        var structure = JSON.parse(result)["architectures"][0]["components"];
-                        //console.log(result);
-                        makeGrid(structure, "dynamicIA");
-                        IAHistory.architectures.push(JSON.parse(result)["architectures"][0]);
+                        console.log("onview receives IA history. ")
+                        IAHistory = JSON.parse(result);
+                        console.log("The  IA history is ");
+                        console.log(IAHistory);
+                        $.ajax({
+                            url : "./optimizer.php",
+                            type : "POST",
+                            data: {
+                                data: JSON.stringify(IAHistory),
+                            },
+                            success: function(result) {
+                                console.log("new IA");
+                                console.log(result);
+                                var structure = JSON.parse(result)["architectures"][0];
+                                IAHistory.architectures.push(structure);
+                                makeGrid(structure["components"], "dynamicIA");
+                            }
+                        })
+
                     }
                 });
 
@@ -179,12 +199,6 @@ function sampleTest() {
                 $("#progressBar").show();
             }, "#comments_page"
         );
-
-    var displayVis = function(){
-        $("#viz").text(currentCar);
-
-
-    };
     return {
         initializeUI: function() {initializeUI()}
     }
