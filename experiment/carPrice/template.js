@@ -91,44 +91,53 @@ function sampleTest() {
         });
 
         $(".decisionBtt").click(
+            clickDecisionBtt
+        );
 
-            function() {
-                var time = new Date() - startTime;
-                startTime = new Date()
-                var r = 0;
-                //console.log($(this).attr('id') === "agreeBtt");
-                if($(this).attr('id') === "agreeBtt"){
-                    r = 1;
-                }
+        
+        function clickDecisionBtt() {
+            var time = new Date() - startTime;
+            startTime = new Date()
+            var r = 0;
+            //console.log($(this).attr('id') === "agreeBtt");
+            if($(this).attr('id') === "agreeBtt"){
+                r = 1;
+            }
 
 
-                decisionBatch.push(r);
-                if(currentCar <= maxCars){
-                    currentCar += 1;
+            decisionBatch.push(r);
+            if(currentCar <= maxCars){
+                currentCar += 1;
 
-                    // update only every X number of questions. 
-                    if(currentCar% REWARD_INTERVAL === 0){
-                        console.log("updating IA.");
-                        IAHistory.scores.push(d3.mean(decisionBatch));
-                        decisionBatch = [];
+                // update only every X number of questions. 
+                if(currentCar% REWARD_INTERVAL === 0){
 
-                        $.ajax({
-                            url : "./optimizer.php",
-                            type : "POST",
-                            data: {
-                                data: JSON.stringify(
-                                    IAHistory
-                                    )
-                                },
-                            success: function(result) {
-                                var structure = JSON.parse(result)["architectures"][0];
-                                IAHistory.architectures.push(structure);
-    
-                                makeGrid(structure["components"], "dynamicIA");
-                            }
-                        });
-                    }
-
+                    d3.select('#dynamicIA').html("<div id='loader'><p>Loading...</p></div>");
+                    console.log("updating IA.");
+                    $(".decisionBtt").off('click');
+                    meanReward = d3.mean(decisionBatch)
+                    IAHistory.scores.push(meanReward);
+                    decisionBatch = [];
+                    
+                    $.ajax({
+                        url : "./optimizer.php",
+                        type : "POST",
+                        data: {
+                            data: JSON.stringify(
+                                IAHistory
+                                )
+                            },
+                        success: function(result) {
+                            var structure = JSON.parse(result)["architectures"][0];
+                            IAHistory.architectures.push(structure);
+                            $(".decisionBtt").click(
+                                clickDecisionBtt
+                            );
+                            
+                            makeGrid(structure["components"], "dynamicIA");
+                            $()
+                        }
+                    });
 
                     // send to PHP
                     $.ajax({
@@ -149,19 +158,23 @@ function sampleTest() {
                             console.log(result);
                         }
                     });
-                    
-                } else{
-                    viewPage("#comments_page");
-                };
-            }
-        );
+                }
+
+
+                
+                
+            } else{
+                viewPage("#comments_page");
+            };
+        }
         onViewPage(
             function() {
                 $("#progressBar").hide();
                 // start tutorial
                 intro.start();
-                d3.select('#dynamicIA').html("<p>loading</p>");
+                d3.select('#dynamicIA').html("<div id='loader'><p>Loading...</p></div>");
                 // generate first architecture
+
                 $.ajax({
                     url : "./optimizer.php",
                     type : "POST",

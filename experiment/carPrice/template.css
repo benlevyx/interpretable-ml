@@ -124,3 +124,16 @@ img, a img {
     left:0;
     border: 3px solid #73AD21;
 }
+
+#loader {
+    position:absolute;
+    width: 15%;
+    height: 15%;
+    top:25%;
+    left:25%;
+    text-align: center;
+}
+#loader p {
+    font-size: 50px;
+    color: #FFFF;
+}
