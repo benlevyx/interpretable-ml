@@ -1,9 +1,11 @@
+#!/Library/Frameworks/Python.framework/Versions/3.7/bin/python3
+
 import subprocess
 import json
 from interpml import information_architecture as ia
 
 def run_bayes_opt(obs=None):
-    args = ['python', str(config.code / 'run_bayes_opt.py')]
+    args = ['./', str(config.code / 'run_bayes_opt.py')]
     if obs is not None:
         args.extend(['-i', obs])
     p = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE)

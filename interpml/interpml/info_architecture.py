@@ -38,8 +38,6 @@ class InfoArchTree:
         :param jsondict: dict
         :return: InfoArchTree
         """
-        #print(jsondict)
-        print(jsondict)
         root = Node.from_json(jsondict.get('components'))
         infoarch = InfoArchTree(jsondict.get('id'), root,
                                 height=jsondict.get('height'),

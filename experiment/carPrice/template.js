@@ -17,15 +17,8 @@ var taskTime = {};
 var variant = ((Math.random() > 0.5) ? 1 : 0); // randomize experiment variable
 
 var IAHistory = {
-    "meta": {
-        "height": 10,
-        "width": 12,
-        "n_architectures": 1,
-        "n_components": 8
-    },
-    "architectures": [],
-    "scores":[]
-}
+};
+
 
 function sampleTest() {
     var startTime;
@@ -111,7 +104,7 @@ function sampleTest() {
                 if(currentCar <= maxCars){
                     currentCar += 1;
                     displayVis();
-                    console.log(IAHistory);
+                    //console.log(IAHistory);
                     // send to python
                     $.ajax({
                         url : "./optimizer.php",
@@ -142,7 +135,7 @@ function sampleTest() {
                                     question_id: currentCar,
                                     time_spent: time,
                                     choice: r,
-                                    arrangement: IAHistory.architectures[IAHistory.architectures.length - 1],
+                                    arrangement: JSON.stringify(IAHistory),
                                     variant: variant
                                 })
                             },
@@ -162,7 +155,7 @@ function sampleTest() {
                 $("#progressBar").hide();
                 // start tutorial
                 intro.start();
-
+                d3.select('#dynamicIA').html("<p>loading</p>");
                 // generate first architecture
                 $.ajax({
                     url : "./optimizer.php",
@@ -171,7 +164,7 @@ function sampleTest() {
                         },
                     success: function(result) {
                         var structure = JSON.parse(result)["architectures"][0]["components"];
-                        console.log(result);
+                        //console.log(result);
                         makeGrid(structure, "dynamicIA");
                         IAHistory.architectures.push(JSON.parse(result)["architectures"][0]);
                     }

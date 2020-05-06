@@ -6,6 +6,7 @@ require_once("../utils/php/utils.php");
 $participantFormFields = array("participant_id", "question_id", "time_spent", "choice", "arrangement", "variant");
 
 $dataJSON = $_REQUEST["data"];
+#echo $dataJSON;
 $data = json_decode($dataJSON, true);
 // read the values from the form
 foreach ($participantFormFields as $field) {
@@ -18,6 +19,6 @@ foreach ($participantFormFields as $field) {
 
 // save the task into the "arrangements" table in the database
 $result = insert("arrangements", $keys, $values);
-
+echo("inserted arrangements data. ")
 
 ?>
