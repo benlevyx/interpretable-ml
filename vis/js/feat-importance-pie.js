@@ -75,8 +75,6 @@ FeatImportancePie.prototype.renderVis = function () {
   vis.arcs
     .append("path")
     .attr("d", vis.arc)
-    .attr("stroke", "white")
-    .attr("stroke-width", "1px")
     .attr("fill", classColor(window.selected.class))
     .attr("opacity",(d, i) => vis.opacity(i) )
 
@@ -92,5 +90,5 @@ FeatImportancePie.prototype.renderVis = function () {
       return vis.data[i].feature;
     })
     .attr("class", "labels")
-      .style('fill', 'black');
+      .style('fill', 'var(--component-card)');
 };
