@@ -3,6 +3,7 @@ import FeatMeanVis from "./feat-mean-vis.js";
 import ParallelCoordsVis from "./parallel-coords-vis.js";
 import FeatImportanceBubble from "./feat-importance-bubble.js";
 import ConfusionMatrix from "./confusion-matrix.js";
+import FeatImportancePie from "./feat-importance-pie.js";
 
 export var components = [
   {
@@ -24,6 +25,11 @@ export var components = [
     id: 3,
     name: 'confusion-matrix',
     draw: drawConfusionMatrix
+  },
+  {
+    id: 4,
+    name: 'feature-importance-pie',
+    draw: drawFeatureImportancePie
   }
 ];
 
@@ -96,4 +102,21 @@ function drawConfusionMatrix() {
   };
 
   window.visComps.confusionMatrix = new ConfusionMatrix('test-vis', window.data.confMat, config);
+}
+function drawFeatureImportancePie() {
+  // The config can contain manually chosen margins, height, width,
+  // and more. E.g. you can specify the index of a point to highlight,
+  // which is then used in the vis to select/highlight elements
+  var config = {
+    'margin': {
+      'bottom': 10,
+      'left': 10,
+      'top': 10,
+      'right': 10
+    }
+  };
+
+  // Then create the vis and store it in the global `visComps` so that it can
+  // be accessed in other scopes.
+  window.visComps.featImportancePie = new FeatImportancePie('test-vis', window.data.featureRanking, config);
 }
