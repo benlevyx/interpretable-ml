@@ -99,22 +99,24 @@ FeatImportanceTreemap.prototype.renderVis = function () {
 
   // add labels
   
-  //   vis.cell
-  //     .append("text")
-  //     .attr("clip-path", function (d) {
-  //       return "url(#clip-" + d.data.id + ")";
-  //     })
-  //     .selectAll("tspan")
-  //     .data(function (d) {
-  //       return d.data.feature.split(/(?=[A-Z][^A-Z])/g);
-  //     })
-  //     .enter()
-  //     .append("tspan")
-  //     .attr("x", 4)
-  //     .attr("y", function (d, i) {
-  //       return 13 + i * 10;
-  //     })
-  //     .text(function (d) {
-  //       return d;
-  //     });
+    vis.cell
+      .append("text")
+      .attr("clip-path", function (d) {
+        return "url(#clip-" + d.data.id + ")";
+      })
+      .selectAll("tspan")
+      .data(function (d) {
+        return d.data.feature.split(/(?=[A-Z][^A-Z])/g);
+      })
+      .enter()
+      .append("tspan")
+      .attr("x", 4)
+      .attr("y", function (d, i) {
+        return 13 + i * 10;
+      })
+      .text(function (d) {
+        return d;
+      })
+      .attr("class", "labels")
+      .style("fill", "var(--component-card)")
 };
