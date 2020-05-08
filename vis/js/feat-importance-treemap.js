@@ -44,8 +44,10 @@ FeatImportanceTreemap.prototype.initVis = function () {
     .round(true)
     .paddingInner(1);
 
+  vis.displayData = {feature: "root", children: vis.data};
+
   vis.root = d3
-    .hierarchy(vis.data)
+    .hierarchy(vis.displayData)
     .sum((d) => d.value)
     .sort(function (a, b) {
       return b.height - a.height || b.value - a.value;
