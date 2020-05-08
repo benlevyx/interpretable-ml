@@ -64,5 +64,5 @@ Promise.all([
 
   // components[1].draw()
   // components[2].draw();
-  components[4].draw()
+  components[5].draw()
 });

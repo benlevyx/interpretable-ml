@@ -4,6 +4,7 @@ import ParallelCoordsVis from "./parallel-coords-vis.js";
 import FeatImportanceBubble from "./feat-importance-bubble.js";
 import ConfusionMatrix from "./confusion-matrix.js";
 import FeatImportancePie from "./feat-importance-pie.js";
+import FeatImportanceTreemap from "./feat-importance-treemap.js";
 
 export var components = [
   {
@@ -30,6 +31,11 @@ export var components = [
     id: 4,
     name: 'feature-importance-pie',
     draw: drawFeatureImportancePie
+  },
+  {
+    id: 5,
+    name: 'feature-importance-treemap',
+    draw: drawFeatureImportanceTreemap
   }
 ];
 
@@ -119,4 +125,21 @@ function drawFeatureImportancePie() {
   // Then create the vis and store it in the global `visComps` so that it can
   // be accessed in other scopes.
   window.visComps.featImportancePie = new FeatImportancePie('test-vis', window.data.featureRanking, config);
+}
+function drawFeatureImportanceTreemap() {
+  // The config can contain manually chosen margins, height, width,
+  // and more. E.g. you can specify the index of a point to highlight,
+  // which is then used in the vis to select/highlight elements
+  var config = {
+    'margin': {
+      'bottom': 10,
+      'left': 10,
+      'top': 10,
+      'right': 10
+    }
+  };
+
+  // Then create the vis and store it in the global `visComps` so that it can
+  // be accessed in other scopes.
+  window.visComps.featImportanceTreemap = new FeatImportanceTreemap('test-vis', window.data.featureRanking, config);
 }
