@@ -59,10 +59,11 @@ Promise.all([
   window.selected.obs = window.data.carData[idx];
   window.selected.class = window.selected.obs.class;
 
+  window.components = components;
   // Setting the left panel
   updateLeftPanel(window.selected.obs);
 
   // components[1].draw()
   // components[2].draw();
-  components[5].draw()
+  components[3].draw()
 });

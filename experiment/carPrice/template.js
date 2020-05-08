@@ -99,11 +99,19 @@ function sampleTest() {
             var time = new Date() - startTime;
             startTime = new Date()
             var r = 0;
+
+            // update a random car
+            var nCars = window.data.carData.length,
+            idx = Math.floor(Math.random() * nCars);
+            window.selected.obs = window.data.carData[idx];
+            window.selected.class = window.selected.obs.class;
+            updateLeftPanel(window.selected.obs);
+            fillComponents();
+
             //console.log($(this).attr('id') === "agreeBtt");
             if($(this).attr('id') === "agreeBtt"){
                 r = 1;
             }
-
 
             decisionBatch.push(r);
             if(currentCar <= maxCars){
@@ -134,8 +142,9 @@ function sampleTest() {
                                 clickDecisionBtt
                             );
                             
+                            //make grid, filling the components
                             makeGrid(structure["components"], "dynamicIA");
-                            $()
+                            fillComponents();
                         }
                     });
 
@@ -197,6 +206,7 @@ function sampleTest() {
                                 var structure = JSON.parse(result)["architectures"][0];
                                 IAHistory.architectures.push(structure);
                                 makeGrid(structure["components"], "dynamicIA");
+                                fillComponents();
                             }
                         })
 
@@ -238,16 +248,16 @@ $(function() {
  *      }
  *
  */
-    function makeGrid(spec, _parentElem) {
-        var container = d3.select('#' + _parentElem)
-        .html("");
-        var elemBbox = container.node().getBoundingClientRect(),
-        w = elemBbox.width,
-        h = elemBbox.height;
-        drawSingleGridLevel(spec, container, w, h, 0, 0);
+function makeGrid(spec, _parentElem) {
+    var container = d3.select('#' + _parentElem)
+    .html("");
+    var elemBbox = container.node().getBoundingClientRect(),
+    w = elemBbox.width,
+    h = elemBbox.height;
+    drawSingleGridLevel(spec, container, w, h, 0, 0);
 
 
-    }
+}
   
   /**
    * drawSingleGridLevel -- Recursively draw the grid
@@ -294,18 +304,33 @@ function drawSingleGridLevel(data, elem, w, h, left, top) {
     }
 
 }
+
+function fillComponents() {
+    for (let i = 0; i < window.components.length; i++) {
+        const vis = window.components[i];
+        if($("#vis-container-" + i).length !== 0) {
+            // fill if exist
+            d3.select('#vis-container-' + i)
+            .html("");
+            vis.draw("vis-container-" + i);
+
+          }
+        
+    }
+}
+
 function setChildAttrs(e, width, height, left, top, id) {
     width = Math.floor(width) + 'px';
     height = Math.floor(height) + 'px';
     left = Math.floor(left) + 'px';
     top = Math.floor(top) + 'px';
     e.style('position', 'absolute')
-        .attr('class', `vis-container vis-container-${id}`)
+        .attr('class', 'vis-container')
+        .attr('id', `vis-container-${id}`)
         .style('width', width)
         .style('height', height)
         .style('left', left)
-        .style('top',  top)
-        .style('border', "1px solid #FFF");
+        .style('top',  top);
 
 
 }

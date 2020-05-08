@@ -79,12 +79,13 @@ require_once("survey.php");
 
     <script src="https://kit.fontawesome.com/72212d619e.js" crossorigin="anonymous"></script>
 
-    <!-- Modules and vis components -->
-    <script src="../../vis/js/utils.js"></script>
-
     <!-- Main JS -->
     <script src="../../vis/js/main.js" type="module"></script>
-    
+
+    <!-- Modules and vis components -->
+    <script src="../../vis/js/utils.js"></script>
+    <script src="../../vis/js/constants.js"></script>
+    <script src="../../vis/js/left-panel.js"></script>
     <?php
     // initialize our analytics software for tracking participant behavior
     embeddedSessionFlowStart();
@@ -313,56 +314,116 @@ require_once("survey.php");
     <!-- TODO this is entirely yours to fill out, but here is an example of a survey page -->
     <div id="experiment2_page" class="page">
         <div class="interface-container">
-            <!-- left side interface -->
-        <div class="left-container">
-            <div class="car-card">
-            <div class="title">This car is classified by the model as:</div>
-            <div id="prediction" class="class-list-container first">
-                <div  class="class-item">
-                <div class="dida">unacceptable</div>
-                <div class="class-bar unacceptable"></div>
-                </div>
-                <div class="class-item">
-                <div class="dida">acceptable</div>
-                <div class="class-bar acceptable"></div>
-                </div>
-                <div class="class-item">
-                <div class="dida">good</div>
-                <div class="class-bar good"></div>
-                </div>
-                <div class="class-item">
-                <div class="dida">very good</div>
-                <div class="class-bar vgood"></div>
-                </div>
+      <!-- left side interface -->
+      <div class="left-container">
+        <div class="car-card">
+          <div class="title">This car is classified by the model as:</div>
+          <div class="class-list-container first">
+            <div class="class-item">
+              <div class="dida">unacceptable</div>
+              <div class="class-bar unacceptable"></div>
             </div>
-            <div class="title">According to the car features:</div>
-            <div id="features" class="class-list-container">
-                <div class="class-item">
-                <div class="dida">ESTIMATED SAFETY</div>
-                </div>
-                <div class="class-item">
-                <div class="dida">CAPACITY (PERSONS)</div>
-                </div>
-                <div class="class-item">
-                <div class="dida">BUYING PRICE</div>
-                </div>
-                <div class="class-item">
-                <div class="dida">MAINTENANCE PRICE</div>
-                </div>
-                <div class="class-item">
-                <div class="dida">LUGGAGE BOOT SIZE</div>
-                </div>
-                <div class="class-item">
-                <div class="dida">DOORS</div>
-                </div>
+            <div class="class-item">
+              <div class="dida">acceptable</div>
+              <div class="class-bar acceptable"></div>
             </div>
+            <div class="class-item">
+              <div class="dida">good</div>
+              <div class="class-bar good"></div>
             </div>
-            <div id="decisions" class="answer-card">
-            <div class="title">What do you think about the model prediction?</div>
-            <div id="agreeBtt" class="button first decisionBtt"><div class="dida">agree</div></div>
-            <div id="disagreeBtt" class="button decisionBtt"><div class="dida">disagree</div></div>
+            <div class="class-item">
+              <div class="dida">very good</div>
+              <div class="class-bar vgood"></div>
             </div>
+          </div>
+          <div class="title">According to the car features:</div>
+          <div class="class-list-container">
+            <div id="estimated-safety" class="feature-item">
+              <div class="dida">ESTIMATED SAFETY</div>
+              <div class="feature-container">
+                <div class="points-container">
+                  <span class="point active"></span>
+                  <span class="point active"></span>
+                  <span class="point active"></span>
+                  <span class="point active"></span>
+                  <span class="point"></span>
+                </div>
+                <div class="feature-value dida">high</div>
+              </div>
+            </div>
+            <div id="capacity-(persons)" class="feature-item">
+              <div class="dida">CAPACITY (PERSONS)</div>
+              <div class="feature-container">
+                <div class="points-container">
+                  <span class="point active"></span>
+                  <span class="point active"></span>
+                  <span class="point active"></span>
+                  <span class="point"></span>
+                  <span class="point"></span>
+                </div>
+                <div class="feature-value dida">3</div>
+              </div>
+            </div>
+            <div id="buying-price" class="feature-item">
+              <div class="dida">BUYING PRICE</div>
+              <div class="feature-container">
+                <div class="points-container">
+                  <span class="point active"></span>
+                  <span class="point active"></span>
+                  <span class="point active"></span>
+                  <span class="point active"></span>
+                  <span class="point"></span>
+                </div>
+                <div class="feature-value dida">high</div>
+              </div>
+            </div>
+            <div id="maintanence-price" class="feature-item">
+              <div class="dida">MAINTENANCE PRICE</div>
+              <div class="feature-container">
+                <div class="points-container">
+                  <span class="point active"></span>
+                  <span class="point active"></span>
+                  <span class="point"></span>
+                  <span class="point"></span>
+                  <span class="point"></span>
+                </div>
+                <div class="feature-value dida">low</div>
+              </div>
+            </div>
+            <div id="luggage-boot-size" class="feature-item">
+              <div class="dida">LUGGAGE BOOT SIZE</div>
+              <div class="feature-container">
+                <div class="points-container">
+                  <span class="point active"></span>
+                  <span class="point active"></span>
+                  <span class="point active"></span>
+                  <span class="point active"></span>
+                  <span class="point active"></span>
+                </div>
+                <div class="feature-value dida">very high</div>
+              </div>
+            </div>
+            <div id="doors" class="feature-item">
+              <div class="dida">DOORS</div>
+              <div class="feature-container">
+                <div class="points-container">
+                  <span class="point active"></span>
+                  <span class="point active"></span>
+                  <span class="point active"></span>
+                  <span class="point"></span>
+                  <span class="point"></span>
+                </div>
+                <div class="feature-value dida">3</div>
+              </div>
+            </div>
+          </div>
         </div>
+            <div class="answer-card">
+            <div class="title">What do you think about the model prediction?</div>
+            <div class="button first decisionBtt"><div class="dida">agree</div></div>
+            <div class="button decisionBtt"><div class="dida">disagree</div></div>
+            </div>
+      </div>
         <!-- right side interface -->
             <div id="dynamicIA" class="d-flex flex-nowrap">
             </div>
