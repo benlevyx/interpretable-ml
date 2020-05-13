@@ -24,11 +24,13 @@ window.selected = {
 Promise.all([
     d3.csv('data/feature_ranking.csv'),
     d3.csv('data/all_data_encoded.csv'),
-    d3.text('data/confusion_matrix.csv')
+    d3.text('data/confusion_matrix.csv'),
+    d3.csv('data/class_votes.csv')
 ]).then(function(datasets) {
   var featRanking = datasets[0],
       allData = datasets[1],
-      confMat = d3.csvParseRows(datasets[2]);
+      confMat = d3.csvParseRows(datasets[2]),
+      classVotes = datasets[3];
 
   allData.forEach(d => {
     features.forEach(f => {
@@ -47,15 +49,24 @@ Promise.all([
     })
   });
 
+  classVotes.forEach(d => {
+    d.idx = +d[""];
+    delete d[""];
+    levels.class.forEach(c => {
+      d[c] = +d[c]
+    })
+  });
+
   window.data.featureRanking = featRanking;
   window.data.carData = allData;
   window.data.confMat = confMat;
+  window.data.classVotes = classVotes;
 
   // Simulating a randomly drawn car
   var nCars = window.data.carData.length,
       idx = Math.floor(Math.random() * nCars);
 
-
+  window.selected.idx = idx;
   window.selected.obs = window.data.carData[idx];
   window.selected.class = window.selected.obs.class;
 
@@ -65,5 +76,6 @@ Promise.all([
 
   // components[1].draw()
   // components[2].draw();
-  components[3].draw()
+  // components[3].draw()
+  components[5].draw();
 });

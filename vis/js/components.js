@@ -5,6 +5,7 @@ import FeatImportanceTreemap from "./feat-importance-treemap.js";
 import FeatImportanceVis from "./feat-importance-vis.js";
 import FeatMeanVis from "./feat-mean-vis.js";
 import ParallelCoordsVis from "./parallel-coords-vis.js";
+import ClassVoteVis from "./class-vote-vis.js";
 
 export var components = [
   {
@@ -27,22 +28,16 @@ export var components = [
     name: 'feature-importance-tree',
     draw: drawFeatureImportanceTree
   },
-/*   {
+  {
     id: 4,
-    name: 'feature-importance',
-    draw: drawFeatureImportanceVis
+    name: 'parallel-coordinates',
+    draw: drawParallelCoordinatesVis
   },
   {
     id: 5,
-    name: 'feature-importance-mean',
-    draw: drawFeatureImportanceMean
-  }, */
-  {
-    id: 4,
-    name: 'parrallel-coordiantes',
-    draw: drawParallelCoordinatesVis
-  },
-
+    name: 'class-vote',
+    draw: drawClassVoteVis
+  }
 ];
 
 
@@ -157,4 +152,16 @@ function drawConfusionMatrix(vis = 'test-vis') {
   };
 
   window.visComps.confusionMatrix = new ConfusionMatrix(vis, window.data.confMat, config);
+}
+
+function drawClassVoteVis(vis = 'test-vis') {
+  var config = {
+    margin: {
+      bottom: 10,
+      left: 10,
+      top: 10,
+      right: 10
+    }
+  };
+  window.visComps.classVote = new ClassVoteVis(vis, window.data.classVotes, config);
 }
