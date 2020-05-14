@@ -241,3 +241,8 @@ rect.box-outline {
     stroke-width: 1px;
     fill: none;
 }
+
+/******* Voting vis *******/
+circle.dot {
+  opacity: 1;
+}

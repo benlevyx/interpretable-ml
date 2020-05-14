@@ -20,18 +20,22 @@ ClassVoteVis.prototype.initVis = function() {
   initVis(vis);
 
   vis.r = 5;
-  vis.nPerRow = 4;
+  vis.nPerRow = 6;
   vis.pad = 2;
 
   // Scales
   vis.x = d3.scaleBand()
       .domain(levels.class)  // Number of classes = 4
       .range([0, vis.width])
-      .padding(0.1);
+      .padding(0);
 
   vis.y = d3.scaleLinear()
       .domain([0, 100 / vis.nPerRow])
-      .range([vis.height, 0]);
+      .range([vis.height - vis.pad, 0]);
+
+  vis.xAxis = d3.axisBottom()
+      .scale(vis.x)
+      .tickFormat((d, i) => classLabs[i]);
 
   vis.wrangleData();
 };
@@ -60,29 +64,38 @@ ClassVoteVis.prototype.updateVis = function() {
       .enter()
       .append('g')
       .attr('class', 'class')
-      .attr('transform', d => `translate(${vis.x(d.class)}, 0)`);
+      .attr('transform', d => `translate(${vis.x(d.class) + vis.x.bandwidth() / 2}, 0)`);
 
   // Draw pictograms
-  gClasses.selectAll('circle.marker')
+  gClasses.selectAll('circle.dot')
       .data(d => d.count)
       .enter()
       .append('circle')
-      .attr('class', 'marker')
+      .attr('class', 'dot')
       .attr('cx', d => vis.xpos(d, vis))
       .attr('cy', d => vis.ypos(d, vis))
-      .style('r', 3);
+      .style('r', vis.r);
 
-  d3.selectAll('circle.marker')
+  d3.selectAll('circle.dot')
       .style('fill', classColor(window.selected.class));
   // Draw labels
 
   // Draw axes
+  vis.svg.append('g')
+      .attr('class', 'axis x-axis grid')
+      .attr('transform', `translate(0, ${vis.height + vis.pad})`)
+      .call(vis.xAxis);
+
+  vis.svg.selectAll('.tick text')
+      .attr('class', 'labels')
+      .attr('fill', 'var(--labels)');
 };
 ClassVoteVis.prototype.xpos = function(d, vis) {
   var i = d % vis.nPerRow,
-      offset = (vis.nPerRow - 1) * (-vis.r + vis.pad) / 2;
-  return offset + i * (vis.r + vis.pad);
+      // offset = 0;
+      offset = (vis.nPerRow) * 3 * (-vis.r + vis.pad) / 2;
+  return offset + i * (vis.r * 2 + vis.pad) - vis.pad;
 };
 ClassVoteVis.prototype.ypos = function(d, vis) {
-  return vis.y(Math.floor(d / vis.nPerRow)) + vis.pad;
+  return vis.y(Math.floor(d / vis.nPerRow)) - vis.pad;
 };

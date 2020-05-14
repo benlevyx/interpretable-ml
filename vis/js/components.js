@@ -157,7 +157,7 @@ function drawConfusionMatrix(vis = 'test-vis') {
 function drawClassVoteVis(vis = 'test-vis') {
   var config = {
     margin: {
-      bottom: 10,
+      bottom: 20,
       left: 10,
       top: 10,
       right: 10

@@ -1,6 +1,6 @@
 // Dynamically updating the left-hand panel that contains the car information
 function updateLeftPanel(obs) {
-  var cls = obs.class,
+  var cls = obs.class_pred,
       color = classLevels[cls];
 
   console.log(obs);

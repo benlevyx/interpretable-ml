@@ -23,7 +23,7 @@ window.selected = {
 // Load all data once, then call the vis constructors
 Promise.all([
     d3.csv('data/feature_ranking.csv'),
-    d3.csv('data/all_data_encoded.csv'),
+    d3.csv('data/test_data.csv'),
     d3.text('data/confusion_matrix.csv'),
     d3.csv('data/class_votes.csv')
 ]).then(function(datasets) {
@@ -51,10 +51,15 @@ Promise.all([
 
   classVotes.forEach(d => {
     d.idx = +d[""];
-    delete d[""];
+    // delete d[""];
     levels.class.forEach(c => {
       d[c] = +d[c]
-    })
+    });
+  });
+
+  classVotes.forEach((d, i) => {
+    console.log(allData[i].class_pred);
+    console.log(d);
   });
 
   window.data.featureRanking = featRanking;
@@ -68,7 +73,7 @@ Promise.all([
 
   window.selected.idx = idx;
   window.selected.obs = window.data.carData[idx];
-  window.selected.class = window.selected.obs.class;
+  window.selected.class = window.selected.obs.class_pred;
 
   window.components = components;
   // Setting the left panel
