@@ -104,13 +104,13 @@ ClassVoteVis.prototype.updateVis = function() {
       .attr('font-size', 12)
       .attr('text-anchor', 'middle');
 
-  gVoteLabs.append('line')
-      .attr('class','bar')
-      .attr('x1', ( -vis.nPerRow * (vis.r * 2 + vis.pad)) / 2)
-      .attr('x2', (vis.nPerRow * (vis.r * 2 + vis.pad)) / 2)
-      .attr('y1', 0)
-      .attr('y2', 0)
-      .style('stroke', classColor(window.selected.class));
+  // gVoteLabs.append('line')
+  //     .attr('class','bar')
+  //     .attr('x1', ( -vis.nPerRow * (vis.r * 2 + vis.pad)) / 2)
+  //     .attr('x2', (vis.nPerRow * (vis.r * 2 + vis.pad)) / 2)
+  //     .attr('y1', 0)
+  //     .attr('y2', 0)
+  //     .style('stroke', classColor(window.selected.class));
 
   // Draw axes
   vis.svg.append('g')
@@ -125,7 +125,7 @@ ClassVoteVis.prototype.updateVis = function() {
 ClassVoteVis.prototype.xpos = function(d, vis) {
   var i = d % vis.nPerRow,
       // offset = 0;
-      offset = (vis.nPerRow) * 3 * (-vis.r + vis.pad) / 2 - vis.r;
+      offset = (vis.nPerRow) * 3 * (-vis.r + vis.pad) / 2 - vis.r * 2;
   return offset + i * (vis.r * 2 + vis.pad) - vis.pad;
 };
 ClassVoteVis.prototype.ypos = function(d, vis) {

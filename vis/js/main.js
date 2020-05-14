@@ -16,9 +16,6 @@ window.selected = {
   obs: null
 };
 
-// Simulating a randomly drawn car
-
-
 // // LOADING DATA
 // Load all data once, then call the vis constructors
 Promise.all([

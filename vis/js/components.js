@@ -112,7 +112,7 @@ function drawParallelCoordinatesVis(vis = 'test-vis') {
   var margin = {
         bottom: 40,
         left: 70,
-        top: 10,
+        top: 20,
         right: 50
       },
       config = {
