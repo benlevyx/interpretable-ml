@@ -178,11 +178,12 @@
   flex-wrap: wrap;
 }
 div.vis-container {
-  height: 50%;
-  width: 500px;
+  /*height: 50%;*/
+  /*width: 500px;*/
   border-radius: 15px;
   background-color: var(--component-card);
   padding: 15px 18px;
+  margin: 0.5em;
   box-shadow: 0 4px 9px 0 rgba(0, 0, 0, 0.1);
 }
 

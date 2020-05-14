@@ -87,7 +87,7 @@ FeatImportancePie.prototype.renderVis = function () {
     })
     .attr("text-anchor", "middle")
     .text(function (d, i) {
-      return vis.data[i].feature;
+      return featureAbbrevs[vis.data[i].feature];
     })
     .attr("class", "labels")
       .style('fill', 'var(--component-card)');

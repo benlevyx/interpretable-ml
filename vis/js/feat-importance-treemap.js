@@ -115,7 +115,7 @@ FeatImportanceTreemap.prototype.renderVis = function () {
         return 13 + i * 10;
       })
       .text(function (d) {
-        return d;
+        return featureAbbrevs[d];
       })
       .attr("class", "labels")
       .style("fill", "var(--component-card)")

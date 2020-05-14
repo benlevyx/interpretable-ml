@@ -24,6 +24,14 @@ const features = [
     'doors',
     'capacity (persons)'
 ];
+const featureAbbrevs = {
+    'buying price': 'buy price',
+    'maintanence price': 'maint. price',
+    'luggage boot size': 'lugg. size',
+    'estimated safety': 'safety',
+    'doors': 'doors',
+    'capacity (persons)': 'capacity'
+};
 const encodedLevels = {
     'buying price': [0, 1, 2, 3],
     'maintanence price': [0, 1, 2, 3],

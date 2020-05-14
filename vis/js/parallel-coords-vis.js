@@ -1,5 +1,3 @@
-//TODO: Flip this vis so that it becomes "of all cars with the same class as the predicted car,
-// what is the average value for each of the features?
 /**
  * ParallelCoordsVis. Object constructor function
  *
@@ -27,7 +25,7 @@ ParallelCoordsVis.prototype.initVis = function () {
 
   initVis(vis);
 
-  vis.selected = vis.config.selected;
+  vis.selected = window.selected.obs;
 
   vis.x = d3
     .scalePoint()
@@ -108,7 +106,7 @@ ParallelCoordsVis.prototype.updateVis = function () {
       .enter()
       .append('text')
       .attr('class', 'labels')
-      .text(d => d)
+      .text(d => featureAbbrevs[d])
       .style('text-anchor', 'middle')
       .attr('x', (d, i) => vis.x(i))
       .attr('y', vis.height + 7)
@@ -119,7 +117,7 @@ ParallelCoordsVis.prototype.updateVis = function () {
     .attr("class", "labels")
     .attr("text-anchor", "end");
 
-  var color = classColor(vis.selected.class);
+  var color = classColor(window.selected.class);
 
   var lines = vis.svg.append('g')
       .attr('class', 'data-lines')

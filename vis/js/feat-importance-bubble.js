@@ -101,14 +101,15 @@ FeatImportanceBubble.prototype.renderVis = function () {
       .attr("r", function (d) {
         return d.r;
       })
-      .style("fill", "var(--unacceptable)");
+      .style("fill", classColor(window.selected.class));
 
   vis.node
     .append("text")
     .attr("dy", ".2em")
     .style("text-anchor", "middle")
     .text(function (d) {
-      return d.data.feature.substring(0, d.r / 3);
+      return featureAbbrevs[d.data.feature];
+      // return d.data.feature.substring(0, d.r / 3);
     })
     .attr("class", "labels")
       .style('fill', 'black');
