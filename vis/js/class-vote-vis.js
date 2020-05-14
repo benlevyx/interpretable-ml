@@ -19,8 +19,8 @@ ClassVoteVis.prototype.initVis = function() {
 
   initVis(vis);
 
-  vis.r = 5;
-  vis.nPerRow = 6;
+  vis.r = 3;
+  vis.nPerRow = 5;
   vis.pad = 2;
 
   // Scales
@@ -56,6 +56,12 @@ ClassVoteVis.prototype.wrangleData = function() {
 ClassVoteVis.prototype.updateVis = function() {
   var vis = this;
 
+  // Drawing the title
+  vis.svg.append('text')
+      .attr('class', 'title')
+      .text("Number of trees in random forest voting for each class")
+      .attr('y', -25);
+
   // Make groups for each class
   var gClasses = vis.svg.append('g')
       .attr('class', 'all-classes')
@@ -78,7 +84,33 @@ ClassVoteVis.prototype.updateVis = function() {
 
   d3.selectAll('circle.dot')
       .style('fill', classColor(window.selected.class));
+
   // Draw labels
+  var gVoteLabs = vis.svg.append('g')
+      .attr('class', 'labels')
+      .selectAll('g.vote-label')
+      .data(vis.displayData)
+      .enter()
+      .append('g')
+      .attr('class', 'vote-label')
+      .attr('transform', d => `translate(${vis.x(d.class) + vis.x.bandwidth() / 2}, ${vis.ypos(d.count.length - 1, vis) - vis.r - vis.pad * 4})`);
+
+  gVoteLabs.append('text')
+      .attr('class', 'label')
+      .text(d => d.count.length)
+      .style('fill', classColor(window.selected.class))
+      .attr('x', 0)
+      .attr('y', -5)
+      .attr('font-size', 12)
+      .attr('text-anchor', 'middle');
+
+  gVoteLabs.append('line')
+      .attr('class','bar')
+      .attr('x1', ( -vis.nPerRow * (vis.r * 2 + vis.pad)) / 2)
+      .attr('x2', (vis.nPerRow * (vis.r * 2 + vis.pad)) / 2)
+      .attr('y1', 0)
+      .attr('y2', 0)
+      .style('stroke', classColor(window.selected.class));
 
   // Draw axes
   vis.svg.append('g')
@@ -93,7 +125,7 @@ ClassVoteVis.prototype.updateVis = function() {
 ClassVoteVis.prototype.xpos = function(d, vis) {
   var i = d % vis.nPerRow,
       // offset = 0;
-      offset = (vis.nPerRow) * 3 * (-vis.r + vis.pad) / 2;
+      offset = (vis.nPerRow) * 3 * (-vis.r + vis.pad) / 2 - vis.r;
   return offset + i * (vis.r * 2 + vis.pad) - vis.pad;
 };
 ClassVoteVis.prototype.ypos = function(d, vis) {

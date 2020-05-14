@@ -57,11 +57,6 @@ Promise.all([
     });
   });
 
-  classVotes.forEach((d, i) => {
-    console.log(allData[i].class_pred);
-    console.log(d);
-  });
-
   window.data.featureRanking = featRanking;
   window.data.carData = allData;
   window.data.confMat = confMat;

@@ -159,7 +159,7 @@ function drawClassVoteVis(vis = 'test-vis') {
     margin: {
       bottom: 20,
       left: 10,
-      top: 10,
+      top: 35,
       right: 10
     }
   };
