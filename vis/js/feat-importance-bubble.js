@@ -136,27 +136,54 @@ FeatImportanceBubble.prototype.renderVis = function () {
       })
       .style("fill", classColor(window.selected.class));
 
-  vis.node
-    .append("text")
-    .attr("dy", ".2em")
-    .style("text-anchor", "middle")
-    .text(function (d) {
-        return featureAbbrevs[d.data.feature];
-      // return d.data.feature.substring(0, d.r / 3);
-    })
-    .attr("class", "labels")
-      .style('fill', 'black');
+      vis.node
+          .append("text")
+          .attr("dy", ".2em")
+          .style("text-anchor", "middle")
+          .html(function (d) {
+            return `<tspan x="0" dy="0em">${featureAbbrevs[d.data.feature]}</tspan>` +
+                   `<tspan x="0" dy="1.0em">${format2d(d.data.value)}</tspan>`;
+          })
+          .attr("class", "labels")
+          .call(placeLabel, vis);
 
-  vis.node
-    .append("text")
-    .attr("dy", "1.3em")
-    .style("text-anchor", "middle")
-    .text(function (d) {
-      return format2d(d.data.value);
-    })
-    .attr("class", "labels")
-      .style('fill', 'black');
-
-  // d3.select(self.frameElement).style("height", diameter + "px");
+      // vis.node
+      //     .append("text")
+      //     .attr("dy", "1.3em")
+      //     .style("text-anchor", "middle")
+      //     .text(function (d) {
+      //       return format2d(d.data.value);
+      //     })
+      //     .attr("class", "labels")
+      //     .call(placeLabel, vis);
 };
+function placeLabel(text, vis) {
+  text.each(function() {
+    var elem = d3.select(this);
+    if (vis.vertical || vis.horizontal) {
+      var width = elem.node().getBBox().width,
+          d = elem.data()[0],
+          diam = vis.r(d[1] - d[0]) * 2;
+      console.log(d);
+      console.log(diam);
+      if (width > diam - 2) {
+        // Then place it outside the circle
+        if (vis.vertical) {
+          // Move it to the right
+          elem.attr('transform', `translate(${20}, 0)`)
+              .style('text-anchor', 'start');
+        } else {
+          // Move it down
+          elem.attr('transform', `translate(0, ${20})`);
+        }
+      } else {
+        elem.style('fill', 'black');
+      }
+    }
+    else {
+        // Keep it where it is and make it black
+        elem.style('fill', 'black');
+    }
+  })
+}
 
