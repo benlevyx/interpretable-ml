@@ -49,7 +49,6 @@ FeatImportanceBubble.prototype.initVis = function () {
     vis.horizontal = true;
   }
   if (vis.vertical || vis.horizontal) {
-    console.log(vis.vertical ? "vertical" : "horizontal");
 
     var extent;
     if (vis.vertical) {
@@ -83,7 +82,6 @@ FeatImportanceBubble.prototype.initVis = function () {
 FeatImportanceBubble.prototype.renderVis = function () {
   var vis = this;
 
-  console.log("Rendering bubble vis");
 
   if (vis.vertical || vis.horizontal) {
     var stacked = vis.stack(vis.data)[0];
@@ -164,8 +162,6 @@ function placeLabel(text, vis) {
       var width = elem.node().getBBox().width,
           d = elem.data()[0],
           diam = vis.r(d[1] - d[0]) * 2;
-      console.log(d);
-      console.log(diam);
       if (width > diam - 2) {
         // Then place it outside the circle
         if (vis.vertical) {

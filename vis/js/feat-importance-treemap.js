@@ -119,4 +119,12 @@ FeatImportanceTreemap.prototype.renderVis = function () {
       })
       .attr("class", "labels")
       .style("fill", "var(--component-card)")
+        .call(function(e) {
+          e.each(function() {
+            var elem = d3.select(this),
+                d = elem.data(),
+                width = d.x1 - d.x0;
+            elem.call(wrap, width);
+          })
+        })
 };
