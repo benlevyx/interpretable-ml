@@ -71,7 +71,7 @@ Promise.all([
   // Setting the left panel
   updateLeftPanel(window.selected.obs);
 
-  components[4].draw('vis-0');
+  components[1].draw('vis-0');
   components[0].draw('vis-1');
   components[3].draw('vis-2');
   components[5].draw('vis-3');

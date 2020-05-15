@@ -46,20 +46,6 @@ export var components = [
 // To add yours, declare a new function called draw<VIS-NAME> and pass in the data,
 // div ID, and an optional config
 
-function drawFeatureImportanceMean(vis = 'test-vis') {
-  var config = {
-    'margin': {
-      'bottom': 10,
-      'left': 10,
-      'top': 10,
-      'right': 10
-    }
-  };
-  window.visComps.featImportanceMean = new FeatMeanVis(vis, window.data.featureRanking, config);
-
-
-}
-
 function drawFeatureImportanceTree(vis = 'test-vis') {
   var config = {
     'margin': {

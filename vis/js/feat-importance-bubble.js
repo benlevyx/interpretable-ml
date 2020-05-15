@@ -33,31 +33,39 @@ FeatImportanceBubble.prototype.initVis = function () {
   // the syntax `vis.config.<var-name>`
   initVis(vis);
 
-  // Initialize the scales using new D3 v4 syntax (no more scale.band...)
-//   vis.x = d3.scaleBand().rangeRound([0, vis.width], 0.05).padding(0.05);
-//   vis.y = d3.scaleLinear().range([vis.height, 0]);
-
-  // Set the domains. Can also be done later
-//   vis.x.domain(
-//     vis.data.map(function (d) {
-//       return d.feature;
-//     })
-//   );
-//   vis.y.domain([
-//     0,
-//     d3.max(vis.data, function (d) {
-//       return d.value;
-//     }),
-//   ]);
-
-  // Initialize the axis generating functions
- 
-
   vis.diameter = 600;
-//   vis.color = d3.scaleOrdinal(d3.schemeCategory20);
+
+
   vis.bubble = d3.pack()
       .size([vis.width, vis.height])
       .padding(1.5);
+
+  vis.stack = d3.stack()
+      .keys(["value"]);
+
+  if (vis.width / vis.height < 2 / 3) {
+    vis.vertical = true;
+  } else if (vis.width / vis.height > 3 / 2) {
+    vis.horizontal = true;
+  }
+  if (vis.vertical || vis.horizontal) {
+    console.log(vis.vertical ? "vertical" : "horizontal");
+
+    var extent;
+    if (vis.vertical) {
+      extent = vis.height;
+    } else {
+      extent = vis.width;
+    }
+    vis.r = d3.scaleLinear()
+        .domain([0, 1])
+        .range([0, extent / 2]);
+
+    vis.scale = d3.scaleLinear()
+        .domain([0, 1])
+        .range([0, extent]);
+  }
+
 
   // Call the function to generate DOM elements
   vis.renderVis();
@@ -77,29 +85,54 @@ FeatImportanceBubble.prototype.renderVis = function () {
 
   console.log("Rendering bubble vis");
 
-  vis.nodes = d3.hierarchy({children: vis.data}).sum(function (d) {
-    return d.value;
-  });
-  vis.bubble(vis.nodes);
+  if (vis.vertical || vis.horizontal) {
+    var stacked = vis.stack(vis.data)[0];
+    vis.nodes = [];
+
+    stacked.forEach((d, i) => {
+      var tprev = vis.nodes[i-1] || [0, 0];
+      vis.nodes[i] = [d[0] + tprev[1], d[1] + tprev[1]];
+      vis.nodes[i].data = d.data;
+    });
+  } else {
+    vis.nodes = d3.hierarchy({children: vis.data}).sum(function (d) {
+      return d.value;
+    });
+    vis.bubble(vis.nodes);
+  }
 
  vis.node = vis.svg
     .selectAll("g.node")
-    .data(vis.nodes.children)
+    .data(vis.vertical || vis.horizontal ? vis.nodes : vis.nodes.children)
     .enter()
     .append("g")
     .attr("class", "node")
-    .attr("transform", function (d) {
-      return "translate(" + d.x + "," + d.y + ")";
+    .attr("transform", function (d, i) {
+      if (vis.vertical) {
+        return `translate(${vis.width / 2}, ${vis.scale((d[0] + d[1]) / 2)})`
+      } else if (vis.horizontal) {
+        return `translate(${vis.scale((d[0] + d[1]) / 2)}, ${vis.height / 2})`
+      } else {
+        return "translate(" + d.x + "," + d.y + ")";
+      }
     });
 
     vis.node.append("title").text(function (d) {
-      return d.feature + ": " + d.value;
+      if (vis.vertical || vis.horizontal) {
+        return `${d.data.feature}: ${d.data.value}`;
+      } else {
+        return d.feature + ": " + d.value;
+      }
     });
 
     vis.node
       .append("circle")
       .attr("r", function (d) {
-        return d.r;
+        if (vis.vertical || vis.horizontal) {
+          return vis.r(d[1] - d[0]);
+        } else {
+          return d.r;
+        }
       })
       .style("fill", classColor(window.selected.class));
 
@@ -108,7 +141,7 @@ FeatImportanceBubble.prototype.renderVis = function () {
     .attr("dy", ".2em")
     .style("text-anchor", "middle")
     .text(function (d) {
-      return featureAbbrevs[d.data.feature];
+        return featureAbbrevs[d.data.feature];
       // return d.data.feature.substring(0, d.r / 3);
     })
     .attr("class", "labels")
