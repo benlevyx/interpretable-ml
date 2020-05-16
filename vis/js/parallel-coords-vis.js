@@ -26,7 +26,8 @@ ParallelCoordsVis.prototype.initVis = function () {
   initVis(vis);
 
   // If aspect ratio is less than 2/3, switch to vertical layout
-  vis.vertical = vis.width / vis.width > 2/3;
+  // vis.vertical = vis.width / vis.width > 2/3;
+  vis.vertical = vis.width < 300;
 
   vis.selected = window.selected.obs;
 

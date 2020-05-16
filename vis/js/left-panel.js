@@ -16,7 +16,7 @@ function updateLeftPanel(obs, acc, progress) {
     var idx = encodedLevels[varName].findIndex(d => d === val),
         levelName = levelNames[levels[varName][idx]];
     $(this).find(".feature-value").html(levelName);
-    
+
     $(this).find(".point").each(function(j) {
       // Set the appropriate number of dots
       if (["doors", "capacity (persons)"].includes(varName)) {

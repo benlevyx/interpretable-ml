@@ -2,7 +2,8 @@
 
 import subprocess
 import json
-from interpml import information_architecture as ia
+from interpml import info_architecture as ia
+from interpml import config
 
 def run_bayes_opt(obs=None):
     args = ['./', str(config.code / 'run_bayes_opt.py')]

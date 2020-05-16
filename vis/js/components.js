@@ -30,16 +30,11 @@ export var components = [
   },
   {
     id: 4,
-    name: `feature-mean-vis`,
-    draw: drawFeatureMean
-  },
-  {
-    id: 5,
     name: 'parallel-coordinates',
     draw: drawParallelCoordinatesVis
   },
   {
-    id: 6,
+    id: 5,
     name: 'class-vote',
     draw: drawClassVoteVis
   }
@@ -149,7 +144,7 @@ function drawFeatureImportanceBubble(vis = 'test-vis') {
       'bottom': 10,
       'left': 10,
       'top': 10,
-      'right': 10
+      'right': 20
     }
   };
 
