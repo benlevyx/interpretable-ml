@@ -63,7 +63,8 @@ from interpml import bayes_opt as bo
 
 
 X = np.loadtxt(config.ia_feats_file, delimiter=',')
-info_archs = json.load(config.ia_layouts_file.open('r'))['architectures']
+json_info = json.load(config.ia_layouts_file.open('r'))
+info_archs = json_info['architectures']
 
 
 def get_features(info_arch_jsons, n_components):
@@ -93,6 +94,14 @@ def random_init(n=config.n_init):
     return list([info_archs[i] for i in idxs])
 
 
+def init_dbs():
+    """Initialize with the 'start' db's
+
+    :return: list of dashboards
+    """
+    return json_info['start']
+
+
 def propose_next(X_obs, y_obs):
     """Run the BayesOpt procedure to get the next proposed architecture
 
@@ -118,7 +127,7 @@ if __name__ == '__main__':
 
     if input_ is None:
         # Random initialization
-        res = pack_next(random_init())
+        res = pack_next(init_dbs())
     else:
         # get next
         obs = json.loads(input_[0])
