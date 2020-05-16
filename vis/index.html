@@ -20,7 +20,11 @@
     <div class="interface-container">
       <!-- left side interface -->
       <div class="left-container">
-        <div class="car-card">
+        <div class="left-card">
+          <div class="question-container">
+            <div class="title"><b>Question</b></div>
+            <div class="title dynamic"><b>15/40</b></div>
+          </div>
           <div class="title">This car is classified by the model as:</div>
           <div class="class-list-container first">
             <div class="class-item">
@@ -45,95 +49,128 @@
             <div id="estimated-safety" class="feature-item">
               <div class="dida">ESTIMATED SAFETY</div>
               <div class="feature-container">
-                <div class="points-container">
+                <!-- <div class="points-container">
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point"></span>
-                </div>
+                </div> -->
                 <div class="feature-value dida">high</div>
               </div>
             </div>
             <div id="capacity-(persons)" class="feature-item">
               <div class="dida">CAPACITY (PERSONS)</div>
               <div class="feature-container">
-                <div class="points-container">
+                <!-- <div class="points-container">
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point"></span>
                   <span class="point"></span>
-                </div>
+                </div> -->
                 <div class="feature-value dida">3</div>
               </div>
             </div>
             <div id="buying-price" class="feature-item">
               <div class="dida">BUYING PRICE</div>
               <div class="feature-container">
-                <div class="points-container">
+                <!-- <div class="points-container">
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point"></span>
-                </div>
+                </div> -->
                 <div class="feature-value dida">high</div>
               </div>
             </div>
             <div id="maintanence-price" class="feature-item">
               <div class="dida">MAINTENANCE PRICE</div>
               <div class="feature-container">
-                <div class="points-container">
+                <!-- <div class="points-container">
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point"></span>
                   <span class="point"></span>
                   <span class="point"></span>
-                </div>
+                </div> -->
                 <div class="feature-value dida">low</div>
               </div>
             </div>
             <div id="luggage-boot-size" class="feature-item">
               <div class="dida">LUGGAGE BOOT SIZE</div>
               <div class="feature-container">
-                <div class="points-container">
+                <!-- <div class="points-container">
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point active"></span>
-                </div>
+                </div> -->
                 <div class="feature-value dida">very high</div>
               </div>
             </div>
             <div id="doors" class="feature-item">
               <div class="dida">DOORS</div>
               <div class="feature-container">
-                <div class="points-container">
+                <!-- <div class="points-container">
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point"></span>
                   <span class="point"></span>
-                </div>
+                </div> -->
                 <div class="feature-value dida">3</div>
               </div>
             </div>
           </div>
         </div>
-        <div class="answer-card">
+        <div class="left-card">
           <div class="title">What do you think about the model prediction?</div>
-          <div class="button first decisionBtt"><div class="dida">agree</div></div>
-          <div class="button decisionBtt"><div class="dida">disagree</div></div>
+          <div class="buttons-container">
+            <div class="button first decisionBtt">
+              <div class="dida">agree</div>
+            </div>
+            <div class="button decisionBtt">
+              <div class="dida">disagree</div>
+            </div>
+          </div>
+        </div>
+        <div class="left-card">
+          <div class="title-container">
+            <div class="title">Your accuracy</div>
+            <div class="title dynamic"><b>80%</b></div>
+          </div>
+          <div class="accuracy-bar-container">
+            <div class="dida">0%</div>
+            <div class="accuracy-bar"><div class="accuracy-bar-top"></div></div>
+            <div class="dida">100%</div>
+          </div>
         </div>
       </div>
       <!-- right side interface -->
-      <div class="right-container" style="width:100%">
-        <div class="vis-container" id="vis-0" style="height:58%; width:38%;"></div>
-         <div class="vis-container" id="vis-1" style="height:58%; width:58%;"></div>
-         <div class="vis-container" id="vis-2" style="height:38%; width:65%;"></div>
-         <div class="vis-container" id="vis-3" style="height:38%; width:31%;"></div>
+      <div class="right-container" style="width: 100%;">
+        <div
+          class="vis-container"
+          id="vis-0"
+          style="height: 58%; width: 38%;"
+        ></div>
+        <div
+          class="vis-container"
+          id="vis-1"
+          style="height: 58%; width: 58%;"
+        ></div>
+        <div
+          class="vis-container"
+          id="vis-2"
+          style="height: 38%; width: 65%;"
+        ></div>
+        <div
+          class="vis-container"
+          id="vis-3"
+          style="height: 38%; width: 31%;"
+        ></div>
       </div>
     </div>
 
@@ -161,7 +198,7 @@
     <script src="js/utils.js"></script>
     <script src="js/constants.js"></script>
     <script src="js/left-panel.js"></script>
-<!--    <script src="js/components.js" type="module"></script>-->
+    <!--    <script src="js/components.js" type="module"></script>-->
 
     <!-- Main JS -->
     <script src="js/main.js" type="module"></script>

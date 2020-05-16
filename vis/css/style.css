@@ -23,7 +23,7 @@
 /* big titles */
 .title {
   font-family: "Karla", sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 400;
   font-stretch: normal;
   font-style: normal;
@@ -41,7 +41,7 @@
   font-style: normal;
   line-height: 1.23;
   letter-spacing: 0.39px;
-  color: white;
+  color: #F0F0F0;
   text-transform: uppercase;
 }
 /* components labels and numbers */
@@ -84,13 +84,22 @@
   height: 100%;
   margin-right: 10px;
 }
-.car-card {
+.left-card {
   width: 100%;
   background: var(--user-card);
-  border-radius: 15px;
+  border-radius: 10px;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  padding: 15px 16px;
+  margin-top: 10px;
+}
+.question-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom:10px;
+}
+
+.left-card .title {
   margin-bottom: 10px;
-  padding: 15px 20px;
 }
 
 /****** CLASS SECTION ******/
@@ -102,7 +111,7 @@
 }
 .class-bar {
   width: 100%;
-  height: 7px;
+  height: 5px;
   border-radius: 3px;
   margin-top: 3px;
 }
@@ -113,7 +122,7 @@
 .feature-item {
   display: flex;
   justify-content: space-between;
-  margin-top: 16px;
+  margin-top: 10px;
 }
 
 .feature-container {
@@ -140,19 +149,13 @@
 }
 
 /****** ANSWER CARD ******/
-.answer-card {
-  width: 100%;
-  background: var(--user-card);
-  border-radius: 15px;
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-  padding: 15px 18px;
-}
-.answer-card .title {
-  margin-bottom: 10px;
+
+.buttons-container {
+  display: flex;
 }
 .button {
-  width: 100%;
-  height: 37px;
+  width: 50%;
+  height: 35px;
   border-radius: 3px;
   background-color: var(--button-default);
   display: flex;
@@ -165,10 +168,38 @@
   color: var(--user-card);
 }
 .button.first {
-  margin-bottom: 7px;
+  margin-right: 7px;
 }
 .button:hover {
   background: var(--button-selected);
+}
+/****** ACCURACY CARD ******/
+.title-container {
+  display: flex;
+  justify-content: space-between;
+}
+.accuracy-bar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.accuracy-bar {
+  width: 100%;
+  height: 5px;
+  border-radius: 3px;
+  margin: 0 3px;
+  background-color: rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index:0;
+}
+.accuracy-bar-top {
+  width: 80%;
+  height: 100%;
+  background: white;
+  position:absolute;
+  top:0;
+  left:0;
+  z-index:2;
 }
 
 /************ RIGHT SIDE ************/
@@ -180,7 +211,7 @@
 div.vis-container {
   /*height: 50%;*/
   /*width: 500px;*/
-  border-radius: 15px;
+  border-radius: 10px;
   background-color: var(--component-card);
   padding: 15px 18px;
   margin: 0.5em;
@@ -194,7 +225,7 @@ div.vis-container {
   stroke-width: 0.5px;
 }
 .data-line {
-  stroke-width:  1.5px;
+  stroke-width: 1.5px;
 }
 
 /****** feat-mean vis ******/
@@ -236,12 +267,12 @@ text.data-label:not(.selected) {
 
 /******* Confusion Matrix ******/
 .axis-label {
-    font-size: 12px;
-    opacity: 1;
+  font-size: 12px;
+  opacity: 1;
 }
 rect.box-outline {
-    stroke-width: 1px;
-    fill: none;
+  stroke-width: 1px;
+  fill: none;
 }
 
 /******* Voting vis *******/
