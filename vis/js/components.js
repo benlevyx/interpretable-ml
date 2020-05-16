@@ -35,17 +35,11 @@ export var components = [
   },
   {
     id: 5,
-    name: `feature-importance`,
-    draw: drawFeatureImportance
-  }
-  ,
-  {
-    id: 6,
     name: 'parallel-coordinates',
     draw: drawParallelCoordinatesVis
   },
   {
-    id: 7,
+    id: 6,
     name: 'class-vote',
     draw: drawClassVoteVis
   }
@@ -80,7 +74,7 @@ function drawFeatureImportance(vis = 'test-vis') {
     }
   };
 
-  window.visComps.featImportanceVis = new FeatImportance(vis, window.data.featureRanking, config);
+  window.visComps.featImportanceVis = new FeatImportanceVis(vis, window.data.featureRanking, config);
 
 }
 
