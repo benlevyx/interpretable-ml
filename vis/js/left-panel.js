@@ -1,9 +1,7 @@
 // Dynamically updating the left-hand panel that contains the car information
-function updateLeftPanel(obs) {
+function updateLeftPanel(obs, acc, progress) {
   var cls = obs.class_pred,
       color = classLevels[cls];
-
-  console.log(obs);
 
   $(`.class-bar:not(.${color})`).addClass('inactive');
   $(`.class-bar.${color}`).removeClass('inactive');
@@ -18,9 +16,7 @@ function updateLeftPanel(obs) {
     var idx = encodedLevels[varName].findIndex(d => d === val),
         levelName = levelNames[levels[varName][idx]];
     $(this).find(".feature-value").html(levelName);
-
-
-
+    
     $(this).find(".point").each(function(j) {
       // Set the appropriate number of dots
       if (["doors", "capacity (persons)"].includes(varName)) {
@@ -37,7 +33,12 @@ function updateLeftPanel(obs) {
         }
       }
     })
-  })
+  });
+
+  // Updating the progress bar
+
+  // Updating the accuracy bar
+
 }
 
 /**
