@@ -1,0 +1,6 @@
+,buying price,maintanence price,doors,capacity (persons),luggage boot size,estimated safety,class_pred,class
+439,0.0,2.0,3.0,5.0,2.0,1.0,0,0
+137,1.0,0.0,3.0,5.0,1.0,1.0,1,1
+151,3.0,2.0,3.0,5.0,2.0,0.0,2,2
+187,0.0,0.0,4.0,4.0,2.0,2.0,3,3
+332,0.0,1.0,5.0,5.0,1.0,2.0,3,3
