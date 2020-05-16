@@ -421,7 +421,7 @@ require_once("survey.php");
         </div>
             <div class="answer-card">
             <div class="title">What do you think about the model prediction?</div>
-            <div class="button first decisionBtt"><div class="dida">agree</div></div>
+            <div class="button first decisionBtt" id="agreeBtt"><div class="dida">agree</div></div>
             <div class="button decisionBtt"><div class="dida">disagree</div></div>
             </div>
       </div>

@@ -155,12 +155,12 @@ function sampleTest() {
                 }
             }
 
-            console.log(window.selected.obs);
+            //console.log(window.selected.obs);
             window.selected.class = window.selected.obs.class;
             updateLeftPanel(window.selected.obs);
             fillComponents();
 
-            //console.log($(this).attr('id') === "agreeBtt");
+            console.log($(this).attr('id'));
             if($(this).attr('id') === "agreeBtt"){
                 r = 1;
             }
@@ -178,7 +178,10 @@ function sampleTest() {
                     console.log("updating IA.");
                     $(".decisionBtt").off('click');
                     meanReward = d3.mean(decisionBatch)
-                    meanReward = meanReward * Math.exp(-time);
+                    console.log(meanReward)
+                    meanReward = meanReward * Math.exp(-time/50000);
+
+                    console.log(time);
 
                     IAHistory.scores.push(meanReward);
                     decisionBatch = [];
