@@ -1,5 +1,5 @@
 // Dynamically updating the left-hand panel that contains the car information
-function updateLeftPanel(obs, acc, progress) {
+function updateLeftPanel(obs, acc, curr, total) {
   var cls = obs.class_pred,
       color = classLevels[cls];
 
@@ -17,27 +17,31 @@ function updateLeftPanel(obs, acc, progress) {
         levelName = levelNames[levels[varName][idx]];
     $(this).find(".feature-value").html(levelName);
 
-    $(this).find(".point").each(function(j) {
-      // Set the appropriate number of dots
-      if (["doors", "capacity (persons)"].includes(varName)) {
-        if (j <= val - 1) {
-          $(this).addClass('active');
-        } else {
-          $(this).removeClass('active');
-        }
-      } else {
-        if (j <= val) {
-          $(this).addClass('active');
-        } else {
-          $(this).removeClass('active');
-        }
-      }
-    })
+    // $(this).find(".point").each(function(j) {
+    //   // Set the appropriate number of dots
+    //   if (["doors", "capacity (persons)"].includes(varName)) {
+    //     if (j <= val - 1) {
+    //       $(this).addClass('active');
+    //     } else {
+    //       $(this).removeClass('active');
+    //     }
+    //   } else {
+    //     if (j <= val) {
+    //       $(this).addClass('active');
+    //     } else {
+    //       $(this).removeClass('active');
+    //     }
+    //   }
+    // })
   });
 
   // Updating the progress bar
+  $('#question-progress').html(`<b>${curr}/${total}</b>`);
 
   // Updating the accuracy bar
+  acc = `${(acc || 0) * 100}%`;
+  $('.accuracy-bar-top').css('width', acc);
+  $('#accuracy-score').html(`<b>${acc}</b>`);
 
 }
 
