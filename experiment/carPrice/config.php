@@ -65,7 +65,7 @@ ensureTable("arrangements", "CREATE TABLE `arrangements` (
   `arrangement_id` int(11) NOT NULL AUTO_INCREMENT,
   `participant_id` int(11) NOT NULL,
   `question_id` int(11) DEFAULT NULL,
-  `time_spent` int(11) DEFAULT NULL,
+  `reward` int(11) DEFAULT NULL,
   `choice` int(11) DEFAULT NULL,
   `arrangement` text,
   `variant` int(11) DEFAULT NULL,

@@ -11,7 +11,7 @@ var debug = 1;
 // global progress bar variable (could be made private)
 var progressBar = null;
 var currentCar = 0;
-var maxCars = 40;
+var maxCars = 55;
 var REWARD_INTERVAL = 5;
 var arrangements = {};
 var taskTime = {};
@@ -20,6 +20,11 @@ var decisionBatch = []; // array of user decisions of a certain length. When rea
 var IAHistory = {
 };
 
+var tutorialsShown = {
+    "tut": false,
+    "opt": false,
+    "eval": false
+}
 
 function sampleTest() {
     var startTime;
@@ -44,13 +49,23 @@ function sampleTest() {
                 intro: "Indicate your choices here."
             },
             { 
-                intro: "Have fun :)"
+                intro: "Next 5 cars will be tutorials :)"
               },
     
           ],
           showStepNumbers:false
         });
-    
+        var opt = introJs();
+        opt.setOptions({
+          steps: [{intro: "the real optimiazation starts"},],
+          showStepNumbers:false
+        });
+        var evaluation = introJs();
+        evaluation.setOptions({
+          steps: [{intro: "the evaluation starts"},],
+          showStepNumbers:false
+        });
+
         // TODO configure progress bar
         progressBar = progress(); // creating progressBar object
         // defining the steps in the study and the page IDs that they correspond to
@@ -73,6 +88,7 @@ function sampleTest() {
             viewPage("#instructions_page")
         });
         $("#instructions_button").click(function () {
+            variant = $("#variant").val()
             viewPage("#experiment2_page");
             startTime = new Date();
             // visually show that progress has been made through "The test" step on the progress bar
@@ -96,34 +112,77 @@ function sampleTest() {
 
         
         function clickDecisionBtt() {
+            if(currentCar >= maxCars) {
+
+
+                viewPage("#comments_page");
+                return;
+            }
             var time = new Date() - startTime;
             startTime = new Date()
             var r = 0;
 
             // update a random car
-            var nCars = window.data.carData.length,
-            idx = Math.floor(Math.random() * nCars);
-            window.selected.obs = window.data.carData[idx];
+            //var nCars = window.data.carData.length,
+            //idx = Math.floor(Math.random() * nCars);
+
+            if(currentCar < 5) {
+                window.selected.obs = window.data.carTut[currentCar];
+            }
+            else if (currentCar >= 5 && currentCar < 45){
+
+                
+
+                window.selected.obs = window.data.carOpt[currentCar - 5];
+            }
+            else if (currentCar >= 45) {
+
+                window.selected.obs = window.data.carEval[currentCar - 45];
+            }
+
+            if (currentCar >= 4 && currentCar < 44) {
+                // tutorials
+                if(!tutorialsShown['opt']) {
+                    opt.start();
+                    tutorialsShown["opt"] = true;
+                }
+            }
+            else if (currentCar >= 44) {
+                // opt
+                if(!tutorialsShown['eval']) {
+                    evaluation.start();
+                    tutorialsShown["eval"] = true;
+                }
+            }
+
+            //console.log(window.selected.obs);
             window.selected.class = window.selected.obs.class;
             updateLeftPanel(window.selected.obs);
             fillComponents();
 
-            //console.log($(this).attr('id') === "agreeBtt");
+            console.log($(this).attr('id'));
             if($(this).attr('id') === "agreeBtt"){
                 r = 1;
             }
 
-            decisionBatch.push(r);
-            if(currentCar <= maxCars){
+            if(currentCar >= 5){
+                decisionBatch.push(r);
+            }
+
                 currentCar += 1;
 
                 // update only every X number of questions. 
-                if(currentCar% REWARD_INTERVAL === 0){
+                if(currentCar% REWARD_INTERVAL === 0 & currentCar > 5 & currentCar <= 45){
 
                     d3.select('#dynamicIA').html("<div id='loader'><p>Loading...</p></div>");
                     console.log("updating IA.");
                     $(".decisionBtt").off('click');
                     meanReward = d3.mean(decisionBatch)
+                    console.log(meanReward)
+                    meanReward = meanReward * Math.exp(-time/50000);
+
+                    console.log(time);
+
                     IAHistory.scores.push(meanReward);
                     decisionBatch = [];
                     
@@ -157,7 +216,7 @@ function sampleTest() {
                                 {
                                     participant_id: participantID,
                                     question_id: currentCar,
-                                    time_spent: time,
+                                    reward: meanReward,
                                     choice: r,
                                     arrangement: JSON.stringify(IAHistory),
                                     variant: variant
@@ -171,10 +230,6 @@ function sampleTest() {
 
 
                 
-                
-            } else{
-                viewPage("#comments_page");
-            };
         }
         onViewPage(
             function() {
@@ -187,18 +242,19 @@ function sampleTest() {
                 $.ajax({
                     url : "./optimizer.php",
                     type : "POST",
-                    data: {
+                    data: { 
+                        variant: JSON.stringify(variant)
                         },
                     success: function(result) {
                         console.log("onview receives IA history. ")
                         IAHistory = JSON.parse(result);
-                        console.log("The  IA history is ");
+                        console.log("The IA history is ");
                         console.log(IAHistory);
                         $.ajax({
                             url : "./optimizer.php",
                             type : "POST",
                             data: {
-                                data: JSON.stringify(IAHistory),
+                                data: JSON.stringify(IAHistory)
                             },
                             success: function(result) {
                                 console.log("new IA");
@@ -308,11 +364,12 @@ function drawSingleGridLevel(data, elem, w, h, left, top) {
 function fillComponents() {
     for (let i = 0; i < window.components.length; i++) {
         const vis = window.components[i];
-        if($("#vis-container-" + i).length !== 0) {
+        j = i + 1
+        if($("#vis-container-" + j).length !== 0) {
             // fill if exist
-            d3.select('#vis-container-' + i)
+            d3.select('#vis-container-' + j)
             .html("");
-            vis.draw("vis-container-" + i);
+            vis.draw("vis-container-" + j);
 
           }
         
