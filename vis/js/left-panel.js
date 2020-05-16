@@ -1,4 +1,10 @@
-// Dynamically updating the left-hand panel that contains the car information
+/**
+ * Dynamically updating the left-hand panel that contains the car information
+ * @param obs   -- The selected observation
+ * @param acc   -- The accuracy of the user (0 <= acc <= 1)
+ * @param curr  -- The number of the current question (0 < curr <= total)
+ * @param total -- The total number of questions in the experiment (should be 40)
+ */
 function updateLeftPanel(obs, acc, curr, total) {
   var cls = obs.class_pred,
       color = classLevels[cls];
