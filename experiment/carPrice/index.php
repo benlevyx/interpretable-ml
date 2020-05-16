@@ -283,7 +283,8 @@ require_once("survey.php");
 
 
     <h1>Instructions</h1>
-    <p></p>
+    <p>Hello plz type in your variant number such as 1, 2, 3. :)</p>
+    <input type="number" id="variant" value="1" />
 
     <svg> 
     <circle class="target" style="fill: #69b3a2" stroke="black" cx=50 cy=50 r=40></circle>

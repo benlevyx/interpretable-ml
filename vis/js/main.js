@@ -22,12 +22,19 @@ Promise.all([
     d3.csv('data/feature_ranking.csv'),
     d3.csv('data/test_data.csv'),
     d3.text('data/confusion_matrix.csv'),
-    d3.csv('data/class_votes.csv')
+    d3.csv('data/class_votes.csv'),
+    d3.csv('data/tut_cars.csv'),
+    d3.csv('data/opt_cars.csv'),
+    d3.csv('data/eval_cars.csv'),
+
 ]).then(function(datasets) {
   var featRanking = datasets[0],
       allData = datasets[1],
       confMat = d3.csvParseRows(datasets[2]),
-      classVotes = datasets[3];
+      classVotes = datasets[3],
+      tut_cars = datasets[4],
+      opt_cars = datasets[5],
+      eval_cars = datasets[6];
 
   allData.forEach(d => {
     features.forEach(f => {
@@ -58,6 +65,9 @@ Promise.all([
   window.data.carData = allData;
   window.data.confMat = confMat;
   window.data.classVotes = classVotes;
+  window.data.carTut = tut_cars;
+  window.data.carOpt = opt_cars;
+  window.data.carEval = eval_cars;
 
   // Simulating a randomly drawn car
   var nCars = window.data.carData.length,

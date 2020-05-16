@@ -25,8 +25,12 @@ if (isset($_REQUEST['data'])) {
     $output = exec("../../code/run_bayes_opt.py -i '{$d}' 2>&1"); 
     echo($output);
 }
-else {
-    $query = ("SELECT arrangement FROM arrangements WHERE arrangement_id = (SELECT MAX(arrangement_id) FROM arrangements);");
+else if (isset($_REQUEST['variant'])) {
+    $v = $_REQUEST['variant'];
+    $query = ("SELECT arrangement FROM arrangements WHERE arrangement_id = (SELECT MAX(arrangement_id) FROM (SELECT * FROM arrangements WHERE variant = {$v}) x)");
+    #echo($query);
+    #$query = ("SELECT arrangement FROM arrangements WHERE arrangement_id = (SELECT MAX(arrangement_id) FROM arrangements);");
+    
 
     $result_r = mysqli_fetch_array(mysqli_query($mysqli, $query))['arrangement'];
     #$output = exec("../../code/run_bayes_opt.py -i '{$result_r}' 2>&1");
