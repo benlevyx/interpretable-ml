@@ -30,11 +30,22 @@ export var components = [
   },
   {
     id: 4,
+    name: `feature-mean-vis`,
+    draw: drawFeatureMean
+  },
+  {
+    id: 5,
+    name: `feature-importance`,
+    draw: drawFeatureImportance
+  }
+  ,
+  {
+    id: 6,
     name: 'parallel-coordinates',
     draw: drawParallelCoordinatesVis
   },
   {
-    id: 5,
+    id: 7,
     name: 'class-vote',
     draw: drawClassVoteVis
   }
@@ -45,6 +56,33 @@ export var components = [
 
 // To add yours, declare a new function called draw<VIS-NAME> and pass in the data,
 // div ID, and an optional config
+
+function drawFeatureMean(vis = 'test-vis') {
+  var config = {
+    'margin': {
+      'bottom': 10,
+      'left': 10,
+      'top': 10,
+      'right': 10
+    }
+  };
+  window.visComps.featMean = new FeatMeanVis(vis, window.data.featureRanking, config);
+
+}
+
+function drawFeatureImportance(vis = 'test-vis') {
+  var config = {
+    'margin': {
+      'bottom': 10,
+      'left': 10,
+      'top': 10,
+      'right': 10
+    }
+  };
+
+  window.visComps.featImportanceVis = new FeatImportance(vis, window.data.featureRanking, config);
+
+}
 
 function drawFeatureImportanceTree(vis = 'test-vis') {
   var config = {
