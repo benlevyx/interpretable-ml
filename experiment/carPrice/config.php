@@ -71,3 +71,12 @@ ensureTable("arrangements", "CREATE TABLE `arrangements` (
   `variant` int(11) DEFAULT NULL,
   PRIMARY KEY (`arrangement_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;");
+
+
+ensureTable("accuracy", "CREATE TABLE `accuracy` (
+  `accuracy_id` int(11) NOT NULL AUTO_INCREMENT,
+  `participant_id` int(11) NOT NULL,
+  `variant` int(11) DEFAULT NULL,
+  `accuracies` text,
+  PRIMARY KEY (`accuracy_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;");

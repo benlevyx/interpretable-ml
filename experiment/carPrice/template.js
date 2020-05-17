@@ -114,32 +114,67 @@ function sampleTest() {
         
         function clickDecisionBtt() {
             currentCar += 1;
-            if(currentCar >= maxCars) {
-
-
+            if(currentCar > maxCars) {
                 viewPage("#comments_page");
+                $.ajax({
+                    url : "./data.php",
+                    type : "POST",
+                    data: {
+                        accuracy: JSON.stringify({
+                            participant_id: participantID,
+                            variant: variant,
+                            accuracies: JSON.stringify(accuracyBatch),
+                        
+                        }
+                            
+                            )
+                        },
+                    success: function(result) {
+                        console.log("uploaded accuracy");
+                    }
+                });
                 return;
             }
+
             var time = new Date() - startTime;
             startTime = new Date()
             var r = 0;
+            if($(this).attr('id') === "agreeBtt"){
+                r = 1;
+            }
+
+            console.log(r);
+            console.log(window.selected.obs['class'] === window.selected.obs['class_pred']);
+            console.log(window.selected.obs['class'])
+            console.log(window.selected.obs['class_pred']);
+            if (r & (window.selected.obs['class'] === window.selected.obs['class_pred'])) {
+                accuracyBatch.push(1);
+            } else if (!r & (window.selected.obs['class'] != window.selected.obs['class_pred'])) {
+                accuracyBatch.push(1);
+            } else {
+                accuracyBatch.push(0);
+            }
+
+            if(currentCar >= 5){
+                decisionBatch.push(r);
+            }
 
             // update a car
             if(currentCar < 5) {
                 window.selected.obs = window.data.carTut[currentCar];
             }
             else if (currentCar >= 5 && currentCar < 45){
-
-                
-
                 window.selected.obs = window.data.carOpt[currentCar - 5];
             }
             else if (currentCar >= 45) {
-
                 window.selected.obs = window.data.carEval[currentCar - 45];
             }
 
 
+            //console.log(window.selected.obs);
+            window.selected.idx = parseInt(window.selected.obs[""]);
+            window.selected.class = window.selected.obs.class_pred;
+            fillComponents();
             // show tutorials
             if (currentCar >= 4 && currentCar < 44) {
                 // tutorials
@@ -155,29 +190,8 @@ function sampleTest() {
                     tutorialsShown["eval"] = true;
                 }
             }
-
-            //console.log(window.selected.obs);
-            window.selected.class = window.selected.obs.class_pred;
-            fillComponents();
-
-            console.log($(this).attr('id'));
-            if($(this).attr('id') === "agreeBtt"){
-                r = 1;
-            }
-            if (r & (window.selected.obs['class'] === window.selected.obs['class_pred'])) {
-                accuracyBatch.push(1);
-            } else if (!r & (window.selected.obs['class'] != window.selected.obs['class_pred'])) {
-                accuracyBatch.push(1);
-            } else {
-                accuracyBatch.push(0);
-            }
-
-            if(currentCar >= 5){
-                decisionBatch.push(r);
-            }
-
             // update left panels
-            updateLeftPanel(window.selected.obs, d3.mean(accuracyBatch).toFixed(1), currentCar, maxCars);
+            updateLeftPanel(window.selected.obs, d3.mean(accuracyBatch).toFixed(3), currentCar, maxCars);
             
             // update visualizations only every X number of questions. 
             if(currentCar% REWARD_INTERVAL === 0 & currentCar > 5 & currentCar <= 45){
@@ -212,8 +226,7 @@ function sampleTest() {
                         //make grid, filling the components
                         makeGrid(structure["components"], "dynamicIA");
                         fillComponents();
-                        updateLeftPanel(window.selected.obs, d3.mean(accuracyBatch), currentCar, maxCars);
-            
+                        
                     }
                 });
 
@@ -237,6 +250,7 @@ function sampleTest() {
                     }
                 });
             }
+
         }
 
         // initially on view experiments, initialize left panel and visualizations
@@ -247,9 +261,10 @@ function sampleTest() {
                 intro.start();
                 window.selected.obs = window.data.carTut[0];
                 window.selected.class = window.selected.obs.class_pred;
+                window.selected.idx = parseInt(window.selected.obs[""]);
                 d3.select('#dynamicIA').html("<div id='loader'><p>Loading...</p></div>");
                 // generate first architecture
-
+                updateLeftPanel(window.selected.obs, 0,0, maxCars);
                 $.ajax({
                     url : "./optimizer.php",
                     type : "POST",
@@ -274,8 +289,7 @@ function sampleTest() {
                                 IAHistory.architectures.push(structure);
                                 makeGrid(structure["components"], "dynamicIA");
                                 fillComponents();
-                                updateLeftPanel(window.selected.obs, 0, 0, maxCars);
-                            }
+                                }
                         })
 
                     }

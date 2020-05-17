@@ -42,6 +42,24 @@ Promise.all([
     })
   });
 
+  tut_cars.forEach(d => {
+    features.forEach(f => {
+      d[f] = +d[f];
+    })
+  });
+
+  opt_cars.forEach(d => {
+    features.forEach(f => {
+      d[f] = +d[f];
+    })
+  });
+
+  eval_cars.forEach(d => {
+    features.forEach(f => {
+      d[f] = +d[f];
+    })
+  });
+
   featRanking.forEach(d => {
     d.value = +d.value;
     d.std = +d.std;
@@ -68,7 +86,8 @@ Promise.all([
   window.data.carTut = tut_cars;
   window.data.carOpt = opt_cars;
   window.data.carEval = eval_cars;
-
+  window.components = components;
+  
   // Simulating a randomly drawn car
   var nCars = window.data.carData.length,
       idx = Math.floor(Math.random() * nCars);
@@ -77,7 +96,7 @@ Promise.all([
   window.selected.obs = window.data.carData[idx];
   window.selected.class = window.selected.obs.class_pred;
 
-  window.components = components;
+
   // Setting the left panel
   updateLeftPanel(window.selected.obs, 0.4, 20, 40);
 
