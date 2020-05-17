@@ -47,11 +47,11 @@ function updateLeftPanel(obs, acc, curr, total) {
 
   // Updating the accuracy bar
   console.log(acc);
-  acc = `${(acc || 0) * 100}%`;
+  acc = `${format2d(acc || 0) * 100}%`;
 
   console.log(acc);
   $('.accuracy-bar-top').css('width', acc);
-  $('#accuracy-score').html(`<b>${format2d(acc)}</b>`);
+  $('#accuracy-score').html(`<b>${acc}</b>`);
 
 }
 
