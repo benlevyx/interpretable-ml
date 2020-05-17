@@ -21,11 +21,13 @@ else {
 }
 */
 if (isset($_REQUEST['data'])) {
+    #echo("data");
     $d = $_REQUEST['data'];
     $output = exec("../../code/run_bayes_opt.py -i '{$d}' 2>&1"); 
     echo($output);
 }
 else if (isset($_REQUEST['variant'])) {
+    #echo("variant");
     $v = $_REQUEST['variant'];
     $query = ("SELECT arrangement FROM arrangements WHERE arrangement_id = (SELECT MAX(arrangement_id) FROM (SELECT * FROM arrangements WHERE variant = {$v}) x)");
     #echo($query);

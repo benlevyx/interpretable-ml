@@ -131,6 +131,7 @@ function sampleTest() {
                         },
                     success: function(result) {
                         console.log("uploaded accuracy");
+
                     }
                 });
                 return;
@@ -217,7 +218,8 @@ function sampleTest() {
                             )
                         },
                     success: function(result) {
-                        var structure = JSON.parse(result)["architectures"][0];
+                        var l = (JSON.parse(result)["architectures"]).length
+                        var structure = JSON.parse(result)["architectures"][l - 1];
                         IAHistory.architectures.push(structure);
                         $(".decisionBtt").click(
                             clickDecisionBtt
@@ -276,21 +278,13 @@ function sampleTest() {
                         IAHistory = JSON.parse(result);
                         console.log("The IA history is ");
                         console.log(IAHistory);
-                        $.ajax({
-                            url : "./optimizer.php",
-                            type : "POST",
-                            data: {
-                                data: JSON.stringify(IAHistory)
-                            },
-                            success: function(result) {
-                                console.log("new IA");
-                                console.log(result);
-                                var structure = JSON.parse(result)["architectures"][0];
-                                IAHistory.architectures.push(structure);
-                                makeGrid(structure["components"], "dynamicIA");
-                                fillComponents();
-                                }
-                        })
+                        console.log("new IA");
+                        console.log(result);
+                        var l = (JSON.parse(result)["architectures"]).length
+                        var structure = JSON.parse(result)["architectures"][l - 1];
+                        IAHistory.architectures.push(structure);
+                        makeGrid(structure["components"], "dynamicIA");
+                        fillComponents();
 
                     }
                 });
