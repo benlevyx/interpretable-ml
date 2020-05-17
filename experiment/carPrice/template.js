@@ -144,10 +144,6 @@ function sampleTest() {
                 r = 1;
             }
 
-            console.log(r);
-            console.log(window.selected.obs['class'] === window.selected.obs['class_pred']);
-            console.log(window.selected.obs['class'])
-            console.log(window.selected.obs['class_pred']);
             if (r & (window.selected.obs['class'] === window.selected.obs['class_pred'])) {
                 accuracyBatch.push(1);
             } else if (!r & (window.selected.obs['class'] != window.selected.obs['class_pred'])) {
@@ -229,29 +225,30 @@ function sampleTest() {
                         //make grid, filling the components
                         makeGrid(structure["components"], "dynamicIA");
                         fillComponents();
+                                        // send to PHP
+                    $.ajax({
+                        url : "./data.php",
+                        type : "POST",
+                        data: {
+                            data: JSON.stringify(
+                                {
+                                    participant_id: participantID,
+                                    question_id: currentCar,
+                                    reward: meanReward,
+                                    choice: r,
+                                    arrangement: JSON.stringify(IAHistory),
+                                    variant: variant
+                                })
+                            },
+                        success: function(result) {
+                            console.log(result);
+                        }
+                    });
                         
                     }
                 });
 
-                // send to PHP
-                $.ajax({
-                    url : "./data.php",
-                    type : "POST",
-                    data: {
-                        data: JSON.stringify(
-                            {
-                                participant_id: participantID,
-                                question_id: currentCar,
-                                reward: meanReward,
-                                choice: r,
-                                arrangement: JSON.stringify(IAHistory),
-                                variant: variant
-                            })
-                        },
-                    success: function(result) {
-                        console.log(result);
-                    }
-                });
+
             }
 
         }
@@ -279,8 +276,6 @@ function sampleTest() {
                         IAHistory = JSON.parse(result);
                         console.log("The IA history is ");
                         console.log(IAHistory);
-                        console.log("new IA");
-                        console.log(result);
                         var l = (JSON.parse(result)["architectures"]).length
                         var structure = JSON.parse(result)["architectures"][l - 1];
                         makeGrid(structure["components"], "dynamicIA");
