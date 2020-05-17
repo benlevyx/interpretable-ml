@@ -6,6 +6,7 @@
  * @param total -- The total number of questions in the experiment (should be 40)
  */
 function updateLeftPanel(obs, acc, curr, total) {
+  console.log(obs);
   var cls = obs.class_pred,
       color = classLevels[cls];
 
@@ -45,7 +46,10 @@ function updateLeftPanel(obs, acc, curr, total) {
   $('#question-progress').html(`<b>${curr}/${total}</b>`);
 
   // Updating the accuracy bar
+  console.log(acc);
   acc = `${(acc || 0) * 100}%`;
+
+  console.log(acc);
   $('.accuracy-bar-top').css('width', acc);
   $('#accuracy-score').html(`<b>${acc}</b>`);
 

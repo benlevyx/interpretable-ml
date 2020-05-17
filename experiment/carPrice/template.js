@@ -17,6 +17,7 @@ var arrangements = {};
 var taskTime = {};
 var variant = ((Math.random() > 0.5) ? 1 : 0); // randomize experiment variable
 var decisionBatch = []; // array of user decisions of a certain length. When reaching the length the reward is calculated as the mean and this array will be empty again. 
+var accuracyBatch = [];
 var IAHistory = {
 };
 
@@ -112,6 +113,7 @@ function sampleTest() {
 
         
         function clickDecisionBtt() {
+            currentCar += 1;
             if(currentCar >= maxCars) {
 
 
@@ -122,10 +124,7 @@ function sampleTest() {
             startTime = new Date()
             var r = 0;
 
-            // update a random car
-            //var nCars = window.data.carData.length,
-            //idx = Math.floor(Math.random() * nCars);
-
+            // update a car
             if(currentCar < 5) {
                 window.selected.obs = window.data.carTut[currentCar];
             }
@@ -140,6 +139,8 @@ function sampleTest() {
                 window.selected.obs = window.data.carEval[currentCar - 45];
             }
 
+
+            // show tutorials
             if (currentCar >= 4 && currentCar < 44) {
                 // tutorials
                 if(!tutorialsShown['opt']) {
@@ -156,86 +157,96 @@ function sampleTest() {
             }
 
             //console.log(window.selected.obs);
-            window.selected.class = window.selected.obs.class;
-            updateLeftPanel(window.selected.obs);
+            window.selected.class = window.selected.obs.class_pred;
             fillComponents();
 
             console.log($(this).attr('id'));
             if($(this).attr('id') === "agreeBtt"){
                 r = 1;
             }
+            if (r & (window.selected.obs['class'] === window.selected.obs['class_pred'])) {
+                accuracyBatch.push(1);
+            } else if (!r & (window.selected.obs['class'] != window.selected.obs['class_pred'])) {
+                accuracyBatch.push(1);
+            } else {
+                accuracyBatch.push(0);
+            }
 
             if(currentCar >= 5){
                 decisionBatch.push(r);
             }
 
-                currentCar += 1;
+            // update left panels
+            updateLeftPanel(window.selected.obs, d3.mean(accuracyBatch).toFixed(1), currentCar, maxCars);
+            
+            // update visualizations only every X number of questions. 
+            if(currentCar% REWARD_INTERVAL === 0 & currentCar > 5 & currentCar <= 45){
 
-                // update only every X number of questions. 
-                if(currentCar% REWARD_INTERVAL === 0 & currentCar > 5 & currentCar <= 45){
+                d3.select('#dynamicIA').html("<div id='loader'><p>Loading...</p></div>");
+                console.log("updating IA.");
+                $(".decisionBtt").off('click');
+                meanReward = d3.mean(decisionBatch)
+                console.log(meanReward)
+                meanReward = meanReward * Math.exp(-time/50000);
 
-                    d3.select('#dynamicIA').html("<div id='loader'><p>Loading...</p></div>");
-                    console.log("updating IA.");
-                    $(".decisionBtt").off('click');
-                    meanReward = d3.mean(decisionBatch)
-                    console.log(meanReward)
-                    meanReward = meanReward * Math.exp(-time/50000);
+                console.log(time);
 
-                    console.log(time);
-
-                    IAHistory.scores.push(meanReward);
-                    decisionBatch = [];
-                    
-                    $.ajax({
-                        url : "./optimizer.php",
-                        type : "POST",
-                        data: {
-                            data: JSON.stringify(
-                                IAHistory
-                                )
-                            },
-                        success: function(result) {
-                            var structure = JSON.parse(result)["architectures"][0];
-                            IAHistory.architectures.push(structure);
-                            $(".decisionBtt").click(
-                                clickDecisionBtt
-                            );
-                            
-                            //make grid, filling the components
-                            makeGrid(structure["components"], "dynamicIA");
-                            fillComponents();
-                        }
-                    });
-
-                    // send to PHP
-                    $.ajax({
-                        url : "./data.php",
-                        type : "POST",
-                        data: {
-                            data: JSON.stringify(
-                                {
-                                    participant_id: participantID,
-                                    question_id: currentCar,
-                                    reward: meanReward,
-                                    choice: r,
-                                    arrangement: JSON.stringify(IAHistory),
-                                    variant: variant
-                                })
-                            },
-                        success: function(result) {
-                            console.log(result);
-                        }
-                    });
-                }
-
-
+                IAHistory.scores.push(meanReward);
+                decisionBatch = [];
                 
+                $.ajax({
+                    url : "./optimizer.php",
+                    type : "POST",
+                    data: {
+                        data: JSON.stringify(
+                            IAHistory
+                            )
+                        },
+                    success: function(result) {
+                        var structure = JSON.parse(result)["architectures"][0];
+                        IAHistory.architectures.push(structure);
+                        $(".decisionBtt").click(
+                            clickDecisionBtt
+                        );
+                        
+                        //make grid, filling the components
+                        makeGrid(structure["components"], "dynamicIA");
+                        fillComponents();
+                        updateLeftPanel(window.selected.obs, d3.mean(accuracyBatch), currentCar, maxCars);
+            
+                    }
+                });
+
+                // send to PHP
+                $.ajax({
+                    url : "./data.php",
+                    type : "POST",
+                    data: {
+                        data: JSON.stringify(
+                            {
+                                participant_id: participantID,
+                                question_id: currentCar,
+                                reward: meanReward,
+                                choice: r,
+                                arrangement: JSON.stringify(IAHistory),
+                                variant: variant
+                            })
+                        },
+                    success: function(result) {
+                        console.log(result);
+                    }
+                });
+            }
         }
+
+        // initially on view experiments, initialize left panel and visualizations
         onViewPage(
             function() {
                 $("#progressBar").hide();
                 // start tutorial
                 intro.start();
+                window.selected.obs = window.data.carTut[0];
+                window.selected.class = window.selected.obs.class_pred;
                 d3.select('#dynamicIA').html("<div id='loader'><p>Loading...</p></div>");
                 // generate first architecture
 
@@ -263,6 +274,7 @@ function sampleTest() {
                                 IAHistory.architectures.push(structure);
                                 makeGrid(structure["components"], "dynamicIA");
                                 fillComponents();
+                                updateLeftPanel(window.selected.obs, 0, 0, maxCars);
                             }
                         })
 
