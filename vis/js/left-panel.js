@@ -22,7 +22,7 @@ function updateLeftPanel(obs, acc, curr, total) {
         levelData = levels[varName][idx],
         levelName = levelNames[levelData] || levelData;
     $(this).find(".feature-value").html(levelName);
-    
+
     // $(this).find(".point").each(function(j) {
     //   // Set the appropriate number of dots
     //   if (["doors", "capacity (persons)"].includes(varName)) {

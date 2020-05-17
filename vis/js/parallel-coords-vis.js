@@ -172,7 +172,7 @@ ParallelCoordsVis.prototype.updateVis = function () {
   var dataLabs = vis.svg.append('g')
       .attr('class', 'data-labels')
       .selectAll('text.data-label')
-      .data(['Selected car', `All ${classLabs[vis.selectedClass]} cars`])
+      .data(['Selected car', `All ${classLabs[window.selected.class]} cars`])
       .enter()
       .append('text')
       .attr('class', 'data-label labels')
