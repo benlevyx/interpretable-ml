@@ -221,6 +221,7 @@ function sampleTest() {
                         var l = (JSON.parse(result)["architectures"]).length
                         var structure = JSON.parse(result)["architectures"][l - 1];
                         IAHistory.architectures.push(structure);
+                        console.log(IAHistory);
                         $(".decisionBtt").click(
                             clickDecisionBtt
                         );
@@ -282,7 +283,6 @@ function sampleTest() {
                         console.log(result);
                         var l = (JSON.parse(result)["architectures"]).length
                         var structure = JSON.parse(result)["architectures"][l - 1];
-                        IAHistory.architectures.push(structure);
                         makeGrid(structure["components"], "dynamicIA");
                         fillComponents();
 
