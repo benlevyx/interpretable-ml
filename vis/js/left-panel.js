@@ -18,11 +18,11 @@ function updateLeftPanel(obs, acc, curr, total) {
 
     // Get the value of the selected car for that variable
     var val = obs[varName];
-
     var idx = encodedLevels[varName].findIndex(d => d === val),
-        levelName = levelNames[levels[varName][idx]];
+        levelData = levels[varName][idx],
+        levelName = levelNames[levelData] || levelData;
     $(this).find(".feature-value").html(levelName);
-
+    
     // $(this).find(".point").each(function(j) {
     //   // Set the appropriate number of dots
     //   if (["doors", "capacity (persons)"].includes(varName)) {
