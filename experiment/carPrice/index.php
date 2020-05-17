@@ -317,7 +317,11 @@ require_once("survey.php");
         <div class="interface-container">
       <!-- left side interface -->
       <div class="left-container">
-        <div class="car-card">
+        <div class="left-card">
+          <div class="question-container">
+            <div class="title"><b>Question</b></div>
+            <div id="question-progress" class="title dynamic"><b></b></div>
+          </div>
           <div class="title">This car is classified by the model as:</div>
           <div class="class-list-container first">
             <div class="class-item">
@@ -342,90 +346,107 @@ require_once("survey.php");
             <div id="estimated-safety" class="feature-item">
               <div class="dida">ESTIMATED SAFETY</div>
               <div class="feature-container">
-                <div class="points-container">
+                <!-- <div class="points-container">
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point"></span>
-                </div>
+                </div> -->
                 <div class="feature-value dida">high</div>
               </div>
             </div>
             <div id="capacity-(persons)" class="feature-item">
               <div class="dida">CAPACITY (PERSONS)</div>
               <div class="feature-container">
-                <div class="points-container">
+                <!-- <div class="points-container">
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point"></span>
                   <span class="point"></span>
-                </div>
+                </div> -->
                 <div class="feature-value dida">3</div>
               </div>
             </div>
             <div id="buying-price" class="feature-item">
               <div class="dida">BUYING PRICE</div>
               <div class="feature-container">
-                <div class="points-container">
+                <!-- <div class="points-container">
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point"></span>
-                </div>
+                </div> -->
                 <div class="feature-value dida">high</div>
               </div>
             </div>
             <div id="maintanence-price" class="feature-item">
               <div class="dida">MAINTENANCE PRICE</div>
               <div class="feature-container">
-                <div class="points-container">
+                <!-- <div class="points-container">
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point"></span>
                   <span class="point"></span>
                   <span class="point"></span>
-                </div>
+                </div> -->
                 <div class="feature-value dida">low</div>
               </div>
             </div>
             <div id="luggage-boot-size" class="feature-item">
               <div class="dida">LUGGAGE BOOT SIZE</div>
               <div class="feature-container">
-                <div class="points-container">
+                <!-- <div class="points-container">
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point active"></span>
-                </div>
+                </div> -->
                 <div class="feature-value dida">very high</div>
               </div>
             </div>
             <div id="doors" class="feature-item">
               <div class="dida">DOORS</div>
               <div class="feature-container">
-                <div class="points-container">
+                <!-- <div class="points-container">
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point active"></span>
                   <span class="point"></span>
                   <span class="point"></span>
-                </div>
+                </div> -->
                 <div class="feature-value dida">3</div>
               </div>
             </div>
           </div>
         </div>
-            <div class="answer-card">
-            <div class="title">What do you think about the model prediction?</div>
-            <div class="button first decisionBtt" id="agreeBtt"><div class="dida">agree</div></div>
-            <div class="button decisionBtt"><div class="dida">disagree</div></div>
+        <div class="left-card">
+          <div class="title">What do you think about the model prediction?</div>
+          <div class="buttons-container">
+            <div class="button first decisionBtt" id="agreeBtt">
+              <div class="dida">agree</div>
             </div>
+            <div class="button decisionBtt">
+              <div class="dida">disagree</div>
+            </div>
+          </div>
+        </div>
+        <div class="left-card">
+          <div class="title-container">
+            <div class="title">Your accuracy</div>
+            <div id="accuracy-score" class="title dynamic"><b></b></div>
+          </div>
+          <div class="accuracy-bar-container">
+            <div class="dida">0%</div>
+            <div class="accuracy-bar"><div class="accuracy-bar-top"></div></div>
+            <div class="dida">100%</div>
+          </div>
+        </div>
       </div>
-        <!-- right side interface -->
+    <!-- right side interface -->
             <div id="dynamicIA" class="d-flex flex-nowrap">
             </div>
 
