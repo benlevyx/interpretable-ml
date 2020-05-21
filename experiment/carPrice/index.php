@@ -323,7 +323,7 @@ require_once("survey.php");
             <div id="question-progress" class="title dynamic"><b></b></div>
           </div>
           <div class="title">This car is classified by the model as:</div>
-          <div class="class-list-container first">
+          <div id="prediction" class="class-list-container first">
             <div class="class-item">
               <div class="dida">unacceptable</div>
               <div class="class-bar unacceptable"></div>
@@ -342,7 +342,7 @@ require_once("survey.php");
             </div>
           </div>
           <div class="title">According to the car features:</div>
-          <div class="class-list-container">
+          <div id="features" class="class-list-container">
             <div id="estimated-safety" class="feature-item">
               <div class="dida">ESTIMATED SAFETY</div>
               <div class="feature-container">
@@ -423,7 +423,7 @@ require_once("survey.php");
             </div>
           </div>
         </div>
-        <div class="left-card">
+        <div class="left-card" id="decisions">
           <div class="title">What do you think about the model prediction?</div>
           <div class="buttons-container">
             <div class="button first decisionBtt" id="agreeBtt">
