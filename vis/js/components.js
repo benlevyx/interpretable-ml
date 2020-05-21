@@ -11,32 +11,54 @@ export var components = [
   {
     id: 0,
     name: 'confusion-matrix',
-    draw: drawConfusionMatrix
+    draw: drawConfusionMatrix,
+    desc: "This confusion matrix shows you how many cars were classified correctly and incorrectly. " +
+          "Each column represents the true class of each car and each row represents the predicted classes. " +
+          "The count in each cell shows the number of cars from that true class (column) that were classified " +
+          "as the predicted class (row). The diagonal elements are the correctly classified cars.",
+    tutorialGroup: null
   },
   {
     id: 1,
     name: 'feature-importance-bubble',
-    draw: drawFeatureImportanceBubble
+    draw: drawFeatureImportanceBubble,
+    desc: "These charts all show the \"importance\" of each feature, which is how much each feature " +
+        "contributed to the decision of the random forest; the greater the feature importance, the " +
+        "more a change in that feature could lead to a change in the predicted class. The size of the circles, " +
+        "pie slices, or rectangles are proportional to the importance of the feature.",
+    tutorialGroup: 'feature-importance'
   },
   {
     id: 2,
     name: 'feature-importance-pie',
-    draw: drawFeatureImportancePie
+    draw: drawFeatureImportancePie,
+    desc: "",
+    tutorialGroup: 'feature-importance'
   },
   {
     id: 3,
     name: 'feature-importance-tree',
-    draw: drawFeatureImportanceTree
+    draw: drawFeatureImportanceTree,
+    desc: "",
+    tutorialGroup: 'feature-importance'
   },
   {
     id: 4,
     name: 'parallel-coordinates',
-    draw: drawParallelCoordinatesVis
+    draw: drawParallelCoordinatesVis,
+    desc: "This parallel coordinates chart shows the features of the selected car compared to the average" +
+          " features of all cars with the same class as the selected car's predicted class.",
+    tutorialGroup: null
   },
   {
     id: 5,
     name: 'class-vote',
-    draw: drawClassVoteVis
+    draw: drawClassVoteVis,
+    desc: "The random forest is comprised of 100 individual decision trees. Each decision tree comes up with " +
+        "a prediction for the selected car and \"votes\" for that predicted class. The overall predicted class " +
+        "for the car is the class with the most votes from the individual trees. This visualization shows how " +
+        "many trees voted for each class.",
+    tutorialGroup: null
   }
 ];
 
