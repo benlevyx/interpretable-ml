@@ -82,6 +82,7 @@ FeatImportanceBubble.prototype.initVis = function () {
 FeatImportanceBubble.prototype.renderVis = function () {
   var vis = this;
 
+  addTitle(vis);
 
   if (vis.vertical || vis.horizontal) {
     var stacked = vis.stack(vis.data)[0];

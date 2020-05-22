@@ -72,6 +72,8 @@ FeatImportanceTreemap.prototype.initVis = function () {
 FeatImportanceTreemap.prototype.renderVis = function () {
   var vis = this;
 
+  addTitle(vis);
+
     vis.cell = vis.svg.selectAll("g")
       .data(vis.root.leaves())
       .enter().append("g")

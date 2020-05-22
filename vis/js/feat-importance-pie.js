@@ -62,11 +62,13 @@ FeatImportancePie.prototype.initVis = function () {
  */
 FeatImportancePie.prototype.renderVis = function () {
   var vis = this;
-  vis.svg.attr("transform", `translate(${vis.width / 2}, ${vis.height / 2})`);
+  addTitle(vis);
 
+  var mid = vis.svg
+      .append('g')
+      .attr("transform", `translate(${vis.width / 2}, ${vis.height / 2})`);
 
-  vis.arcs = vis.svg
-    .selectAll("g.slice")
+  vis.arcs = mid.selectAll("g.slice")
     .data(vis.pie(vis.data))
     .enter()
     .append("g")

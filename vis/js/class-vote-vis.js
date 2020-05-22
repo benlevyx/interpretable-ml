@@ -58,10 +58,11 @@ ClassVoteVis.prototype.updateVis = function() {
   var vis = this;
 
   // Drawing the title
-  vis.svg.append('text')
-      .attr('class', 'title')
-      .text("Number of trees in random forest voting for each class")
-      .attr('y', -25);
+  // vis.svg.append('text')
+  //     .attr('class', 'title')
+  //     .text("Number of trees in random forest voting for each class")
+  //     .attr('y', -25);
+  addTitle(vis);
 
   // Make groups for each class
   var gClasses = vis.svg.append('g')

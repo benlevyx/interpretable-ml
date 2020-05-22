@@ -92,3 +92,20 @@ var format2d = d3.format(".2f");
 function classColor(cls) {
   return `var(--${classLevels[cls]})`;
 }
+
+function addTitle(vis, offset) {
+  if (vis.config.title) {
+    let x = -vis.margin.left,
+        y = -vis.margin.top;
+    if (offset) {
+      x = offset.x || x;
+      y = offset.y || y;
+    }
+    vis.svg.append('text')
+        .attr('class', 'title')
+        .text(vis.config.title)
+        .attr('x', x)
+        .attr('y', y)
+        .attr('alignment-baseline', 'hanging');
+  }
+}

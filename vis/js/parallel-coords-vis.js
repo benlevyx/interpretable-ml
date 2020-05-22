@@ -103,6 +103,8 @@ ParallelCoordsVis.prototype.wrangleData = function() {
 ParallelCoordsVis.prototype.updateVis = function () {
   var vis = this;
 
+  addTitle(vis);
+
   // Axes
   var axes = vis.svg.append('g')
       .attr('class', 'axes y-axes')

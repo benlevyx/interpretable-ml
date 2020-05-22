@@ -58,6 +58,8 @@ ConfusionMatrix.prototype.wrangleData = function() {
 ConfusionMatrix.prototype.updateVis = function() {
   var vis = this;
 
+  addTitle(vis);
+
   var cells = vis.svg.append('g')
       .attr('class', 'blocks')
       .selectAll('g.row')
@@ -120,7 +122,7 @@ ConfusionMatrix.prototype.updateVis = function() {
       .attr('class', 'pred-labels')
       .attr('transform', `translate(0, ${vis.y.bandwidth() / 2})`)
       .selectAll('text.label')
-      .data(classLabs)
+      .data(classLabsAbbrev)
       .enter()
       .append('text')
       .attr('class', 'label')
@@ -139,7 +141,7 @@ ConfusionMatrix.prototype.updateVis = function() {
       .style('text-anchor', 'middle');
   gAxisLabs.append('text')
       .text("Predicted class")
-      .attr('y', -60)
+      .attr('y', -30)
       .attr('x', -vis.height / 2)
       .style('text-anchor', 'middle')
       .attr('class', 'axis-label')
