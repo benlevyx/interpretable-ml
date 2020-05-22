@@ -93,6 +93,13 @@ function classColor(cls) {
   return `var(--${classLevels[cls]})`;
 }
 
+/**
+ * Add a title to the visualization
+ * @param vis     -- The visualization
+ * @param offset  -- (optional) object with 'x' and/or 'y', specifying the offset.
+ *                   If not specified, then defaults to -vis.config.margin.left (x)
+ *                   and -vis.config.margin.top (y)
+ */
 function addTitle(vis, offset) {
   if (vis.config.title) {
     let x = -vis.margin.left,
