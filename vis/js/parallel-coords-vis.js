@@ -83,11 +83,10 @@ ParallelCoordsVis.prototype.wrangleData = function() {
   var vis = this;
 
   // Find the class of the selected datum
-  vis.selectedClass = vis.selected.class;
   var selectedIndivData = features.map(f => vis.selected[f]);
 
   // Filter the data
-  var selectedClassData = vis.data.filter(d => d.class === vis.selectedClass);
+  var selectedClassData = vis.data.filter(d => d.class === window.selected.class);
   var selectedClassMeans = features.map(f => d3.mean(selectedClassData, d => d[f]));
 
   vis.displayData = [

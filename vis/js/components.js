@@ -151,10 +151,9 @@ function drawParallelCoordinatesVis(vis = 'test-vis') {
         right: 50
       },
       config = {
-        margin: margin,
-        selected: window.selected.obs
+        margin: margin
       };
-  window.visComps.parallelCoordsVis = new ParallelCoordsVis(vis, window.data.carData, config);
+  window.visComps.parallelCoordsVis = new ParallelCoordsVis(vis, window.data.trainData, config);
 }
 
 function drawFeatureImportanceBubble(vis = 'test-vis') {
