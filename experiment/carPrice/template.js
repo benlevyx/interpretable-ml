@@ -18,7 +18,7 @@ var taskTime = {};
 
 var counterbalance = ((Math.random() > 0.5) ? 1 : 0); 
 
-var variant_placebo = ((Math.random() > 0.8) ? 1 : 0);
+var variant_placebo = 0;
 
 var variant_dashboard = Math.random(); // randomize experiment variable
 if(variant_dashboard >= 0 && variant_dashboard < 0.33) {

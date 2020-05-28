@@ -318,25 +318,14 @@ require_once("survey.php");
 
 
     <h1>Instructions</h1>
-    
-
-    <svg> 
-    <circle class="target" style="fill: #69b3a2" stroke="black" cx=50 cy=50 r=40></circle>
-        testing d3
-    </svg>
-
+    <p>The AI that you will encounter in this task classifies second hand cars. You will be asked to indicate whether you agree or
+    disagree with the AI's decision.</p>
     <div class=instructions>
         <div></div>
         <div></div>
     
     </div>
-    <script>
-        d3
-        .select(".target")  // select the elements that have the class 'target'
-        .style("stroke-width", 8) // change their style: stroke width is not equal to 8 pixels
-        .style("opacity", 0.5) // change their style: stroke width is not equal to 8 pixels
-    
-    </script>
+
 
 
     <!-- TODO instructions for your experiment go here -->
