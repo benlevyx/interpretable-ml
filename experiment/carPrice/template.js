@@ -15,7 +15,22 @@ var maxCars = 55;
 var REWARD_INTERVAL = 5;
 var arrangements = {};
 var taskTime = {};
-var variant = ((Math.random() > 0.5) ? 1 : 0); // randomize experiment variable
+
+var counterbalance = ((Math.random() > 0.5) ? 1 : 0); 
+
+var variant_placebo = ((Math.random() > 0.8) ? 1 : 0);
+
+var variant_dashboard = Math.random(); // randomize experiment variable
+if(variant_dashboard >= 0 && variant_dashboard < 0.33) {
+    variant_dashboard = 1
+} else if (variant_dashboard >= 0.33 && variant_dashboard < 0.66) {
+    variant_dashboard = 2
+} else {
+    variant_dashboard = 3
+}
+
+var defaultDashboard = {"id":1723,"height":12,"width":12,"components":{"id":-1,"height":1,"width":1,"orientation":"v","left_child":{"id":4,"height":1,"width":0.3333333333333333,"orientation":"v","left_child":{},"right_child":{}},"right_child":{"id":-1,"height":1,"width":0.6666666666666667,"orientation":"v","left_child":{"id":6,"height":0.5,"width":1,"orientation":"h","left_child":{},"right_child":{}},"right_child":{"id":-1,"height":0.5,"width":1,"orientation":"h","left_child":{"id":5,"height":1,"width":0.5,"orientation":"v","left_child":{},"right_child":{}},"right_child":{"id":-1,"height":1,"width":0.5,"orientation":"v","left_child":{"id":1,"height":1,"width":1,"orientation":"v","left_child":{},"right_child":{}},"right_child":{}}}}}};
+defaultDashboard = defaultDashboard.components;
 var decisionBatch = []; // array of user decisions of a certain length. When reaching the length the reward is calculated as the mean and this array will be empty again. 
 var accuracyBatch = [];
 var IAHistory = {
@@ -89,7 +104,6 @@ function sampleTest() {
             viewPage("#instructions_page")
         });
         $("#instructions_button").click(function () {
-            variant = $("#variant").val()
             viewPage("#experiment2_page");
             startTime = new Date();
             // visually show that progress has been made through "The test" step on the progress bar
@@ -122,7 +136,7 @@ function sampleTest() {
                     data: {
                         accuracy: JSON.stringify({
                             participant_id: participantID,
-                            variant: variant,
+                            variant: variant_dashboard,
                             accuracies: JSON.stringify(accuracyBatch),
                         
                         }
@@ -165,6 +179,9 @@ function sampleTest() {
             }
             else if (currentCar >= 45) {
                 window.selected.obs = window.data.carEval[currentCar - 45];
+                $('#accuracy').hide();
+
+
             }
 
 
@@ -173,20 +190,14 @@ function sampleTest() {
             window.selected.class = window.selected.obs.class_pred;
             fillComponents();
             // show tutorials
-            if (currentCar >= 4 && currentCar < 44) {
+            if (currentCar > 4 && currentCar <= 44) {
                 // tutorials
                 if(!tutorialsShown['opt']) {
                     opt.start();
                     tutorialsShown["opt"] = true;
                 }
             }
-            else if (currentCar >= 44) {
-                // opt
-                if(!tutorialsShown['eval']) {
-                    evaluation.start();
-                    tutorialsShown["eval"] = true;
-                }
-            }
+
             // update left panels
             updateLeftPanel(window.selected.obs, d3.mean(accuracyBatch).toFixed(3), currentCar, maxCars);
             
@@ -221,11 +232,12 @@ function sampleTest() {
                         $(".decisionBtt").click(
                             clickDecisionBtt
                         );
-                        
-                        //make grid, filling the components
-                        makeGrid(structure["components"], "dynamicIA");
-                        fillComponents();
-                                        // send to PHP
+                        if(currentCar < 45) {
+                            //make grid, filling the components
+                            makeGrid(structure["components"], "dynamicIA");
+                            fillComponents();// send to PHP
+                        }
+
                     $.ajax({
                         url : "./data.php",
                         type : "POST",
@@ -237,7 +249,7 @@ function sampleTest() {
                                     reward: meanReward,
                                     choice: r,
                                     arrangement: JSON.stringify(IAHistory),
-                                    variant: variant
+                                    variant: variant_dashboard
                                 })
                             },
                         success: function(result) {
@@ -249,6 +261,33 @@ function sampleTest() {
                 });
 
 
+            }
+            if(counterbalance == 0) {
+                if(currentCar >= 45 && currentCar < 50) {
+                    //make grid, filling the components
+                    var structure = IAHistory.architectures[IAHistory.architectures.length - 1];
+                    makeGrid(structure["components"], "dynamicIA");
+                    fillComponents();
+                } else if (currentCar >= 50) {
+
+                    makeGrid(defaultDashboard, "dynamicIA");
+                    fillComponents();
+                }
+
+            } else {
+                if(currentCar >= 45 && currentCar < 50) {
+                    makeGrid(defaultDashboard, "dynamicIA");
+                    fillComponents();
+
+                } else if (currentCar >= 50) {
+                    //make grid, filling the components
+                    var structure = IAHistory.architectures[IAHistory.architectures.length - 1];
+                    makeGrid(structure["components"], "dynamicIA");
+                    fillComponents();
+                }
+            }
+            if (currentCar >= 54) {
+                viewPage("#comments_page");
             }
 
         }
@@ -269,7 +308,7 @@ function sampleTest() {
                     url : "./optimizer.php",
                     type : "POST",
                     data: { 
-                        variant: JSON.stringify(variant)
+                        variant: JSON.stringify(variant_dashboard)
                         },
                     success: function(result) {
                         console.log("onview receives IA history. ")

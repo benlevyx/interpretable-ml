@@ -270,10 +270,45 @@ require_once("survey.php");
                         sessionFlow.setParticipantID(participantID);
                     if (debug)
                         console.log("received response from the server for demographics: " + data);
+        // post counterbalance in additional data 
+        $.ajax({
+          url: './data.php',
+          type: "POST",
+          data: {"additional_data": JSON.stringify({
+              participant_id: participantID,
+              entry_name: "counterbalance",
+              value: counterbalance,
+              text_value:" ",
+          })}, 
+          success: function(data) {
+              console.log("Successfully transmitted counterbalance version.");
+          },
+          error: function() {
+              console.log("Failed to transmit results to server");
+          }
+      });
+      $.ajax({
+          url: './data.php',
+          type: "POST",
+          data: {"additional_data": JSON.stringify({
+              participant_id: participantID,
+              entry_name: "dashboard",
+              value: variant_dashboard,
+              text_value:" ",
+          })}, 
+          success: function(data) {
+              console.log("Successfully transmitted dashboard version.");
+          },
+          error: function() {
+              console.log("Failed to transmit results to server");
+          }
+      });
 
                 }
             })
         })
+
+
     </script>
 </div>
 
@@ -283,13 +318,18 @@ require_once("survey.php");
 
 
     <h1>Instructions</h1>
-    <p>Hello plz type in your variant number such as 1, 2, 3. :)</p>
-    <input type="number" id="variant" value="1" />
+    
 
     <svg> 
     <circle class="target" style="fill: #69b3a2" stroke="black" cx=50 cy=50 r=40></circle>
         testing d3
     </svg>
+
+    <div class=instructions>
+        <div></div>
+        <div></div>
+    
+    </div>
     <script>
         d3
         .select(".target")  // select the elements that have the class 'target'
@@ -434,7 +474,7 @@ require_once("survey.php");
             </div>
           </div>
         </div>
-        <div class="left-card">
+        <div class="left-card" id='accuracy'>
           <div class="title-container">
             <div class="title">Your accuracy</div>
             <div id="accuracy-score" class="title dynamic"><b></b></div>

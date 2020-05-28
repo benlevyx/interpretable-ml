@@ -47,7 +47,9 @@ function updateLeftPanel(obs, acc, curr, total) {
 
   // Updating the accuracy bar
   console.log(acc);
-  acc = `${format2d(acc || 0) * 100}%`;
+  acc = (acc * 100).toFixed(2);
+  
+  acc = `${acc}%`;
 
   console.log(acc);
   $('.accuracy-bar-top').css('width', acc);
