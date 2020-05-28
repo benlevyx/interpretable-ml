@@ -128,7 +128,8 @@ function sampleTest() {
         
         function clickDecisionBtt() {
             currentCar += 1;
-            if(currentCar > maxCars) {
+
+            if(currentCar >= maxCars) {
                 viewPage("#comments_page");
                 $.ajax({
                     url : "./data.php",
@@ -177,7 +178,7 @@ function sampleTest() {
             else if (currentCar >= 5 && currentCar < 45){
                 window.selected.obs = window.data.carOpt[currentCar - 5];
             }
-            else if (currentCar >= 45) {
+            else if (currentCar > 45) {
                 window.selected.obs = window.data.carEval[currentCar - 45];
                 $('#accuracy').hide();
 
@@ -189,14 +190,7 @@ function sampleTest() {
             window.selected.idx = parseInt(window.selected.obs[""]);
             window.selected.class = window.selected.obs.class_pred;
             fillComponents();
-            // show tutorials
-            if (currentCar > 4 && currentCar <= 44) {
-                // tutorials
-                if(!tutorialsShown['opt']) {
-                    opt.start();
-                    tutorialsShown["opt"] = true;
-                }
-            }
+
 
             // update left panels
             updateLeftPanel(window.selected.obs, d3.mean(accuracyBatch).toFixed(3), currentCar, maxCars);
@@ -232,7 +226,7 @@ function sampleTest() {
                         $(".decisionBtt").click(
                             clickDecisionBtt
                         );
-                        if(currentCar < 45) {
+                        if(currentCar <=  45) {
                             //make grid, filling the components
                             makeGrid(structure["components"], "dynamicIA");
                             fillComponents();// send to PHP
@@ -263,32 +257,30 @@ function sampleTest() {
 
             }
             if(counterbalance == 0) {
-                if(currentCar >= 45 && currentCar < 50) {
+                if(currentCar > 45 && currentCar <= 50) {
                     //make grid, filling the components
                     var structure = IAHistory.architectures[IAHistory.architectures.length - 1];
                     makeGrid(structure["components"], "dynamicIA");
                     fillComponents();
-                } else if (currentCar >= 50) {
+                } else if (currentCar > 50) {
 
                     makeGrid(defaultDashboard, "dynamicIA");
                     fillComponents();
                 }
 
             } else {
-                if(currentCar >= 45 && currentCar < 50) {
+                if(currentCar > 45 && currentCar <= 50) {
                     makeGrid(defaultDashboard, "dynamicIA");
                     fillComponents();
 
-                } else if (currentCar >= 50) {
+                } else if (currentCar > 50) {
                     //make grid, filling the components
                     var structure = IAHistory.architectures[IAHistory.architectures.length - 1];
                     makeGrid(structure["components"], "dynamicIA");
                     fillComponents();
                 }
             }
-            if (currentCar >= 54) {
-                viewPage("#comments_page");
-            }
+
 
         }
 
