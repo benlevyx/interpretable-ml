@@ -41,14 +41,15 @@
   font-style: normal;
   line-height: 1.23;
   letter-spacing: 0.39px;
-  color: #F0F0F0;
+  color: #f0f0f0;
   text-transform: uppercase;
 }
 /* components labels and numbers */
 .labels {
   font-family: "Karla", sans-serif;
-  font-size: 9px;
+  font-size: 10px;
   line-height: 1.1;
+  letter-spacing: 0.8px;
   color: var(--labels);
   fill: var(--labels);
   text-transform: uppercase;
@@ -66,6 +67,46 @@
 }
 .vgood {
   background: var(--vgood);
+}
+
+/****************** FEEDBACK PAGE *******************/
+.feedback-container {
+  height: 100vh;
+  width: 100vw;
+  background: var(--background);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.feedback-container.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.feedback-window {
+  width: 30vw;
+  background: var(--user-card);
+  border-radius: 10px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.feedback-buttons {
+  width: 100%;
+  display: flex;
+  pointer-events: none;
+  margin: 20px 0;
+}
+.feedback.button.active {
+  background: var(--button-selected) !important;
+}
+.dida.cta {
+  margin-top: 30px;
+  color: var(--labels);
 }
 
 /****************** INTERFACE ELEMENTS *******************/
@@ -95,7 +136,7 @@
 .question-container {
   display: flex;
   justify-content: space-between;
-  margin-bottom:10px;
+  margin-bottom: 10px;
 }
 
 .left-card .title {
@@ -190,16 +231,25 @@
   margin: 0 3px;
   background-color: rgba(255, 255, 255, 0.2);
   position: relative;
-  z-index:0;
+  z-index: 0;
 }
 .accuracy-bar-top {
   width: 0%;
   height: 100%;
   background: white;
-  position:absolute;
-  top:0;
-  left:0;
-  z-index:2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+.accuracy-bar-bar {
+  width: 1px;
+  height: calc(100% + 7px);
+  background: var(--button-selected);
+  position: absolute;
+  bottom: 0;
+  left: 40%;
+  z-index: 2;
 }
 
 /************ RIGHT SIDE ************/
