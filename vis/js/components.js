@@ -99,7 +99,7 @@ function drawFeatureImportancePie(vis = 'test-vis') {
 
 function drawParallelCoordinatesVis(vis = 'test-vis') {
   var margin = {
-        bottom: 40,
+        bottom: 50,
         left: 70,
         top: 20,
         right: 75

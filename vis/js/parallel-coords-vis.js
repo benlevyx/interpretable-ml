@@ -92,7 +92,7 @@ ParallelCoordsVis.prototype.wrangleData = function() {
 
   // Getting features in order of importance
   vis.featsOrdered = features.sort((a, b) => {
-    return vis.featImportanceDict[b] - vis.featImportanceDict[a];
+    return vis.featImportanceDict[a] - vis.featImportanceDict[b];
   });
 
   // Find the class of the selected datum
@@ -155,6 +155,15 @@ ParallelCoordsVis.prototype.updateVis = function () {
       .attr(vis.vertical ? 'x' : 'y', vis.vertical ? -12 : vis.height + 7)
       .call(wrap, 10)
       .attr('text-anchor', 'end');
+
+  // Adding importance axis label
+  vis.svg.append('text')
+      .attr('class', 'labels')
+      .text('Low ← Feature importance → High')
+      .attr('x', vis.vertical ? 0 : vis.width / 2)
+      .attr('y', vis.vertical ? vis.height / 2 : vis.height)
+      .style('text-anchor', 'middle')
+      .attr('transform', vis.vertical ? 'rotate(90)' : 'translate(0, 45)');
 
   vis.svg.selectAll('g.tick > text').remove();
 
