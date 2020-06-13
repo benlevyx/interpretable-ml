@@ -8,7 +8,8 @@
  */
 export default function ParallelCoordsVis(_parentElement, _data, _config) {
   this.parentElement = _parentElement;
-  this.data = _data;
+  this.data = _data.carData;
+  this.featImportances = _data.featImportances
   this.displayData = null;
   this.config = _config;
 
@@ -32,8 +33,7 @@ ParallelCoordsVis.prototype.initVis = function () {
   vis.selected = window.selected.obs;
 
   vis.x = d3
-    .scalePoint()
-    .domain(features.map((d, i) => i));
+    .scalePoint();
 
   if (vis.vertical) {
     vis.x.range([vis.height, 0]);
@@ -41,8 +41,8 @@ ParallelCoordsVis.prototype.initVis = function () {
     vis.x.range([0, vis.width]);
   }
 
-  vis.yScales = [];
-  vis.yAxes = [];
+  vis.yScales = {};
+  vis.yAxes = {};
   features.forEach(column => {
     var y = d3.scaleLinear();
     if (vis.vertical) {
@@ -50,11 +50,9 @@ ParallelCoordsVis.prototype.initVis = function () {
     } else {
       y.range([vis.height, 0])
     }
-    if (column === 'doors' || column === 'capacity (persons)') {
-      y.domain([2, 5])
-    } else {
-      y.domain([0, levels[column].length - 1])
-    }
+    var ymin = d3.min(encodedLevels[column]),
+        ymax = d3.max(encodedLevels[column]);
+    y.domain([ymin, ymax]);
     var yAxis;
     if (vis.vertical) {
       yAxis = d3.axisTop();
@@ -65,15 +63,18 @@ ParallelCoordsVis.prototype.initVis = function () {
             .ticks(levels[column].length)
             .tickFormat((d, i) => levels[column][i]);
 
-    vis.yScales.push(y);
-    vis.yAxes.push(yAxis);
+    vis.yScales[column] = y;
+    vis.yAxes[column] = yAxis;
+
+    // Radius scale for marker size (feature importance)
+    vis.r = d3.scaleSqrt()
+        .range([2, 8])
+        .domain(d3.extent(vis.featImportances, d => d.value))
   });
 
   vis.line = d3
     .line()
-    .curve(vis.vertical ? d3.curveMonotoneY : d3.curveMonotoneX)
-    .x((d, i) => vis.vertical ? vis.yScales[i](d) : vis.x(i))
-    .y((d, i) => vis.vertical ? vis.x(i) : vis.yScales[i](d));
+    .curve(vis.vertical ? d3.curveMonotoneY : d3.curveMonotoneX);
 
   // Call the function to generate DOM elements
   vis.wrangleData();
@@ -83,16 +84,40 @@ ParallelCoordsVis.prototype.wrangleData = function() {
   var vis = this;
 
   // Find the class of the selected datum
-  var selectedIndivData = features.map(f => vis.selected[f]);
+  var selectedIndivData = features.map(f => {
+    return {feature: f, value: vis.selected[f]};
+  });
 
   // Filter the data
-  var selectedClassData = vis.data.filter(d => d.class === window.selected.class);
-  var selectedClassMeans = features.map(f => d3.mean(selectedClassData, d => d[f]));
+  var selectedClassData = vis.data.filter(d => d.class === vis.selected.class),
+      selectedClassMeans = features.map(f => {
+    return {feature: f, value: d3.mean(selectedClassData, d => d[f])}
+  });
 
   vis.displayData = [
-      selectedIndivData,
-      selectedClassMeans
+    selectedIndivData,
+    selectedClassMeans
   ];
+
+  console.log(vis.displayData);
+
+  // Converting feat importances into a dictionary mapping from
+  // feature name to feature value
+  vis.featImportanceDict = {};
+  vis.featImportances.forEach(d => {
+    vis.featImportanceDict[d.feature] = d.value;
+  });
+
+  // Getting features in order of importance
+  vis.featsOrdered = features.sort((a, b) => {
+    return vis.featImportanceDict[a] < vis.featImportanceDict[b];
+  })
+
+  vis.x.domain(vis.featsOrdered.map(d => d))
+
+  vis.line
+      .x(d => vis.vertical ? vis.yScales[d.feature](d.value) : vis.x(d.feature))
+      .y(d => vis.vertical ? vis.x(d.feature) : vis.yScales[d.feature](d.value))
 
   vis.updateVis();
 };
@@ -109,31 +134,28 @@ ParallelCoordsVis.prototype.updateVis = function () {
   var axes = vis.svg.append('g')
       .attr('class', 'axes y-axes')
       .selectAll('g.axis.y-axis')
-      .data(vis.yAxes)
+      .data(vis.featsOrdered)
       .enter()
       .append('g')
       .attr('class', 'axis y-axis grid')
-      .attr('transform', (d, i) => vis.vertical ? `translate(0, ${vis.x(i)})` : `translate(${vis.x(i)}, 0)`)
-      .each(function(d) { d3.select(this).call(d) });
+      .attr('transform', (d, i) => vis.vertical ? `translate(0, ${vis.x(d)})` : `translate(${vis.x(d)}, 0)`)
+      .each(function(d) { d3.select(this).call(vis.yAxes[d]) });
 
   // Axis labels
   var axisLabels = vis.svg.append('g')
       .attr('class', 'axis-labels')
       .selectAll('text.axis-label')
-      .data(features)
+      .data(vis.featsOrdered)
       .enter()
       .append('text')
       .attr('class', 'labels')
       .text(d => featureAbbrevs[d])
-      .attr('transform', vis.vertical ? 'translate(-20, -10)' : 'translate(0, 0)')
-      .attr(vis.vertical ? 'y' : 'x', (d, i) => vis.x(i))
+      .attr('transform', vis.vertical ? 'translate(0, -10)' : 'translate(0, 0)')
+      .attr(vis.vertical ? 'y' : 'x', d => vis.x(d))
       .attr(vis.vertical ? 'x' : 'y', vis.vertical ? -12 : vis.height + 7)
-      .call(wrap, 10);
+      .call(wrap, 10)
+      .attr('text-anchor', 'end');
 
-  // vis.svg
-  //   .selectAll("g.tick > text")
-  //   .attr("class", "labels")
-  //   .attr("text-anchor", vis.vertical ? 'middle' : "end");
   vis.svg.selectAll('g.tick > text').remove();
 
   var color = classColor(window.selected.class);
@@ -163,17 +185,25 @@ ParallelCoordsVis.prototype.updateVis = function () {
       .enter()
       .append('circle')
       .attr('class', 'marker')
-      .attr(vis.vertical ? 'cy' : 'cx', (d, i) => vis.x(i))
-      .attr(vis.vertical ? 'cx' : 'cy', (d, i) => vis.yScales[i](d))
+      .attr(vis.vertical ? 'cy' : 'cx', d => vis.x(d.feature))
+      .attr(vis.vertical ? 'cx' : 'cy', d => vis.yScales[d.feature](d.value))
       .style('fill', color);
+  if (vis.config.featImportanceDiameter) {
+    markers.style('r', d => vis.r(vis.featImportanceDict[d.feature]));
+  }
 
-
-  var getPos = (d, i) => vis.yScales[vis.vertical ? 0 : 5](vis.displayData[i][vis.vertical ? 0 : 5]);
+  function getPos(d, i) {
+    var endIdx = vis.vertical ? 0 : 5,
+        endFeat = vis.featsOrdered[endIdx],
+        res = vis.yScales[endFeat](vis.displayData[i][endIdx].value);
+    console.log(res);
+    return res;
+  }
 
   var dataLabs = vis.svg.append('g')
       .attr('class', 'data-labels')
       .selectAll('text.data-label')
-      .data(['Selected car', `All ${classLabs[window.selected.class]} cars`])
+      .data(['Selected car', `All ${classLabs[vis.selected.class]} cars`])
       .enter()
       .append('text')
       .attr('class', 'data-label labels')
@@ -181,7 +211,7 @@ ParallelCoordsVis.prototype.updateVis = function () {
       .attr(vis.vertical ? 'y' : 'x', vis.vertical ? vis.height : vis.width)
       .attr(vis.vertical ? 'x' : 'y', getPos)
       .style('fill', color)
-      .attr('transform', `translate(${vis.vertical ? 0 : 5}, ${vis.vertical ? 10 : -5})`)
+      .attr('transform', `translate(${vis.vertical ? 0 : 10}, ${vis.vertical ? 10 : -5})`)
       .text(d => d)
       .style('text-anchor', function(d, i) {
         if (!vis.vertical) {

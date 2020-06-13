@@ -102,13 +102,18 @@ function drawParallelCoordinatesVis(vis = 'test-vis') {
         bottom: 40,
         left: 70,
         top: 20,
-        right: 50
+        right: 75
       },
       config = {
         margin: margin,
-        title: "Comparing selected car to all cars with predicted class"
+        title: "Comparing selected car to all cars with predicted class",
+        featImportanceDiameter: true
+      },
+      visData = {
+        carData: window.data.trainData,
+        featImportances: window.data.featureRanking
       };
-  window.visComps.parallelCoordsVis = new ParallelCoordsVis(vis, window.data.trainData, config);
+  window.visComps.parallelCoordsVis = new ParallelCoordsVis(vis, visData, config);
 }
 
 function drawFeatureImportanceBubble(vis = 'test-vis') {

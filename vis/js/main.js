@@ -19,14 +19,14 @@ window.selected = {
 // // LOADING DATA
 // Load all data once, then call the vis constructors
 Promise.all([
-    d3.csv('data/feature_ranking.csv'),
-    d3.csv('data/test_data.csv'),
-    d3.text('data/confusion_matrix.csv'),
-    d3.csv('data/class_votes.csv'),
+    d3.csv('data/new_data/feature_ranking.csv'),
+    d3.csv('data/new_data/test_data.csv'),
+    d3.text('data/new_data/confusion_matrix.csv'),
+    d3.csv('data/new_data/class_votes.csv'),
     d3.csv('data/tut_cars.csv'),
     d3.csv('data/opt_cars.csv'),
     d3.csv('data/eval_cars.csv'),
-    d3.csv('data/train_data.csv')
+    d3.csv('data/new_data/train_data.csv')
 
 ]).then(function(datasets) {
   var featRanking = datasets[0],
