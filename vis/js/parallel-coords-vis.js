@@ -83,24 +83,6 @@ ParallelCoordsVis.prototype.initVis = function () {
 ParallelCoordsVis.prototype.wrangleData = function() {
   var vis = this;
 
-  // Find the class of the selected datum
-  var selectedIndivData = features.map(f => {
-    return {feature: f, value: vis.selected[f]};
-  });
-
-  // Filter the data
-  var selectedClassData = vis.data.filter(d => d.class === vis.selected.class),
-      selectedClassMeans = features.map(f => {
-    return {feature: f, value: d3.mean(selectedClassData, d => d[f])}
-  });
-
-  vis.displayData = [
-    selectedIndivData,
-    selectedClassMeans
-  ];
-
-  console.log(vis.displayData);
-
   // Converting feat importances into a dictionary mapping from
   // feature name to feature value
   vis.featImportanceDict = {};
@@ -110,8 +92,26 @@ ParallelCoordsVis.prototype.wrangleData = function() {
 
   // Getting features in order of importance
   vis.featsOrdered = features.sort((a, b) => {
-    return vis.featImportanceDict[a] < vis.featImportanceDict[b];
-  })
+    return vis.featImportanceDict[b] - vis.featImportanceDict[a];
+  });
+
+  // Find the class of the selected datum
+  var selectedIndivData = vis.featsOrdered.map(f => {
+    return {feature: f, value: vis.selected[f]};
+  });
+
+  // Filter the data
+  var selectedClassData = vis.data.filter(d => d.class === vis.selected.class),
+      selectedClassMeans = vis.featsOrdered.map(f => {
+    return {feature: f, value: d3.mean(selectedClassData, d => d[f])}
+  });
+
+  vis.displayData = [
+    selectedIndivData,
+    selectedClassMeans
+  ];
+
+  console.log(vis.displayData);
 
   vis.x.domain(vis.featsOrdered.map(d => d))
 
