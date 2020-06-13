@@ -160,10 +160,10 @@ ParallelCoordsVis.prototype.updateVis = function () {
   vis.svg.append('text')
       .attr('class', 'labels')
       .text('Low ← Feature importance → High')
-      .attr('x', vis.vertical ? 0 : vis.width / 2)
-      .attr('y', vis.vertical ? vis.height / 2 : vis.height)
+      .attr('x', vis.vertical ? -vis.height / 2 : vis.width / 2)
+      .attr('y', vis.vertical ? 0 : vis.height)
       .style('text-anchor', 'middle')
-      .attr('transform', vis.vertical ? 'rotate(90)' : 'translate(0, 45)');
+      .attr('transform', vis.vertical ? 'rotate(-90) translate(0, -65)' : 'translate(0, 45)');
 
   vis.svg.selectAll('g.tick > text').remove();
 
