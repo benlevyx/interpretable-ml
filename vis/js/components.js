@@ -7,25 +7,46 @@ import FeatMeanVis from "./feat-mean-vis.js";
 import ParallelCoordsVis from "./parallel-coords-vis.js";
 import ClassVoteVis from "./class-vote-vis.js";
 
+
+// ******************** VIS DESCRIPTIONS ******************** //
+const visDescriptions = {
+  confusionMatrix: "This confusion matrix shows you how many cars were classified correctly and incorrectly. " +
+      "Each column represents the true class of each car and each row represents the predicted classes. " +
+      "The count in each cell shows the number of cars from that true class (column) that were classified " +
+      "as the predicted class (row). The diagonal elements are the correctly classified cars.",
+  featImportanceBubble: "This chart shows the \"importance\" of each feature, which is how much each feature " +
+      "contributed to the decision of the random forest; the greater the feature importance, the " +
+      "more a change in that feature could lead to a change in the predicted class. The sizes of the circles " +
+      "are proportional to the importance of the feature.",
+  featImportancePie: "This chart shows the \"importance\" of each feature, which is how much each feature " +
+      "contributed to the decision of the random forest; the greater the feature importance, the " +
+      "more a change in that feature could lead to a change in the predicted class. The sizes of the " +
+      "pie slices are proportional to the importance of the feature.",
+  featImportanceTree: "This chart shows the \"importance\" of each feature, which is how much each feature " +
+      "contributed to the decision of the random forest; the greater the feature importance, the " +
+      "more a change in that feature could lead to a change in the predicted class. The sizes of the " +
+      "rectangles are proportional to the importance of the feature.",
+  parallelCoordinates: "This parallel coordinates chart shows the features of the selected car compared to the average" +
+      " features of all cars with the same class as the selected car's predicted class.",
+  classVote: " This visualization shows how many trees in the random forest voted for each class. " +
+      "The random forest is comprised of 100 individual decision trees. Each decision tree comes up with " +
+      "a prediction for the selected car and \"votes\" for that predicted class. The overall predicted class " +
+      "for the car is the class with the most votes from the individual trees."
+}
+
 export var components = [
   {
     id: 0,
     name: 'confusion-matrix',
     draw: drawConfusionMatrix,
-    desc: "This confusion matrix shows you how many cars were classified correctly and incorrectly. " +
-          "Each column represents the true class of each car and each row represents the predicted classes. " +
-          "The count in each cell shows the number of cars from that true class (column) that were classified " +
-          "as the predicted class (row). The diagonal elements are the correctly classified cars.",
+    desc: visDescriptions.confusionMatrix,
     tutorialGroup: null
   },
   {
     id: 1,
     name: 'feature-importance-bubble',
     draw: drawFeatureImportanceBubble,
-    desc: "These charts all show the \"importance\" of each feature, which is how much each feature " +
-        "contributed to the decision of the random forest; the greater the feature importance, the " +
-        "more a change in that feature could lead to a change in the predicted class. The size of the circles, " +
-        "pie slices, or rectangles are proportional to the importance of the feature.",
+    desc: visDescriptions.featImportanceBubble,
     tutorialGroup: 'feature-importance'
   },
   {
@@ -46,18 +67,14 @@ export var components = [
     id: 4,
     name: 'parallel-coordinates',
     draw: drawParallelCoordinatesVis,
-    desc: "This parallel coordinates chart shows the features of the selected car compared to the average" +
-          " features of all cars with the same class as the selected car's predicted class.",
+    desc: visDescriptions.parallelCoordinates,
     tutorialGroup: null
   },
   {
     id: 5,
     name: 'class-vote',
     draw: drawClassVoteVis,
-    desc: "The random forest is comprised of 100 individual decision trees. Each decision tree comes up with " +
-        "a prediction for the selected car and \"votes\" for that predicted class. The overall predicted class " +
-        "for the car is the class with the most votes from the individual trees. This visualization shows how " +
-        "many trees voted for each class.",
+    desc: visDescriptions.classVote,
     tutorialGroup: null
   }
 ];
@@ -76,7 +93,8 @@ function drawFeatureImportanceTree(vis = 'test-vis') {
       'top': 15,
       'right': 10
     },
-    title: "Feature importances"
+    title: "Feature importances",
+    info: visDescriptions.featImportanceTree
   };
   window.visComps.featImportanceVisTree = new FeatImportanceTreemap(vis, window.data.featureRanking, config);
 }
@@ -92,7 +110,8 @@ function drawFeatureImportancePie(vis = 'test-vis') {
       'top': 10,
       'right': 10
     },
-    title: "Feature importances"
+    title: "Feature importances",
+    info: visDescriptions.featImportancePie
   };
   window.visComps.featImportanceVisPie = new FeatImportancePie(vis, window.data.featureRanking, config);
 }
@@ -106,8 +125,9 @@ function drawParallelCoordinatesVis(vis = 'test-vis') {
       },
       config = {
         margin: margin,
-        title: "Comparing selected car to all cars with predicted class",
-        featImportanceDiameter: true
+        title: "Comparing selected car to all cars with same class",
+        featImportanceDiameter: true,
+        info: visDescriptions.parallelCoordinates
       },
       visData = {
         carData: window.data.trainData,
@@ -127,7 +147,8 @@ function drawFeatureImportanceBubble(vis = 'test-vis') {
       'top': 10,
       'right': 20
     },
-    title: "Feature importances"
+    title: "Feature importances",
+    info: visDescriptions.featImportanceBubble
   };
 
   // Then create the vis and store it in the global `visComps` so that it can
@@ -144,7 +165,8 @@ function drawConfusionMatrix(vis = 'test-vis') {
       'top': 35,
       'right': 10
     },
-    title: "Confusion matrix"
+    title: "Confusion matrix",
+    info: visDescriptions.confusionMatrix
   };
   window.visComps.confusionMatrix = new ConfusionMatrix(vis, window.data.confMat, config);
 }
@@ -157,7 +179,8 @@ function drawClassVoteVis(vis = 'test-vis') {
       top: 35,
       right: 10
     },
-    title: "How each tree in random forest voted"
+    title: "How each tree in random forest voted",
+    info: visDescriptions.classVote
   };
   window.visComps.classVote = new ClassVoteVis(vis, window.data.classVotes, config);
 }

@@ -277,6 +277,50 @@ div.vis-container {
 .data-line {
   stroke-width: 1.5px;
 }
+g.tooltip rect {
+  fill: var(--grid);
+  rx: 5
+}
+.info-label.dida {
+  fill: white;
+  text-transform: none;
+  font-size: 12px;
+}
+/** Tooltip **/
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border-radius: 2px;
+  max-width: 200px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.6);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+  transform: rotate(180deg);
+  top: 0;
+  left: 0;
+  margin: -8px 0 0 0;
+  /*margin: -50px -20px 0 0;*/
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
 
 /****** feat-mean vis ******/
 text.annotation {

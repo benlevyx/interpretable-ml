@@ -28,6 +28,7 @@ function initVis(vis) {
   vis.height = vis.config.height || $parentElem.height() - vis.margin.top - vis.margin.bottom;
 
   vis.svg = makeSvg(vis)
+  addInfoBubble(vis);
 }
 
 /**
@@ -114,5 +115,45 @@ function addTitle(vis, offset) {
         .attr('x', x)
         .attr('y', y)
         .attr('alignment-baseline', 'hanging');
+  }
+}
+
+function addInfoBubble(vis, offset) {
+  if (vis.config.info) {
+    offset = offset || vis.config.infoOffset;
+    let x = vis.width + vis.margin.right - 15,
+        y = -vis.margin.top;
+    if (offset) {
+      x = x - offset || x;
+      y = y - offset || y;
+    }
+
+    vis.tooltip = d3.tip()
+        .attr('class', 'd3-tip')
+        .direction('s')
+        .offset([10, 0])
+        .html(function() {
+          return `<p class="info-label dida">${vis.config.info}</p>`
+        })
+    vis.svg.call(vis.tooltip);
+
+    vis.svg.append('svg:image')
+        .attr('xlink:href', 'img/info.svg')
+        .attr('x', x)
+        .attr('y', y)
+        .attr('width', 15)
+        .attr('height', 15);
+    vis.svg.append('rect')
+        .attr('x', x)
+        .attr('y', y)
+        .attr('width', 15)
+        .attr('height', 15)
+        .style('opacity', 0)
+        .on('mouseover', function() {
+          vis.tooltip.show(d3.select(this));
+        })
+        .on('mouseout', function() {
+          vis.tooltip.hide(d3.select(this));
+        });
   }
 }
