@@ -294,7 +294,7 @@ g.tooltip rect {
   background: rgba(0, 0, 0, 0.6);
   color: #fff;
   border-radius: 2px;
-  max-width: 200px;
+  max-width: 300px;
 }
 
 /* Creates a small triangle extender for the tooltip */
