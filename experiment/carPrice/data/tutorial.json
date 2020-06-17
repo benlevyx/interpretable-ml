@@ -1,0 +1,40 @@
+{
+  "confusion-matrix": {
+    "selectedClass": "good",
+    "question": "How many good cars were classified as unacceptable by the model?",
+    "options": [1, 38, 0, 357],
+    "correct": 1
+  },
+  "feature-importance-bubble": {
+    "selectedClass":  "acc",
+    "question": "Which feature is the least important",
+    "options": ["Doors", "Safety", "Buying price", "Luggage size"],
+    "correct": 0
+  },
+  "feature-importance-pie": {
+    "selectedClass": "unacc",
+    "question": "Which feature is the most important?",
+    "options": ["Doors", "Safety", "Buying price", "Luggage size"],
+    "correct": 1
+  },
+  "feature-importance-tree": {
+    "selectedClass": "good",
+    "question": "True or false: luggage size is a more important feature than capacity",
+    "options": ["True", "False"],
+    "correct": 1
+  },
+  "parallel-coordinates": {
+    "selectedIdx": 80,
+    "selectedClass": "good",
+    "question": "Which is higher, the buying price of the selected car, or the average buying price of all good cars?",
+    "options": ["Selected is higher", "Average good car is higher"],
+    "correct": 1
+  },
+  "class-vote": {
+    "selectedIdx": 64,
+    "selectedClass": "unacc",
+    "question": "How many trees voted for this car being classified as unacceptable?",
+    "options": [12, 14, 74, 0],
+    "correct": 0
+  }
+}

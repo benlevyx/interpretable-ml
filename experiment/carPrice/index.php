@@ -86,6 +86,7 @@ require_once("survey.php");
     <script src="../../vis/js/utils.js"></script>
     <script src="../../vis/js/constants.js"></script>
     <script src="../../vis/js/left-panel.js"></script>
+    <script src="../../vis/js/d3-tip.js"></script>
     <?php
     // initialize our analytics software for tracking participant behavior
     embeddedSessionFlowStart();
@@ -319,7 +320,7 @@ require_once("survey.php");
 
     <h1>Instructions</h1>
     <p>The AI that you will encounter in this task classifies second hand cars. You will be asked to indicate whether you agree or
-    disagree with the AI's decision.</p>
+    disagree with the decision of the AI.</p>
     <div class=instructions>
         <div></div>
         <div></div>
@@ -336,6 +337,33 @@ require_once("survey.php");
         </button> 
         
     </p>
+</div>
+
+
+<!-- ********************* TUTORIAL/PRACTICE PAGE *********************** -->
+<div id="tutorial_page" class="page w800">
+    <div class="separator2"></div>
+
+
+    <h1>Tutorial questions</h1>
+    <p>Please answer the following questions. These questions are meant to make sure that you understand the visualizations. </p>
+    <form id="tutorial_form" class="container" action="tutorials.php" method="POST">
+      <div id="tutorial_questions">  
+      </div>
+      
+      <p align="right"><button class="btn btn-primary btn-lg" id="tutorials_button">
+                Done! <span class="material-icons">navigate_next</span>
+      </button> </p>
+    </form><br>
+
+    <script>
+        // submit the response asynchronously
+        $(function() {
+            $("#tutorial_page").ajaxForm();
+        });
+        
+
+    </script>
 </div>
 
 
