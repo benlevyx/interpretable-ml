@@ -372,6 +372,22 @@ require_once("survey.php");
     <!-- TODO this is entirely yours to fill out, but here is an example of a survey page -->
     <div id="experiment2_page" class="page">
         <div class="interface-container">
+
+          <!-- feedback page -->
+      <div class="feedback-container hidden" id="feedback_notification">
+        <div class="feedback-window">
+          <div class="title">Your answer was</div>
+          <div class="feedback-buttons">
+            <div class="feedback button first active" id="correct_feedback">
+              <div class="dida">correct</div>
+            </div>
+            <div class="feedback button" id="incorrect_feedback">
+              <div class="dida">incorrect</div>
+            </div>
+          </div>
+          <div class="dida cta">Click anywhere to go on</div>
+        </div>
+      </div>
       <!-- left side interface -->
       <div class="left-container">
         <div class="left-card">
@@ -498,7 +514,7 @@ require_once("survey.php");
           </div>
           <div class="accuracy-bar-container">
             <div class="dida">0%</div>
-            <div class="accuracy-bar"><div class="accuracy-bar-top"></div></div>
+            <div class="accuracy-bar"><div class="accuracy-bar-top"></div><div class="accuracy-bar-bar"></div></div>
             <div class="dida">100%</div>
           </div>
         </div>
