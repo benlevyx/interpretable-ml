@@ -138,6 +138,7 @@ function sampleTest() {
             $('input[name=feature-importance-tree]:checked').val() == '1' &&
             $('input[name=parallel-coordinates]:checked').val() == '1' &&
             $('input[name=class-vote]:checked').val() == '0') {
+            //   if (true) {
               alert("All correct!");
               viewPage("#experiment2_page");
               // visually show that progress has been made through "The test" step on the progress bar

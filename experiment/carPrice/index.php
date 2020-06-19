@@ -348,9 +348,9 @@ require_once("survey.php");
     <h1>Tutorial questions</h1>
     <p>Please answer the following questions. These questions are meant to make sure that you understand the visualizations. </p>
     <form id="tutorial_form" class="container" action="tutorials.php" method="POST">
-      <div id="tutorial_questions">  
+      <div id="tutorial_questions">
       </div>
-      
+
       <p align="right"><button class="btn btn-primary btn-lg" id="tutorials_button">
                 Done! <span class="material-icons">navigate_next</span>
       </button> </p>
@@ -361,7 +361,7 @@ require_once("survey.php");
         $(function() {
             $("#tutorial_page").ajaxForm();
         });
-        
+
 
     </script>
 </div>

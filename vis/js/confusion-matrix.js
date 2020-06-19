@@ -33,7 +33,7 @@ ConfusionMatrix.prototype.initVis = function() {
   vis.padding = vis.config.padding || 0.2;
 
   vis.x = d3.scaleBand()
-      .domain([0, 1, 2, 3])
+      .domain([0, 1, 2])
       .range([0, vis.width])
       .padding(vis.padding);
   vis.y = vis.x;

@@ -1,20 +1,17 @@
 const classLabs = [
     "Unacceptable",
     "Acceptable",
-    "Good",
-    "Very good"
+    "Good"
 ];
 const classLabsAbbrev = [
     "Unacc.",
     "Acc.",
-    "Good",
-    "V. good"
+    "Good"
 ];
 const classLevels = [
     "unacceptable",
     "acceptable",
-    "good",
-    "vgood"
+    "good"
 ];
 const features = [
     'buying price',
@@ -45,7 +42,7 @@ const levels = {
     'maintanence price': ['low', 'med', 'high', 'vhigh'],
     'luggage boot size': ['small', 'med', 'big'],
     'estimated safety': ['low', 'med', 'high'],
-    'class': ['unacc', 'acc', 'good', 'vgood'],
+    'class': ['unacc', 'acc', 'good'],
     'doors': ['2', '3', '4', '5more'],
     'capacity (persons)': ['2', '4', 'more']
 };

@@ -23,9 +23,9 @@ Promise.all([
     d3.csv('data/new_data/test_data.csv'),
     d3.text('data/new_data/confusion_matrix.csv'),
     d3.csv('data/new_data/class_votes.csv'),
-    d3.csv('data/tut_cars.csv'),
-    d3.csv('data/opt_cars.csv'),
-    d3.csv('data/eval_cars.csv'),
+    d3.csv('data/new_data/tut_cars.csv'),
+    d3.csv('data/new_data/opt_cars.csv'),
+    d3.csv('data/new_data/eval_cars.csv'),
     d3.csv('data/new_data/train_data.csv')
 
 ]).then(function(datasets) {
@@ -109,10 +109,10 @@ Promise.all([
   // Setting the left panel
   updateLeftPanel(window.selected.obs, 0.4, 20, 40);
   
-  // components[4].draw('vis-0');
-  // components[2].draw('vis-1');
-  // components[1].draw('vis-2');
-  // components[3].draw('vis-3');
+  components[4].draw('vis-0');
+  components[2].draw('vis-1');
+  components[1].draw('vis-2');
+  components[3].draw('vis-3');
 
   //for(var op in components){
   //  components[op].draw(components[op]['name']);
