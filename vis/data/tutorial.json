@@ -15,13 +15,13 @@
     "selectedClass": "unacc",
     "question": "Which feature is the most important?",
     "options": ["Doors", "Safety", "Buying price", "Luggage size"],
-    "correct": ["Buying price"]
+    "correct": "Buying price"
   },
   "featImportanceTree": {
     "selectedClass": "good",
     "question": "True or false: luggage size is a more important feature than capacity",
     "options": ["True", "False"],
-    "correct": ["False"]
+    "correct": "False"
   },
   "parallelCoordinates": {
     "selectedIdx": 80,
@@ -35,6 +35,6 @@
     "selectedClass": "unacc",
     "question": "How many trees voted for this car being classified as unacceptable?",
     "options": [12, 14, 74, 0],
-    "correct": [12]
+    "correct": 12
   }
 }

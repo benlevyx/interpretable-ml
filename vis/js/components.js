@@ -30,8 +30,9 @@ const visDescriptions = {
       " features of all cars with the same class as the selected car's predicted class.",
   classVote: " This visualization shows how many trees in the random forest voted for each class. " +
       "The random forest is comprised of 100 individual decision trees. Each decision tree comes up with " +
-      "a prediction for the selected car and \"votes\" for that predicted class. The overall predicted class " +
-      "for the car is the class with the most votes from the individual trees."
+      "a probability for each class and those probabilities are averaged to determine the predicted class. " +
+      "This visualization shows the top \"vote\" of each tree (the class with the top probability). " +
+      "The class with the most \"votes\" may not be the class that was predicted by the model."
 }
 
 export var components = [

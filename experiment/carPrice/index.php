@@ -409,10 +409,10 @@ require_once("survey.php");
               <div class="dida">good</div>
               <div class="class-bar good"></div>
             </div>
-            <div class="class-item">
+            <!-- <div class="class-item">
               <div class="dida">very good</div>
               <div class="class-bar vgood"></div>
-            </div>
+            </div> -->
           </div>
           <div class="title">According to the car features:</div>
           <div id="features" class="class-list-container">

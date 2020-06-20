@@ -15,7 +15,8 @@
   --user-card: #06124f;
   --grid: #6d6d6d;
   --labels: #b3b3b3;
-  --background: #1d275b;
+  --background: rgb(29, 39, 91);
+  --background-feedback: rgba(29, 39, 91, 0.6)
 }
 
 /* TEXT STYLES */
@@ -73,7 +74,7 @@
 .feedback-container {
   height: 100vh;
   width: 100vw;
-  background: var(--background);
+  background: var(--background-feedback);
   position: absolute;
   top: 0;
   left: 0;

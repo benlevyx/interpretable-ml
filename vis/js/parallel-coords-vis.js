@@ -129,7 +129,6 @@ ParallelCoordsVis.prototype.updateVis = function () {
   var vis = this;
 
   addTitle(vis);
-  addInfoBubble(vis);
 
   // Axes
   var axes = vis.svg.append('g')
