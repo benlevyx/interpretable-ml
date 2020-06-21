@@ -19,17 +19,19 @@ var taskTime = {};
 var counterbalance = ((Math.random() > 0.5) ? 1 : 0); 
 
 var variant_placebo = 0;
-
+var defaultDashboard = {};
 var variant_dashboard = Math.random(); // randomize experiment variable
 if(variant_dashboard >= 0 && variant_dashboard < 0.33) {
     variant_dashboard = 1
+    defaultDashboard = {"meta":{"height":12,"width":12,"n_architectures":1,"n_components":5},"architectures":[{"id": 1325, "height": 12, "width": 12, "components": {"id": -1, "height": 1, "width": 1.0, "orientation": "v", "left_child": {"id": -1, "height": 1, "width": 0.5, "orientation": "v", "left_child": {"id": 1.0, "height": 0.5, "width": 1, "orientation": "h", "left_child": {}, "right_child": {}}, "right_child": {"id": -1, "height": 0.5, "width": 1, "orientation": "h", "left_child": {"id": 5.0, "height": 1.0, "width": 1, "orientation": "h", "left_child": {}, "right_child": {}}, "right_child": {}}}, "right_child": {"id": -1, "height": 1, "width": 0.5, "orientation": "v", "left_child": {"id": 2.0, "height": 0.5, "width": 1, "orientation": "h", "left_child": {}, "right_child": {}}, "right_child": {"id": -1, "height": 0.5, "width": 1, "orientation": "h", "left_child": {"id": 4.0, "height": 1.0, "width": 1, "orientation": "h", "left_child": {}, "right_child": {}}, "right_child": {}}}}}],"scores":[]};
 } else if (variant_dashboard >= 0.33 && variant_dashboard < 0.66) {
     variant_dashboard = 2
+    defaultDashboard = {"meta":{"height":12,"width":12,"n_architectures":1,"n_components":5},"architectures":[{"id": 1729, "height": 12, "width": 12, "components": {"id": -1, "height": 1, "width": 1.0, "orientation": "v", "left_child": {"id": 2.0, "height": 1, "width": 0.3333333333333333, "orientation": "v", "left_child": {}, "right_child": {}}, "right_child": {"id": -1, "height": 1, "width": 0.6666666666666667, "orientation": "v", "left_child": {"id": 1.0, "height": 0.5, "width": 1, "orientation": "h", "left_child": {}, "right_child": {}}, "right_child": {"id": -1, "height": 0.5, "width": 1, "orientation": "h", "left_child": {"id": 4.0, "height": 1, "width": 0.5, "orientation": "v", "left_child": {}, "right_child": {}}, "right_child": {"id": -1, "height": 1, "width": 0.5, "orientation": "v", "left_child": {"id": 5.0, "height": 1, "width": 1.0, "orientation": "v", "left_child": {}, "right_child": {}}, "right_child": {}}}}}}],"scores":[]};
 } else {
     variant_dashboard = 3
+    defaultDashboard = {"meta":{"height":12,"width":12,"n_architectures":1,"n_components":5},"architectures":[{"id": 1729, "height": 12, "width": 12, "components": {"id": -1, "height": 1, "width": 1.0, "orientation": "v", "left_child": {"id": 2.0, "height": 1, "width": 0.3333333333333333, "orientation": "v", "left_child": {}, "right_child": {}}, "right_child": {"id": -1, "height": 1, "width": 0.6666666666666667, "orientation": "v", "left_child": {"id": 1.0, "height": 0.5, "width": 1, "orientation": "h", "left_child": {}, "right_child": {}}, "right_child": {"id": -1, "height": 0.5, "width": 1, "orientation": "h", "left_child": {"id": 4.0, "height": 1, "width": 0.5, "orientation": "v", "left_child": {}, "right_child": {}}, "right_child": {"id": -1, "height": 1, "width": 0.5, "orientation": "v", "left_child": {"id": 5.0, "height": 1, "width": 1.0, "orientation": "v", "left_child": {}, "right_child": {}}, "right_child": {}}}}}}],"scores":[]};
 }
 
-var defaultDashboard = {"id":1723,"height":12,"width":12,"components":{"id":-1,"height":1,"width":1,"orientation":"v","left_child":{"id":4,"height":1,"width":0.3333333333333333,"orientation":"v","left_child":{},"right_child":{}},"right_child":{"id":-1,"height":1,"width":0.6666666666666667,"orientation":"v","left_child":{"id":6,"height":0.5,"width":1,"orientation":"h","left_child":{},"right_child":{}},"right_child":{"id":-1,"height":0.5,"width":1,"orientation":"h","left_child":{"id":5,"height":1,"width":0.5,"orientation":"v","left_child":{},"right_child":{}},"right_child":{"id":-1,"height":1,"width":0.5,"orientation":"v","left_child":{"id":1,"height":1,"width":1,"orientation":"v","left_child":{},"right_child":{}},"right_child":{}}}}}};
 defaultDashboard = defaultDashboard.components;
 var decisionBatch = []; // array of user decisions of a certain length. When reaching the length the reward is calculated as the mean and this array will be empty again. 
 var accuracyBatch = [];
