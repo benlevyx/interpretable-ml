@@ -165,22 +165,6 @@ function sampleTest() {
             startTime = new Date()
             var r = 0;
 
-            if(currentCar <= 45){
-                setTimeout(function() {
-
-                    $("#feedback_notification").removeClass("hidden");
-                    $(document).click(function (){
-    
-                        $("#feedback_notification").addClass("hidden");
-                        $(document).off("click");
-                    });
-                }, 200);
-                
-                if($(this).attr('id') === "agreeBtt"){
-                    r = 1;
-                }
-            }
-
 
 
 
@@ -217,16 +201,21 @@ function sampleTest() {
             }
 
 
-            //console.log(window.selected.obs);
-            window.selected.idx = parseInt(window.selected.obs[""]);
-            window.selected.class = window.selected.obs.class_pred;
-            fillComponents();
 
 
-            // update left panels
-            updateLeftPanel(window.selected.obs, d3.mean(accuracyBatch).toFixed(3), currentCar, maxCars);
-            
-            // update visualizations only every X number of questions. 
+            if(currentCar <= 45){
+                setTimeout(function() {
+
+                    $("#feedback_notification").removeClass("hidden");
+                    $(document).click(function (){
+                                    //console.log(window.selected.obs);
+                        window.selected.idx = parseInt(window.selected.obs[""]);
+                        window.selected.class = window.selected.obs.class_pred;
+                        fillComponents();
+                        // update left panels
+                        updateLeftPanel(window.selected.obs, d3.mean(accuracyBatch).toFixed(3), currentCar, maxCars);
+                        
+                        // update visualizations only every X number of questions. 
             if(currentCar% REWARD_INTERVAL === 0 & currentCar > 5 & currentCar <= 45){
 
                 d3.select('#dynamicIA').html("<div id='loader'><p>Loading...</p></div>");
@@ -313,6 +302,111 @@ function sampleTest() {
                     fillComponents();
                 }
             }
+                        $("#feedback_notification").addClass("hidden");
+                        $(document).off("click");
+                    });
+                }, 200);
+                
+                if($(this).attr('id') === "agreeBtt"){
+                    r = 1;
+                }
+            }
+            else {
+                            //console.log(window.selected.obs);
+            window.selected.idx = parseInt(window.selected.obs[""]);
+            window.selected.class = window.selected.obs.class_pred;
+            fillComponents();
+                updateLeftPanel(window.selected.obs, d3.mean(accuracyBatch).toFixed(3), currentCar, maxCars);
+                      // update visualizations only every X number of questions. 
+            if(currentCar% REWARD_INTERVAL === 0 & currentCar > 5 & currentCar <= 45){
+
+                d3.select('#dynamicIA').html("<div id='loader'><p>Loading...</p></div>");
+                console.log("updating IA.");
+                $(".decisionBtt").off('click');
+                meanReward = d3.mean(decisionBatch)
+                console.log(meanReward)
+                meanReward = meanReward * Math.exp(-time/50000) * d3.mean(accuracyBatch.slice(-5));
+
+                console.log(time);
+
+                IAHistory.scores.push(meanReward);
+                decisionBatch = [];
+                
+                $.ajax({
+                    url : "./optimizer.php",
+                    type : "POST",
+                    data: {
+                        data: JSON.stringify(
+                            IAHistory
+                            )
+                        },
+                    success: function(result) {
+                        console.log(result);
+                        var l = (JSON.parse(result)["architectures"]).length
+                        var structure = JSON.parse(result)["architectures"][l - 1];
+                        IAHistory.architectures.push(structure);
+                        console.log(IAHistory);
+                        console.log(`Next EI: ${JSON.parse(result)["nextScore"]}`)
+                        $(".decisionBtt").click(
+                            clickDecisionBtt
+                        );
+                        if(currentCar <=  45) {
+                            //make grid, filling the components
+                            makeGrid(structure["components"], "dynamicIA");
+                            fillComponents();// send to PHP
+                        }
+
+                    $.ajax({
+                        url : "./data.php",
+                        type : "POST",
+                        data: {
+                            data: JSON.stringify(
+                                {
+                                    participant_id: participantID,
+                                    question_id: currentCar,
+                                    reward: meanReward,
+                                    choice: r,
+                                    arrangement: JSON.stringify(IAHistory),
+                                    variant: variant_dashboard
+                                })
+                            },
+                        success: function(result) {
+                            console.log(result);
+                        }
+                    });
+                        
+                    }
+                });
+
+
+            }
+            if(counterbalance == 0) {
+                if(currentCar > 45 && currentCar <= 50) {
+                    //make grid, filling the components
+                    var structure = IAHistory.architectures[IAHistory.architectures.length - 1];
+                    makeGrid(structure["components"], "dynamicIA");
+                    fillComponents();
+                } else if (currentCar > 50) {
+
+                    makeGrid(defaultDashboard, "dynamicIA");
+                    fillComponents();
+                }
+
+            } else {
+                if(currentCar > 45 && currentCar <= 50) {
+                    makeGrid(defaultDashboard, "dynamicIA");
+                    fillComponents();
+
+                } else if (currentCar > 50) {
+                    //make grid, filling the components
+                    var structure = IAHistory.architectures[IAHistory.architectures.length - 1];
+                    makeGrid(structure["components"], "dynamicIA");
+                    fillComponents();
+                }
+            }  
+            }
+            
+            
 
 
 
