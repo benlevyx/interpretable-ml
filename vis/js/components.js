@@ -17,11 +17,13 @@ const visDescriptions = {
   featImportanceBubble: "This chart shows the \"importance\" of each feature, which is how much each feature " +
       "contributed to the decision of the random forest; the greater the feature importance, the " +
       "more a change in that feature could lead to a change in the predicted class. The sizes of the circles " +
-      "are proportional to the importance of the feature.",
+      "are proportional to the importance of the feature. The opacity of the bubble is proportional to the absolute" + 
+      " difference between the selected car feature and the global mean for that feature.",
   featImportancePie: "This chart shows the \"importance\" of each feature, which is how much each feature " +
       "contributed to the decision of the random forest; the greater the feature importance, the " +
       "more a change in that feature could lead to a change in the predicted class. The sizes of the " +
-      "pie slices are proportional to the importance of the feature.",
+      "pie slices are proportional to the importance of the feature. The opacity of each pie is proportional" + 
+      " to the absolute difference between the selected car feature and the global mean for that feature",
   featImportanceTree: "This chart shows the \"importance\" of each feature, which is how much each feature " +
       "contributed to the decision of the random forest; the greater the feature importance, the " +
       "more a change in that feature could lead to a change in the predicted class. The sizes of the " +
