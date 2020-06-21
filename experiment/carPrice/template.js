@@ -22,7 +22,6 @@ var variant_placebo = 0;
 var defaultDashboard = {};
 var variant_dashboard = Math.random(); // randomize experiment variable
 if(variant_dashboard >= 0 && variant_dashboard < 0.33) {
-    
     variant_dashboard = 1
     defaultDashboard = {"meta":{"height":12,"width":12,"n_architectures":1,"n_components":5},"architectures":[{"id": 1325, "height": 12, "width": 12, "components": {"id": -1, "height": 1, "width": 1.0, "orientation": "v", "left_child": {"id": -1, "height": 1, "width": 0.5, "orientation": "v", "left_child": {"id": 1.0, "height": 0.5, "width": 1, "orientation": "h", "left_child": {}, "right_child": {}}, "right_child": {"id": -1, "height": 0.5, "width": 1, "orientation": "h", "left_child": {"id": 5.0, "height": 1.0, "width": 1, "orientation": "h", "left_child": {}, "right_child": {}}, "right_child": {}}}, "right_child": {"id": -1, "height": 1, "width": 0.5, "orientation": "v", "left_child": {"id": 2.0, "height": 0.5, "width": 1, "orientation": "h", "left_child": {}, "right_child": {}}, "right_child": {"id": -1, "height": 0.5, "width": 1, "orientation": "h", "left_child": {"id": 4.0, "height": 1.0, "width": 1, "orientation": "h", "left_child": {}, "right_child": {}}, "right_child": {}}}}}],"scores":[]};
 } else if (variant_dashboard >= 0.33 && variant_dashboard < 0.66) {

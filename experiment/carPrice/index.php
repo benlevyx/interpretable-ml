@@ -361,7 +361,7 @@ require_once("survey.php");
 
     <h1>Tutorial questions</h1>
     <p>Please answer the following questions. These questions are meant to make sure that you understand the visualizations. </p>
-    <form id="tutorial_form" action="tutorials.php" method="POST">
+    <form id="tutorial_form" class="container" action="tutorials.php" method="POST">
       <div id="tutorial_questions">
       </div>
 
@@ -614,7 +614,9 @@ require_once("survey.php");
     </div>
 
     <h1>Thank you!</h1>
-    <p></p>
+
+    <p>Please send the researchers the following code:</p>
+    <p class="participantID"></p>
 
     <!-- TODO this is entirely yours to fill out -->
 
