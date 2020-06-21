@@ -85,10 +85,10 @@ def get_features(info_arch_jsons, n_components):
     return np.stack(feat_vecs, axis=0)
 
 
-def pack_next(next_ias):
+def pack_next(next_ias, next_score):
     if type(next_ias) == dict:
         next_ias = [next_ias]
-    return json.dumps({"architectures": next_ias})
+    return json.dumps({"architectures": next_ias, "nextScore": next_score})
 
 
 def random_init(n=config.n_init):
@@ -115,7 +115,7 @@ def propose_next(X_obs, y_obs):
     bayes_opt.update(X_obs, y_obs)
     idx_next, X_next, score_next = bayes_opt.propose_next(X)
     ia_next = info_archs[idx_next]
-    return ia_next
+    return ia_next, score_next
 
 
 if __name__ == '__main__':
@@ -138,7 +138,7 @@ if __name__ == '__main__':
 
         y_obs = obs['scores']
 
-        ia_next = propose_next(X_obs, y_obs)
-        res = pack_next(ia_next)
+        ia_next, score_next = propose_next(X_obs, y_obs)
+        res = pack_next(ia_next, score_next)
 
     sys.stdout.write(res)
