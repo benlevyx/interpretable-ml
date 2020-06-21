@@ -19,14 +19,14 @@ window.selected = {
 // // LOADING DATA
 // Load all data once, then call the vis constructors
 Promise.all([
-    d3.csv('data/feature_ranking.csv'),
-    d3.csv('data/test_data.csv'),
-    d3.text('data/confusion_matrix.csv'),
-    d3.csv('data/class_votes.csv'),
-    d3.csv('data/tut_cars.csv'),
-    d3.csv('data/opt_cars.csv'),
-    d3.csv('data/eval_cars.csv'),
-    d3.csv('data/train_data.csv')
+    d3.csv('data/new_data/feature_ranking.csv'),
+    d3.csv('data/new_data/test_data.csv'),
+    d3.text('data/new_data/confusion_matrix.csv'),
+    d3.csv('data/new_data/class_votes.csv'),
+    d3.csv('data/new_data/tut_cars.csv'),
+    d3.csv('data/new_data/opt_cars.csv'),
+    d3.csv('data/new_data/eval_cars.csv'),
+    d3.csv('data/new_data/train_data.csv')
 
 ]).then(function(datasets) {
   var featRanking = datasets[0],
@@ -108,9 +108,57 @@ Promise.all([
 
   // Setting the left panel
   updateLeftPanel(window.selected.obs, 0.4, 20, 40);
+  
+  // components[4].draw('vis-0');
+  // components[2].draw('vis-1');
+  // components[1].draw('vis-2');
+  // components[3].draw('vis-3');
 
-  components[4].draw('vis-0');
-  components[5].draw('vis-1');
-  components[2].draw('vis-2');
-  components[3].draw('vis-3');
+
+
+  // tutorials
+  $.getJSON( "data/tutorial.json", function( data ) {
+    var entries = [];
+    $.each( data, function( key, val ) {
+          var items = [];
+          entries.push(key);
+          items.push(`<h3>${val["title"]}</h3>`);
+          items.push(`<div class="vis-container container" style="width: 700px; height: 400px;" id=${key}></div>`)
+          items.push(`<label><b>${val["question"]}</b><br/>`);
+          for(var op in val['options']) {
+            items.push(`<input type='radio' name='${key}' value='${op}'><label>${val['options'][op]}</label><br/>`);
+          }
+
+        $("#tutorial_questions").append(items.join("")+"</label>");
+        for(var op in components){
+          if(components[op]['name'] === key) {
+            window.selected.idx = val['selectedIdx'];
+            window.selected.obs = window.data.testData[window.selected.idx];
+            window.selected.class = window.selected.obs.class_pred;
+            console.log(key); 
+            components[op].draw(key);
+          }
+        }
+      }
+    )
+    $("#tutorials_button").click(function () {
+      var c = false;
+
+      if ($('input[name=confusion-matrix]:checked').val() == '1' &&
+      $('input[name=feature-importance-bubble]:checked').val() == '0' &&
+      $('input[name=feature-importance-pie]:checked').val() == '2' &&
+      $('input[name=parallel-coordinates]:checked').val() == '0' &&
+      $('input[name=class-vote]:checked').val() == '0') {
+        alert("All correct!");
+        viewPage("#experiment2_page");
+        // visually show that progress has been made through "The test" step on the progress bar
+        progressBar.incrementStepProgress();
+      }
+      else alert("Some answers are not correct.");
+
+
+      }
+    );
+  })
+
 });

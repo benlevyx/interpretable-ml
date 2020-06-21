@@ -57,8 +57,22 @@ FeatImportanceTreemap.prototype.initVis = function () {
 
   console.log("treemap", vis.root);
   // Call the function to generate DOM elements
-  vis.renderVis();
+  vis.wrangleData();
 };
+
+FeatImportanceTreemap.prototype.wrangleData = function() {
+  var vis = this;
+
+  // Get the feature differences
+  vis.featDiffs = {};
+  features.forEach(f => {
+    vis.featDiffs[f] = Math.abs(window.selected.obs[f] - d3.mean(window.data.trainData, d => d[f]));
+  })
+
+  vis.opacity.domain(d3.extent(features.map(f => vis.featDiffs[f])));
+
+  vis.renderVis();
+}
 
 /**
  * Draw the visual elements in the DOM
@@ -85,7 +99,8 @@ FeatImportanceTreemap.prototype.renderVis = function () {
     .attr("id", function(d) { return d.data.feature; })
     .attr("width", function(d) { return d.x1 - d.x0; })
     .attr("height", function(d) { return d.y1 - d.y0; })
-    .attr("fill", classColor(window.selected.class));
+    .attr("fill", classColor(window.selected.class))
+    .style('opacity', d => vis.opacity(vis.featDiffs[d.data.feature]));
 
 // add clipPath
 
@@ -120,8 +135,14 @@ FeatImportanceTreemap.prototype.renderVis = function () {
         return featureAbbrevs[d];
       })
       .attr("class", "labels")
-      .style("fill", "var(--component-card)")
-        .call(function(e) {
+      .style('fill', d => {
+        if (vis.opacity(vis.featDiffs[d]) < 0.6) {
+          return 'white';
+        } else {
+          return 'var(--component-card)';
+        }
+      })
+      .call(function(e) {
           e.each(function() {
             var elem = d3.select(this),
                 d = elem.data(),

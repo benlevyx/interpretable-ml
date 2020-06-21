@@ -43,15 +43,13 @@ ClassVoteVis.prototype.wrangleData = function() {
   var vis = this;
 
   // Get the selected class and pull the counts for that one
-  console.log(window.selected.idx);
   var selectedData = vis.data.find(d => d.idx === window.selected.idx);
-  
+
   vis.displayData = levels.class.map(c => {
     var votes = d3.range(selectedData[c]);
     return {class: c, count: votes};
   });
 
-  console.log(vis.displayData);
   vis.updateVis();
 };
 ClassVoteVis.prototype.updateVis = function() {

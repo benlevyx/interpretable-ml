@@ -37,8 +37,9 @@ FeatImportancePie.prototype.initVis = function () {
 
   vis.radius = Math.min(vis.width, vis.height) / 2;
 
-  vis.opacity = d3.scaleOrdinal(["1",".9",".8",
-         ".7",".6",".5"]);
+  // vis.opacity = d3.scaleOrdinal(["1",".9",".8", ".7",".6",".5"]);
+  vis.opacity = d3.scaleLinear()
+      .range([.1, 1])
 
   vis.pie = d3
     .pie()
@@ -48,9 +49,21 @@ FeatImportancePie.prototype.initVis = function () {
   vis.arc = d3.arc().innerRadius(0).outerRadius(vis.radius);
 
   // Call the function to generate DOM elements
-  vis.renderVis();
+  vis.wrangleData();
 };
+FeatImportancePie.prototype.wrangleData = function() {
+  var vis = this;
 
+  // Get the feature differences
+  vis.featDiffs = {};
+  features.forEach(f => {
+    vis.featDiffs[f] = Math.abs(window.selected.obs[f] - d3.mean(window.data.trainData, d => d[f]));
+  })
+
+  vis.opacity.domain(d3.extent(features.map(f => vis.featDiffs[f])));
+
+  vis.renderVis();
+}
 /**
  * Draw the visual elements in the DOM
  *
@@ -78,7 +91,7 @@ FeatImportancePie.prototype.renderVis = function () {
     .append("path")
     .attr("d", vis.arc)
     .attr("fill", classColor(window.selected.class))
-    .attr("opacity",(d, i) => vis.opacity(i) )
+    .attr("opacity",(d, i) => vis.opacity(vis.featDiffs[vis.data[i].feature]))
 
   vis.arcs
     .append("text")
@@ -92,5 +105,11 @@ FeatImportancePie.prototype.renderVis = function () {
       return featureAbbrevs[vis.data[i].feature];
     })
     .attr("class", "labels")
-      .style('fill', 'var(--component-card)');
+      .style('fill', (d, i) => {
+        if (vis.opacity(vis.featDiffs[vis.data[i].feature]) < 0.6) {
+          return 'white'
+        } else {
+          return 'var(--component-card)';
+        }
+      });
 };

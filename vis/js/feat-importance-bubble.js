@@ -65,10 +65,26 @@ FeatImportanceBubble.prototype.initVis = function () {
         .range([0, extent]);
   }
 
+  vis.opacity = d3.scaleLinear()
+      .range([.1, 1])
 
   // Call the function to generate DOM elements
-  vis.renderVis();
+  vis.wrangleData();
 };
+
+FeatImportanceBubble.prototype.wrangleData = function() {
+  var vis = this;
+
+  // Get the feature differences
+  vis.featDiffs = {};
+  features.forEach(f => {
+    vis.featDiffs[f] = Math.abs(window.selected.obs[f] - d3.mean(window.data.trainData, d => d[f]));
+  })
+
+  vis.opacity.domain(d3.extent(features.map(f => vis.featDiffs[f])));
+
+  vis.renderVis();
+}
 
 /**
  * Draw the visual elements in the DOM
@@ -133,7 +149,8 @@ FeatImportanceBubble.prototype.renderVis = function () {
           return d.r;
         }
       })
-      .style("fill", classColor(window.selected.class));
+      .style("fill", classColor(window.selected.class))
+      .style('opacity', d => vis.opacity(vis.featDiffs[d.data.feature]));
 
       vis.node
           .append("text")
@@ -166,21 +183,33 @@ function placeLabel(text, vis) {
       if (width > diam - 2) {
         // Then place it outside the circle
         if (vis.vertical) {
+          elem.style('fill', 'white')
           // Move it to the right
           elem.attr('transform', `translate(${20}, 0)`)
               .style('text-anchor', 'start');
         } else {
           // Move it down
-          elem.attr('transform', `translate(0, ${20})`);
+          elem.attr('transform', `translate(0, ${30})`);
+          elem.style('fill', 'white');
         }
       } else {
-        elem.style('fill', 'black');
+        // elem.style('fill', 'black');
+        styleOpacity(elem, vis);
       }
     }
     else {
         // Keep it where it is and make it black
-        elem.style('fill', 'black');
+        // elem.style('fill', 'black');
+      styleOpacity(elem, vis)
     }
   })
 }
-
+function styleOpacity(elem, vis) {
+  elem.style('fill', d => {
+    if (vis.opacity(vis.featDiffs[d.data.feature]) < 0.6) {
+      return 'white'
+    } else {
+      return 'var(--component-card)';
+    }
+  })
+}

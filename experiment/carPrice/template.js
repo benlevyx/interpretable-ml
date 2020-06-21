@@ -104,12 +104,21 @@ function sampleTest() {
             viewPage("#instructions_page")
         });
         $("#instructions_button").click(function () {
-            viewPage("#experiment2_page");
+            viewPage("#tutorial_page");
             startTime = new Date();
             // visually show that progress has been made through "The test" step on the progress bar
             progressBar.incrementStepProgress();
 
         });
+        $("#instructions_button").click(function () {
+            viewPage("#tutorial_page");
+            // visually show that progress has been made through "The test" step on the progress bar
+            progressBar.incrementStepProgress();
+
+        });
+
+
+  
         $("#experiment2_button").click(function () {
             viewPage("#comments_page");
             // visually show that progress has been made through "The test" step on the progress bar
@@ -155,16 +164,38 @@ function sampleTest() {
             var time = new Date() - startTime;
             startTime = new Date()
             var r = 0;
-            if($(this).attr('id') === "agreeBtt"){
-                r = 1;
+
+            if(currentCar <= 45){
+                setTimeout(function() {
+
+                    $("#feedback_notification").removeClass("hidden");
+                    $(document).click(function (){
+    
+                        $("#feedback_notification").addClass("hidden");
+                        $(document).off("click");
+                    });
+                }, 200);
+                
+                if($(this).attr('id') === "agreeBtt"){
+                    r = 1;
+                }
             }
+
+
+
 
             if (r & (window.selected.obs['class'] === window.selected.obs['class_pred'])) {
                 accuracyBatch.push(1);
+                $("#incorrect_feedback").hide();
+                $("#correct_feedback").show();
             } else if (!r & (window.selected.obs['class'] != window.selected.obs['class_pred'])) {
                 accuracyBatch.push(1);
+                $("#incorrect_feedback").hide();
+                $("#correct_feedback").show();
             } else {
                 accuracyBatch.push(0);
+                $("#incorrect_feedback").show();
+                $("#correct_feedback").hide();
             }
 
             if(currentCar >= 5){
@@ -223,6 +254,7 @@ function sampleTest() {
                         var structure = JSON.parse(result)["architectures"][l - 1];
                         IAHistory.architectures.push(structure);
                         console.log(IAHistory);
+                        console.log(`Next EI: ${JSON.parse(result)["nextScore"]}`)
                         $(".decisionBtt").click(
                             clickDecisionBtt
                         );
@@ -282,6 +314,7 @@ function sampleTest() {
             }
 
 
+
         }
 
         // initially on view experiments, initialize left panel and visualizations
@@ -304,9 +337,11 @@ function sampleTest() {
                         },
                     success: function(result) {
                         console.log("onview receives IA history. ")
+                        console.log(result);
                         IAHistory = JSON.parse(result);
                         console.log("The IA history is ");
                         console.log(IAHistory);
+                        console.log(`Next EI: ${IAHistory.nextScore}`)
                         var l = (JSON.parse(result)["architectures"]).length
                         var structure = JSON.parse(result)["architectures"][l - 1];
                         makeGrid(structure["components"], "dynamicIA");

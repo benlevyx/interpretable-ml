@@ -17,6 +17,22 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
+     <!-- feedback page -->
+    <div class="feedback-container hidden">
+      <div class="feedback-window">
+        <div class="title">Your answer was</div>
+        <div class="feedback-buttons">
+          <div class="feedback button first active">
+            <div class="dida">correct</div>
+          </div>
+          <div class="feedback button">
+            <div class="dida">incorrect</div>
+          </div>
+        </div>
+        <div class="dida cta">Click anywhere to go on</div>
+      </div>
+    </div>
+     <!-- interface page -->
     <div class="interface-container">
       <!-- left side interface -->
       <div class="left-container">
@@ -39,10 +55,10 @@
               <div class="dida">good</div>
               <div class="class-bar good"></div>
             </div>
-            <div class="class-item">
-              <div class="dida">very good</div>
-              <div class="class-bar vgood"></div>
-            </div>
+<!--            <div class="class-item">-->
+<!--              <div class="dida">very good</div>-->
+<!--              <div class="class-bar vgood"></div>-->
+<!--            </div>-->
           </div>
           <div class="title">According to the car features:</div>
           <div class="class-list-container">
@@ -144,7 +160,7 @@
           </div>
           <div class="accuracy-bar-container">
             <div class="dida">0%</div>
-            <div class="accuracy-bar"><div class="accuracy-bar-top"></div></div>
+            <div class="accuracy-bar"><div class="accuracy-bar-top"></div><div class="accuracy-bar-bar"></div></div>
             <div class="dida">100%</div>
           </div>
         </div>
@@ -193,8 +209,9 @@
 
     <!-- D3.js -->
     <script src="https://d3js.org/d3.v5.min.js"></script>
+     <script src="js/d3-tip.js"></script>
 
-    <!-- Modules and vis components -->
+     <!-- Modules and vis components -->
     <script src="js/utils.js"></script>
     <script src="js/constants.js"></script>
     <script src="js/left-panel.js"></script>
