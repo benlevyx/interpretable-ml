@@ -1,4 +1,4 @@
-#! /Users/benjaminlevy/Desktop/Benjamin/School/19_20/Classes/spring/cs271/project/interp-ml/bin/python3.7
+#!/Library/Frameworks/Python.framework/Versions/3.7/bin/python3
 
 """
 run_bayes_opt.py

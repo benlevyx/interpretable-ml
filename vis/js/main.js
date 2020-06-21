@@ -145,8 +145,8 @@ Promise.all([
       var c = false;
 
       if ($('input[name=confusion-matrix]:checked').val() == '1' &&
-      $('input[name=feature-importance-bubble]:checked').val() == '0' &&
-      $('input[name=feature-importance-pie]:checked').val() == '2' &&
+      $('input[name=feature-importance-bubble]:checked').val() == '2' &&
+      $('input[name=feature-importance-pie]:checked').val() == '0' &&
       $('input[name=parallel-coordinates]:checked').val() == '0' &&
       $('input[name=class-vote]:checked').val() == '0') {
         alert("All correct!");

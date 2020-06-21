@@ -11,17 +11,17 @@
     "title":"Feature Importance: Bubble",
     "selectedIdx": 1,
     "selectedClass":  "acc",
-    "question": "Which feature is the least important?",
+    "question": "Which feature is the most important?",
     "options": ["Doors", "Safety", "Buying price", "Luggage size"],
-    "correct": 0
+    "correct": 2
   },
   "feature-importance-pie": {
     "title":"Feature Importance: Pie",
     "selectedIdx": 64,
     "selectedClass": "unacc",
-    "question": "Which feature is the most important?",
+    "question": "Which feature is the least important?",
     "options": ["Doors", "Safety", "Buying price", "Luggage size"],
-    "correct": 2
+    "correct": 0
   },
 
   "parallel-coordinates": {
