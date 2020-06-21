@@ -6,7 +6,6 @@
  * @param total -- The total number of questions in the experiment (should be 40)
  */
 function updateLeftPanel(obs, acc, curr, total) {
-  console.log(obs);
   var cls = obs.class_pred,
       color = classLevels[cls];
 

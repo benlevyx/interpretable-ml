@@ -160,12 +160,33 @@ require_once("survey.php");
 <div id="consent_page" class="page w800">
     <div class="separator2"></div>
 
-    <h1><!-- TODO --> Determining car prices</h1>
+    <h1><!-- TODO -->Informed Consent for Research</h1>
 
     <p><em>Please read the following information carefully before proceeding.</em></p>
 
     <!-- TODO consent form goes here -->
+    <p>
+      Investigators: Zilin Ma (zilinma@g.harvard.edu), Benjamin Levy (benjaminlevy@g.harvard.edu), Giulia Zerbini (giul.zerb@gmail.com) and Weiwei Pan (weiweipan@g.harvard.edu). <br/>
 
+      The purpose of this study is to evaluate the interpretability of different machine learning algorithms and their outputs. The experiment will consist of a series of pre-task instructions, then the primary tasks related to machine learning interpretability, and finally a brief post-task survey.<br/>
+      
+      In total your participation in this experiment will take about 20-25 minutes.<br/>
+      
+      You must be at least 18 years of age to participate.<br/>
+      
+      Your participation in any part of this study is voluntary. You have the right to refuse to participate altogether, or withdraw from the study at any time without any repercussions. There are no known risks associated with your participation in this research beyond those of everyday life.<br/>
+      
+      As a research participant, you will receive compensation. If you complete the study before June 22nd, you will be rewarded with $10. Otherwise you will be rewarded $5. You will receive a code for payment at the end of the study. The task will consist of several interactive visualizations and quizzes about machine learning models.<br/>
+      
+      Confidentiality of the research records will be strictly maintained. The data will be collected on a secure server. The output of the study will be based on an aggregation of data collected from multiple informants. Diligent care will be taken to protect identities and sensitive information.<br/>
+      
+      Research team members, who will sign a confidentiality agreement, will have access to the content of your answers as will the IRB at the governing research institution. Even though we will take every effort to protect your privacy, a breach of confidentiality may become a risk due to unforeseen events. If you have questions, concerns, or complaints, or think the research has hurt you, please feel free to contact the study investigator, Zilin Ma. For questions, concerns, suggestions, or complaints that are not being addressed by the researcher, or research-related harm, you can contact the Committee on the Use of Human Subjects in Research at Harvard University, 1414 Massachusetts Avenue, Second Floor, Cambridge, MA 02138 (Phone: 617-496-2847; Email: cuhs@fas.harvard.edu).<br/>
+      
+      You may print this copy of the Consent Document for your records.<br/>
+      
+      If you are interested in participating in the study, click the "I agree" button. If you are NOT interested in participating in the study, please exit the survey.<br/>
+
+    </p>
     <p>By clicking the "I agree" button you confirm that you have read and understood the above
         and agree to take part in this research. Your participation is voluntary and you are free
         to leave the experiment at any time by simply closing the web browser.</p>
@@ -319,18 +340,11 @@ require_once("survey.php");
 
 
     <h1>Instructions</h1>
-    <p>The AI that you will encounter in this task classifies second hand cars. You will be asked to indicate whether you agree or
-    disagree with the decision of the AI.</p>
-    <div class=instructions>
-        <div></div>
-        <div></div>
-    
-    </div>
-
-
-
-    <!-- TODO instructions for your experiment go here -->
-
+    <p>Thank you for helping us by participating in this experiment! We are submitting this project to the ICML Workshop on Human Interpretability, and your participation is crucial to us being able to present our findings!
+    The experiment itself should take no longer than 25 minutes. We have built a simple machine learning model (random forest) to classify cars as unacceptable, acceptable, or good. During the experiment, you will be shown cars taken from the test dataset (i.e. cars the model has not seen before) alongside visual explanations of model’s decision. Your task is to decide, for each car, whether you agree or disagree.
+    Your score will be shown in the bottom left corner and you should aim to answer the questions as quickly as you can without sacrificing accuracy.
+    If you don’t wish you give your name, that is fine, so long as you clearly indicate that you are part of the class group. As a token of our gratitude, please accept an Amazon gift card, which we will send to your email. 
+    Finally, we greatly appreciate all feedback having to do with any aspect of the task, from the interface, the design, the level of difficulty, etc. Nothing is too small or nitpicky! Thanks again!!</p>
     <p align="right">
         <button class="btn btn-primary btn-lg" id="instructions_button">
             Got it.  Let&apos;s start! <span class="material-icons">navigate_next</span>
@@ -347,7 +361,7 @@ require_once("survey.php");
 
     <h1>Tutorial questions</h1>
     <p>Please answer the following questions. These questions are meant to make sure that you understand the visualizations. </p>
-    <form id="tutorial_form" class="container" action="tutorials.php" method="POST">
+    <form id="tutorial_form" action="tutorials.php" method="POST">
       <div id="tutorial_questions">
       </div>
 

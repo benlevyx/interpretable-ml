@@ -82,6 +82,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0.9;
 }
 .feedback-container.hidden {
   opacity: 0;

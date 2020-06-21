@@ -117,39 +117,7 @@ function sampleTest() {
 
         });
 
-        // tutorials
-        $.getJSON( "data/tutorial.json", function( data ) {
-            var items = [];
-            $.each( data, function( key, val ) {
-                items.push(`<h3>${key}</h3>`);
-                items.push(`<div class="vis-container container" "position: absolute; width: 344px; height: 564px; left: 0px; top: 282px;" id=${key}></div>`)
-                items.push(`<label><b>${val["question"]}</b><br/>`);
-                for(var op in val['options']) {
-                  items.push(`<input type='radio' name='${key}' value='${op}'><label>${val['options'][op]}</label><br/>`);
-                }
-            }
-          )
 
-          $("#tutorial_questions").append(items.join("")+"</label>");
-          $("#tutorials_button").click(function () {
-            // if ($('input[name=confusion-matrix]:checked').val() == '1' &&
-            // $('input[name=feature-importance-bubble]:checked').val() == '0' &&
-            // $('input[name=feature-importance-pie]:checked').val() == '1' &&
-            // $('input[name=feature-importance-tree]:checked').val() == '1' &&
-            // $('input[name=parallel-coordinates]:checked').val() == '1' &&
-            // $('input[name=class-vote]:checked').val() == '0') {
-              if (true) {
-              alert("All correct!");
-              viewPage("#experiment2_page");
-              // visually show that progress has been made through "The test" step on the progress bar
-              progressBar.incrementStepProgress();
-            }
-            else alert("Some answers are not correct.");
-  
-  
-            }
-          );
-        })
   
         $("#experiment2_button").click(function () {
             viewPage("#comments_page");
@@ -197,18 +165,22 @@ function sampleTest() {
             startTime = new Date()
             var r = 0;
 
-            $("#feedback_notification").removeClass("hidden");
-            setTimeout(function() {
-                $(document).click(function (){
+            if(currentCar <= 45){
+                setTimeout(function() {
 
-                    $("#feedback_notification").addClass("hidden");
-                    $(document).off("click");
-                });
-            }, 200);
-            
-            if($(this).attr('id') === "agreeBtt"){
-                r = 1;
+                    $("#feedback_notification").removeClass("hidden");
+                    $(document).click(function (){
+    
+                        $("#feedback_notification").addClass("hidden");
+                        $(document).off("click");
+                    });
+                }, 200);
+                
+                if($(this).attr('id') === "agreeBtt"){
+                    r = 1;
+                }
             }
+
 
 
 
