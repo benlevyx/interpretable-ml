@@ -278,6 +278,7 @@ function sampleTest() {
                             )
                         },
                     success: function(result) {
+                        console.log(result);
                         var l = (JSON.parse(result)["architectures"]).length
                         var structure = JSON.parse(result)["architectures"][l - 1];
                         IAHistory.architectures.push(structure);

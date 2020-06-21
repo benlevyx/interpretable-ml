@@ -85,10 +85,13 @@ def get_features(info_arch_jsons, n_components):
     return np.stack(feat_vecs, axis=0)
 
 
-def pack_next(next_ias, next_score):
+def pack_next(next_ias, next_score=None):
     if type(next_ias) == dict:
         next_ias = [next_ias]
-    return json.dumps({"architectures": next_ias, "nextScore": next_score})
+    res = {"architectures": next_ias, "nextScore": next_score}
+    if next_score is not None:
+        res.update({"nextScore": next_score})
+    return json.dumps(res)
 
 
 def random_init(n=config.n_init):
