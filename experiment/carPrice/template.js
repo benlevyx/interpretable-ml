@@ -117,6 +117,7 @@ function sampleTest() {
 
         });
 
+
   
         $("#experiment2_button").click(function () {
             viewPage("#comments_page");
@@ -164,18 +165,22 @@ function sampleTest() {
             startTime = new Date()
             var r = 0;
 
-            $("#feedback_notification").removeClass("hidden");
-            setTimeout(function() {
-                $(document).click(function (){
+            if(currentCar <= 45){
+                setTimeout(function() {
 
-                    $("#feedback_notification").addClass("hidden");
-                    $(document).off("click");
-                });
-            }, 200);
-            
-            if($(this).attr('id') === "agreeBtt"){
-                r = 1;
+                    $("#feedback_notification").removeClass("hidden");
+                    $(document).click(function (){
+    
+                        $("#feedback_notification").addClass("hidden");
+                        $(document).off("click");
+                    });
+                }, 200);
+                
+                if($(this).attr('id') === "agreeBtt"){
+                    r = 1;
+                }
             }
+
 
 
 
