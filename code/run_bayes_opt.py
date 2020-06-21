@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-
 """
 run_bayes_opt.py
 
