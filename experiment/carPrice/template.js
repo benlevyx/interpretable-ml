@@ -221,9 +221,10 @@ function sampleTest() {
                 d3.select('#dynamicIA').html("<div id='loader'><p>Loading...</p></div>");
                 console.log("updating IA.");
                 $(".decisionBtt").off('click');
-                meanReward = d3.mean(decisionBatch)
+                //meanReward = d3.mean(decisionBatch)
+                var meanReward = 0;
                 console.log(meanReward)
-                meanReward = meanReward * Math.exp(-time/50000) * d3.mean(accuracyBatch.slice(-5));
+                meanReward = Math.exp(-time/50000) * d3.mean(accuracyBatch.slice(-5));
 
                 console.log(time);
 
@@ -323,9 +324,9 @@ function sampleTest() {
                 d3.select('#dynamicIA').html("<div id='loader'><p>Loading...</p></div>");
                 console.log("updating IA.");
                 $(".decisionBtt").off('click');
-                meanReward = d3.mean(decisionBatch)
-                console.log(meanReward)
-                meanReward = meanReward * Math.exp(-time/50000) * d3.mean(accuracyBatch.slice(-5));
+                //meanReward = d3.mean(decisionBatch)
+                //console.log(meanReward)
+                var meanReward = Math.exp(-time/50000) * d3.mean(accuracyBatch.slice(-5));
 
                 console.log(time);
 
