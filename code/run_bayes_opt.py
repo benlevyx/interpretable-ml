@@ -1,5 +1,4 @@
-#!/Library/Frameworks/Python.framework/Versions/3.7/bin/python3
-  
+#!/usr/bin/python3
 
 """
 run_bayes_opt.py
