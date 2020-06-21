@@ -126,7 +126,7 @@ function drawParallelCoordinatesVis(vis = 'test-vis') {
       },
       config = {
         margin: margin,
-        title: "Comparing selected car to all cars with same class",
+        title: "Selected car features",
         featImportanceDiameter: true,
         info: visDescriptions.parallelCoordinates
       },
