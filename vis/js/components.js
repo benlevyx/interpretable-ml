@@ -57,22 +57,22 @@ export var components = [
     desc: "",
     tutorialGroup: 'feature-importance'
   },
+  // {
+  //   id: 3,
+  //   name: 'feature-importance-tree',
+  //   draw: drawFeatureImportanceTree,
+  //   desc: "",
+  //   tutorialGroup: 'feature-importance'
+  // },
   {
     id: 3,
-    name: 'feature-importance-tree',
-    draw: drawFeatureImportanceTree,
-    desc: "",
-    tutorialGroup: 'feature-importance'
-  },
-  {
-    id: 4,
     name: 'parallel-coordinates',
     draw: drawParallelCoordinatesVis,
     desc: visDescriptions.parallelCoordinates,
     tutorialGroup: null
   },
   {
-    id: 5,
+    id: 4,
     name: 'class-vote',
     draw: drawClassVoteVis,
     desc: visDescriptions.classVote,
