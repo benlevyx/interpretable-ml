@@ -105,11 +105,11 @@ class BayesianOptimizer():
             X {np.ndarray} -- Candidate points to sample from (n_obs x dim_x)
 
         Returns:
-            ('idx_next', 'X_next')
+            ('idx_next', 'X_next', 'score_next')
         """
         scores = self.acquisition_fn(X, self.X_obs, self.y_obs)
         idx_next = np.argmax(scores)
-        score_next = scores[idx_next]
+        score_next = scores.flatten()[idx_next]
         return idx_next, X[idx_next], score_next
 
     def _reshape2d(self, arr):

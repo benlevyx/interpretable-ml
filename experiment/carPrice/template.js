@@ -282,6 +282,7 @@ function sampleTest() {
                         var structure = JSON.parse(result)["architectures"][l - 1];
                         IAHistory.architectures.push(structure);
                         console.log(IAHistory);
+                        console.log(`Next EI: ${JSON.parse(result)["nextScore"]}`)
                         $(".decisionBtt").click(
                             clickDecisionBtt
                         );
@@ -368,6 +369,7 @@ function sampleTest() {
                         IAHistory = JSON.parse(result);
                         console.log("The IA history is ");
                         console.log(IAHistory);
+                        console.log(`Next EI: ${IAHistory.nextScore}`)
                         var l = (JSON.parse(result)["architectures"]).length
                         var structure = JSON.parse(result)["architectures"][l - 1];
                         makeGrid(structure["components"], "dynamicIA");

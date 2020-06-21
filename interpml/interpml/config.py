@@ -18,7 +18,7 @@ n_init = 3
 bayes_opt_params = dict(sigma=1,
                         kernel='rbf',
                         acquisition_fn='ei',
-                        xi=.2,
+                        xi=.1,
                         kappa=1,
                         nu=1.5,
                         length_scale=5,
