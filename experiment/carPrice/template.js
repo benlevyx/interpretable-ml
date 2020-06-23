@@ -15,7 +15,7 @@ var maxCars = 55;
 var REWARD_INTERVAL = 5;
 var arrangements = {};
 var taskTime = {};
-
+var timeBatch = []
 var counterbalance = ((Math.random() > 0.5) ? 1 : 0); 
 
 var variant_placebo = 0;
@@ -140,6 +140,31 @@ function sampleTest() {
         function clickDecisionBtt() {
             currentCar += 1;
 
+
+            var time = new Date() - startTime;
+            timeBatch.push(time)
+            startTime = new Date()
+            var r = 0;
+            if($(this).attr('id') === "agreeBtt"){
+                r = 1;
+            }
+
+
+
+            if (r & (window.selected.obs['class'] === window.selected.obs['class_pred'])) {
+                accuracyBatch.push(1);
+                $("#incorrect_feedback").hide();
+                $("#correct_feedback").show();
+            } else if (!r & (window.selected.obs['class'] != window.selected.obs['class_pred'])) {
+                accuracyBatch.push(1);
+                $("#incorrect_feedback").hide();
+                $("#correct_feedback").show();
+            } else {
+                accuracyBatch.push(0);
+                $("#incorrect_feedback").show();
+                $("#correct_feedback").hide();
+            }
+            
             if(currentCar >= maxCars) {
                 viewPage("#comments_page");
                 $.ajax({
@@ -160,28 +185,26 @@ function sampleTest() {
 
                     }
                 });
+
+                $.ajax({
+                    url : "./data.php",
+                    type : "POST",
+                    data: {
+                        accuracy: JSON.stringify({
+                            participant_id: participantID,
+                            variant: variant_dashboard,
+                            accuracies: JSON.stringify(timeBatch),
+                        
+                        }
+                            
+                            )
+                        },
+                    success: function(result) {
+                        console.log("uploaded time");
+
+                    }
+                });
                 return;
-            }
-
-            var time = new Date() - startTime;
-            startTime = new Date()
-            var r = 0;
-
-
-
-
-            if (r & (window.selected.obs['class'] === window.selected.obs['class_pred'])) {
-                accuracyBatch.push(1);
-                $("#incorrect_feedback").hide();
-                $("#correct_feedback").show();
-            } else if (!r & (window.selected.obs['class'] != window.selected.obs['class_pred'])) {
-                accuracyBatch.push(1);
-                $("#incorrect_feedback").hide();
-                $("#correct_feedback").show();
-            } else {
-                accuracyBatch.push(0);
-                $("#incorrect_feedback").show();
-                $("#correct_feedback").hide();
             }
 
             if(currentCar >= 5){
@@ -226,7 +249,7 @@ function sampleTest() {
                 //meanReward = d3.mean(decisionBatch)
                 var meanReward = 0;
                 console.log(meanReward)
-                meanReward = Math.exp(-time/50000) * d3.mean(accuracyBatch.slice(-5));
+                meanReward = Math.exp(-d3.mean(timeBatch.slice(-5))/50000) * d3.mean(accuracyBatch.slice(-5));
 
                 console.log(time);
 
@@ -310,9 +333,7 @@ function sampleTest() {
                     });
                 }, 200);
                 
-                if($(this).attr('id') === "agreeBtt"){
-                    r = 1;
-                }
+
             }
             else {
                             //console.log(window.selected.obs);
