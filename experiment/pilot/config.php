@@ -5,14 +5,14 @@ require_once(__DIR__ . "/../utils/php/utils.php");
 define('DEBUG', 0);
 
 // the mySQL host -- if you are running on labinthewild server, leave as is
-define('DATABASE_HOST', 'mysql.labinthewild.org');
+define('DATABASE_HOST', '127.0.0.1');
 
 // TODO fill out the values below
-define('TEST_NAME', "");
-define('DATABASE', 'pilot');
-define('DB_USER', '');
-define('DB_PASS', ''); // database password
-define('ADMIN_EMAIL', ''); // email of the person who should receive notifications of errors
+define('TEST_NAME', "carPrice");
+define('DATABASE', 'iaiml');
+define('DB_USER', 'user');
+define('DB_PASS', 'password'); // database password
+define('ADMIN_EMAIL', 'zilinma@g.harvard.edu'); // email of the person who should receive notifications of errors
 
 // connect to database -- if the code is running on localhost, it will connect to database on localhost using root/root for user name and password
 // otherwise, it will connect to the production database using information specified above
