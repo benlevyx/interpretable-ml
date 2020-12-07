@@ -1,18 +1,145 @@
 
-.surveyItem {
+.surveyItem, .itemResults {
     margin-bottom: 2em;
     line-height: normal;
 }
 
-.surveyItem input[type=radio] {
-    margin-left: 5px;
-    margin-right: 5px;
+.surveyItem-scale input[type=radio] {
+    margin-left: 2px;
+    margin-right: 2px;
 }
 
 .itemPrompt {
     font-weight: bold;
+    margin-bottom: 0px;
+}
+
+.itemPrompt em {
+    text-decoration: underline;
 }
 
 .itemSubprompt {
     font-style: italic;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.itemHeader {
+    margin-bottom: 5px;
+}
+
+.itemGroup {
+    margin-bottom: 2em;
+}
+
+.scaleItemGroupLeftColumn {
+    text-align: right;
+}
+
+.itemGroup_scaleItemGroup table {
+    border-collapse: collapse;
+}
+
+.itemGroup_scaleItemGroup td {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.itemGroup_scaleItemGroup tbody tr {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.itemGroup_scaleItemGroup thead tr {
+    border-top: 1px solid #dee2e6;
+    border-bottom: 2px solid #dee2e6;
+}
+.itemGroup_scaleItemGroup table .itemPrompt {
+    font-weight: normal;
+}
+
+.itemGroup_scaleItemGroup .evenRow {
+    background-color: #eee;
+}
+
+.scaleLabel, .surveyItem label {
+    font-weight: normal;
+}
+
+@media print {
+    .itemGroup_surveyPage {
+        break-after: page;
+    }
+}
+
+
+.itemResultsContainer {
+    margin-top: 12px;
+}
+
+.bar {
+    /*background-color: #3c550a;*/
+    background-color: #84b144;
+    display: inline-block;
+    width: 40px;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+}
+
+.horizontalHistogram td {
+    padding-left: 4px;
+    padding-right: 4px;
+    border-right: 1px solid #eee;
+}
+
+.horizontalHistogram tr:first-child {
+    border-top: 1px solid #eee;
+    border-bottom: 2px solid #eee;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.horizontalHistogram tr:first-child td, .horizontalHistogram tr:first-child th {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.groupResults-scaleItemGroup .horizontalHistogram tr:first-child {
+    border-top: none;
+    border-bottom: 2px solid #eee;;
+}
+
+.groupResults-scaleItemGroup .horizontalHistogram tr:first-child td, .groupResults-scaleItemGroup .horizontalHistogram tr:first-child th {
+    border-top: none;
+}
+
+.horizontalHistogram tr {
+    text-align: center;
+}
+
+.horizontalHistogram tr :first-child {
+    text-align: left;
+}
+
+.horizontalHistogram tr :nth-child(2) {
+    text-align: right;
+}
+
+.horizontalHistogram tr :last-child {
+    text-align: left;
+    border-right: none;
+}
+
+.optionNotShown {
+    display: none;
+}
+
+.labelsRow, .labelsRow td, .labelsRow th {
+    border-top: none;
+    padding-top: 0px;
+}
+
+.freeResponseQuote {
+    font-style: italic;
+    margin-bottom: .5rem;
 }

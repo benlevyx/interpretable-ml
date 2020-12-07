@@ -1,0 +1,199 @@
+/**
+ * LabintheWild study template
+ *
+ * authors: Krzysztof Gajos
+ */
+
+/* remove callout menu functionality */
+* {
+    -webkit-touch-callout: none;
+}
+
+body {
+    margin: 5px;
+    padding: 0;
+    /* font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif; */
+    /* font-size: 16px; */
+    /* line-height: 22px; */
+    /* color: #222; */
+}
+
+a:link, a:visited, a:hover {
+    text-decoration:none;
+    color:#0099cc;
+}
+
+a:active {
+    color: #003b4e;
+}
+
+.logo { float: left; margin-top: 30px; margin-bottom: 15px; }
+
+.share_text { float:right; margin-top:15px; font-size: 13px; color:#888; }
+.share_this { clear:right; float: right; margin-top: 5px; }
+
+.separator {
+    margin-top: 31px;
+    margin-bottom: 20px;
+    height: 10px;
+    clear: both;
+    display: block;
+    width: 100%;
+    border-top: 2px dotted #366;
+}
+
+.separator2 {
+    margin-top: 0px;
+    margin-bottom: 20px;
+    height: 10px;
+    clear: both;
+    display: block;
+    width: 100%;
+    border-top: 2px dotted #366;
+}
+
+img, a img {
+    border: none;
+}
+
+.page {
+    display: block;
+}
+
+.header {
+    display: block;
+}
+
+.w800 {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#demographics_page label {
+    font-weight: normal;
+}
+
+#comments_page label {
+    font-weight: normal;
+}
+
+.likert input[type=radio] {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.likert label {
+    font-weight: normal;
+    font-style: italic;
+}
+
+.option-set-header {
+    font-weight: bold;
+    margin-top: 24px;
+}
+
+  
+  /* The Modal (background) */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+ }
+  
+  
+
+  
+  /* Add Animation - Zoom in the Modal */
+  .modal-content, #caption {
+    animation-name: zoom;
+    animation-duration: 0.6s;
+  }
+  
+  @keyframes zoom {
+    from {transform:scale(0)}
+    to {transform:scale(1)}
+  }
+  
+  /* The Close Button */
+  .close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  @font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto/Roboto-Light.ttf') format('truetype')
+}
+
+#d3Vis {
+    position: relative;
+    width: 100%;
+}
+
+text.c3-axis-x-label,
+text.c3-axis-y-label {
+    font-size: 16px !important;
+}
+
+
+
+.title {
+    text-align: center;
+}
+
+.grid {
+    display: grid;
+    gap: 1rem;
+    grid-auto-flow: column;
+    margin: 0 0 1rem 0;
+}
+.grid > div {
+    min-width: 10px;
+}
+
+rect.cell-rect:hover {
+    stroke: black;
+    stroke-width: 3px;
+}
+
+g.cell:hover text {
+    fill: white;
+}
+
+g.labels text.label,
+g.labels text.title {
+    alignment-baseline: bottom;
+    text-anchor: middle;
+}
+
+g.labels text.title {
+    font-size: 24px
+}
+
+div.tooltip {
+    background-color: white;
+    border: solid;
+    border-width: 2px;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+}

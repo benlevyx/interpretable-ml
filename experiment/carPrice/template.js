@@ -349,7 +349,7 @@ function sampleTest() {
                 $(".decisionBtt").off('click');
                 //meanReward = d3.mean(decisionBatch)
                 //console.log(meanReward)
-                var meanReward = Math.exp(-time/50000) * d3.mean(accuracyBatch.slice(-5));
+                var meanReward = Math.exp(-d3.mean(timeBatch.slice(-5))/50000) * d3.mean(accuracyBatch.slice(-5));
 
                 console.log(time);
 

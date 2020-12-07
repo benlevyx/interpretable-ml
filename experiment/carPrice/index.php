@@ -59,7 +59,7 @@ require_once("survey.php");
 
     <!-- our own libraries -->
     <script src="../utils/js/utils.js"></script><!- general utilities -->
-    <script src="template.js"></script><!-- example code for this template study -->
+    <script type="module" src="template.js"></script><!-- example code for this template study -->
     <link rel="stylesheet" type="text/css" href="template.css"/><!-- starter CSS sheet -->
     <script src="../utils/js/sessionflow2.js"></script><!-- this is our basic analytics software -->
     <script src="../utils/js/progress.js"></script><!-- library for visualizing progress through the study -->

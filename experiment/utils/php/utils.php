@@ -213,6 +213,17 @@ function mysqli_real_escape_strings($mysqli, $strings) {
     return $res;
 }
 
+/**
+ * Turns booleans into 0/1
+ *
+ * @param $boolValue
+ * @return int 0/1
+ */
+function boolToInt($boolValue) {
+    if ($boolValue) return 1;
+    return 0;
+}
+
 // check if the relevant table exists
 function tableExists($tableName) {
     global $mysqli;
@@ -380,7 +391,9 @@ function toAssociativeArray($arrayOfAssociativeArrays, $keyName) {
 // simple check to see if we are running on localhost
 function isRunningOnLocalhost() {
     return $_SERVER['SERVER_NAME'] == "localhost"
-    || 0 === strpos($_SERVER['SERVER_NAME'], 'PhpStorm'); // if using built-in server with PhpStorm
+        || endsWith($_SERVER['SERVER_NAME'], ".local")
+        || startsWith($_SERVER['SERVER_NAME'], "192.168")
+        || 0 === strpos($_SERVER['SERVER_NAME'], 'PhpStorm'); // if using built-in server with PhpStorm
 }
 
 // returns the position of the first digit in a string (or false if no digit is present)

@@ -193,7 +193,7 @@ var imagePreloader = {
 
     // takes an array of image URLs and starts preloading them in the background
     preloadImages: function(imageURLs) {
-        for(i=0; i<imageURLs.length; i++) {
+        for(var i=0; i<imageURLs.length; i++) {
             var img = new Image();
             img.src = imageURLs[i];
             this.forPreloading.push(img);
@@ -202,7 +202,7 @@ var imagePreloader = {
 
     ensureImages: function(imageURLs) {
         var self = this;
-        for(i=0; i<imageURLs.length; i++) {
+        for(var i=0; i<imageURLs.length; i++) {
             var img = new Image();
             img.onload = function() {self.checkLoadingProgress(self)};
             img.src = imageURLs[i];
@@ -215,7 +215,7 @@ var imagePreloader = {
     checkLoadingProgress: function(self) {
         var allLoaded = true;
         var numLoaded = 0;
-        for(i=0; i<self.images.length; i++) {
+        for(var i=0; i<self.images.length; i++) {
             if (self.images[i].complete)
                 numLoaded++;
             else
