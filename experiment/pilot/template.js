@@ -12,62 +12,37 @@ var progressBar = null;
 
 var currentQuestion = 0;
 var currentTime = 0;
+const MAX_QUESTIONS = 3;
+var dataBen,
+dataIke,
+dataWp,
+dataZilin
 
-var ikeDataTrain,
-ikeDataTest,
-zilinDataTrain,
-zilinDataTest,
-zilinPredsTrain,
-zilinPredsTest,
-featImportanceData,
-learningCurveData;
-
+var allData;
 // Loading data
 Promise.all([
-    d3.csv('data/data_ike_train.csv'),
-    d3.csv('data/data_ike_test.csv'),
-    d3.csv('data/data_zilin_train.csv'),
-    d3.csv('data/data_zilin_test.csv'),
-    d3.csv('data/preds_zilin_train.csv'),
-    d3.csv('data/preds_zilin_test.csv'),
-    d3.csv('data/featureImportance.csv'),
-    d3.json('data/learningCurve.json')
+  d3.json('data/data_ben.json'),
+  d3.json('data/data_ike.json'),
+  d3.json('data/data_wp.json'),
+  d3.json('data/data_zilin.json'),
 ]).then(data => {
     [
-      ikeDataTrain,
-      ikeDataTest,
-      zilinDataTrain,
-      zilinDataTest,
-      zilinPredsTrain,
-      zilinPredsTest,
-      featImportanceData,
-      learningCurveData
-    ] = data;
+      dataBen,
+      dataIke,
+      dataWp,
+      dataZilin
+    ] = data.map(parseData);
 
-    zilinDataTrain.forEach((d, i) => {
-      for (key in d) {
-        d[key] = +d[key];
-      }
-      d.pred = +zilinPredsTrain[i].pred;
-    })
-    zilinDataTest.forEach((d, i) => {
-      for (key in d) {
-        d[key] = +d[key];
-      }
-      d.pred = +zilinPredsTest[i].pred;
-    })
+    allData = [dataBen,
+      dataIke,
+      dataWp,
+      dataZilin];
 
-    ikeDataTrain.forEach(d => {
-      for (key in d) {
-        d[key] = +d[key];
-      }
-    })
-    ikeDataTest.forEach(d => {
-      for (key in d) {
-        d[key] = +d[key];
-      }
-    })
-
+    // new LearningCurveVis("vis", dataBen.learningCurve, {});
+    // new HistogramVis("vis", dataBen.data, {});
+    // new ConfusionMatrixVis("vis", dataBen.data.test);
+    // new ScatterVis("vis", dataBen.data.train, {})
+    // new FeatureImportanceVis("vis", dataBen.featureImportance, {})
 })
 
 function updateVis(visName, data) {
@@ -149,7 +124,11 @@ function sampleTest() {
 
             currentQuestion += 1;
 
-            if (currentQuestion >= 5) {
+
+            $(".vis").click(visClick);
+
+            $(".vis").addClass("w3-black");
+            if (currentQuestion >= MAX_QUESTIONS) {
                 viewPage("#comments_page");
             }
 
@@ -162,32 +141,7 @@ function sampleTest() {
         });
 
 
-        $(".vis").click(function () {
-            // change the vis here
-            if($(this).attr('id') == "bt1" ) { // LC
-              updateVis(LearningCurveVis, learningCurveData);
-            } else if ($(this).attr('id') == "bt2") {
-              updateVis(ScatterVis, ikeDataTrain);
-            }
-            else if ($(this).attr('id') == "bt3") {
-              updateVis(ConfusionMatrixVis, zilinDataTest);
-            }
-            else if ($(this).attr('id') == "bt4") {
-              updateVis(FeatureImportanceVis, featImportanceData);
-            }      
-            else if ($(this).attr('id') == "bt5") {
-              updateVis(HistogramVis, {train: zilinDataTrain, test: zilinDataTest});
-            }
-
-
-            currentQuestion += 1;
-            document.getElementById('id01').style.display='block';
-            $(this).off("click");
-            $(this).removeClass("w3-black");
-            $('#test').attr('id');
-
-            $('input[name=sequence]').val($('input[name=sequence]').val() + $(this).attr('id'));
-        })
+        $(".vis").click(visClick);
 
     };
 
@@ -205,3 +159,36 @@ $(function() {
     var test = sampleTest();
     test.initializeUI();
 });
+
+function visClick() {
+  // change the vis here
+
+
+  // new LearningCurveVis("vis", dataBen.learningCurve, {});
+  // new HistogramVis("vis", dataBen.data, {});
+  // new ConfusionMatrixVis("vis", dataBen.data.test);
+  // new ScatterVis("vis", dataBen.data.train, {})
+  // new FeatureImportanceVis("vis", dataBen.featureImportance, {})
+
+  let data = allData[currentQuestion];
+  if($(this).attr('id') == "bt1" ) { // LC
+    updateVis(LearningCurveVis, data.learningCurve);
+  } else if ($(this).attr('id') == "bt2") {
+    updateVis(ScatterVis, data.data.train);
+  }
+  else if ($(this).attr('id') == "bt3") {
+    updateVis(ConfusionMatrixVis, data.data.test);
+  }
+  else if ($(this).attr('id') == "bt4") {
+    updateVis(FeatureImportanceVis, data.featureImportance);
+  }      
+  else if ($(this).attr('id') == "bt5") {
+    updateVis(HistogramVis, data.data);
+  }
+  document.getElementById('id01').style.display='block';
+  $(this).off("click");
+  $(this).removeClass("w3-black");
+
+
+  $('input[name=sequence]').val($('input[name=sequence]').val() + $(this).attr('id'));
+}

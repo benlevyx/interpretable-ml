@@ -11,7 +11,6 @@ function makeSvg(vis) {
       .attr('transform', `translate(${vis.margin.left}, ${vis.margin.top})`)
 }
 
-
 /**
  * From: https://www.d3-graph-gallery.com/graph/density_double.html
  * @param {Number} kernel 
@@ -28,4 +27,35 @@ function kernelEpanechnikov(k) {
   return function(v) {
     return Math.abs(v /= k) <= 1 ? 0.75 * (1 - v * v) / k : 0;
   };
+}
+
+function parseData(data, preds) {
+  const parsedData = {}
+  // data
+  parsedData.data = {}
+  parsedData.data.train = [];
+  parsedData.data.test = [];
+  columns = [0, 1, 2, 3, 'class', 'pred']
+  d3.range(data.data.class.length).forEach(i => {
+    const datum = {};
+    columns.forEach(c => datum[c] = data.data[c][i]);
+    if (data.data.dataset[i] === "train") {
+      parsedData.data.train.push(datum);
+    } else {
+      parsedData.data.test.push(datum);
+    }
+  })
+
+  // learning curve
+  parsedData.learningCurve = data.learning_curve;
+
+  // feature importances
+  parsedData.featureImportance = d3.range(data.feature_importance.feature.length).map(i => {
+    return {
+      feature: data.feature_importance.feature[i],
+      value: data.feature_importance.value[i]
+    };
+  })
+  return parsedData
+  
 }

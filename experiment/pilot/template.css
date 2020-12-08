@@ -102,8 +102,6 @@ img, a img {
     padding-top: 100px; /* Location of the box */
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
  }
   
@@ -146,7 +144,10 @@ img, a img {
 
 #d3Vis {
     position: relative;
-    width: 100%;
+}
+
+.c3 {
+    margin: 100px;
 }
 
 text.c3-axis-x-label,

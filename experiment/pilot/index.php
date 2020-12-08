@@ -382,10 +382,10 @@ Here, each of the 4 plots corresponds to a feature dimension, the x-axis corresp
             <label for="error">What's the mode error?</label>
             <select id="error" name="error" >
                 <option value=" "> </option>
-                <option value="0">No</option>
-                <option value="1">Yes</option>
-                <option value="2"> </option>
-                <option value="3">No</option>
+                <option value="0">Out of Distribution</option>
+                <option value="1">Overfitting</option>
+                <option value="2">Underfitting</option>
+                <option value="3">Class Imbalance</option>
             </select>
             <b>(important)</b>
             <br><br>
@@ -439,8 +439,6 @@ Here, each of the 4 plots corresponds to a feature dimension, the x-axis corresp
     </div>
 </div>
 <script>
-        // asynchronously submit values of the demographics_form to the server without loading a new page
-        // you do not really need to touch anything here
         $(function() {
             $("#actual_test").ajaxForm({
                 success: function (data) {
