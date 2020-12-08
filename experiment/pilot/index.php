@@ -365,7 +365,7 @@ Here, each of the 4 plots corresponds to a feature dimension, the x-axis corresp
 
     <!-- TODO this is entirely yours to fill out, but here is an example of a survey page -->
     <h4>Can you figure out the model error according to the following visualizations? You can only view a visualization about the model once. Therefore think about what's the most important vis to you in this task!</h4>
-    <h3><span id='numQ'></span>/4 Questions left</h3>
+    <h3><span id='numQ'>0</span>/4 Questions</h3>
     <form name="demo" id="actual_test" action="task.php" method="POST">
 
         <input type="hidden" name="participant_id" />

@@ -128,7 +128,7 @@ function sampleTest() {
             $(".vis").click(visClick);
 
             $(".vis").addClass("w3-black");
-            if (currentQuestion >= MAX_QUESTIONS) {
+            if (currentQuestion > MAX_QUESTIONS) {
                 viewPage("#comments_page");
             }
 
