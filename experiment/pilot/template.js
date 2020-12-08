@@ -12,11 +12,14 @@ var progressBar = null;
 
 var currentQuestion = 0;
 var currentTime = 0;
-const MAX_QUESTIONS = 3;
+const MAX_QUESTIONS = 7;
 var dataBen,
 dataIke,
 dataWp,
-dataZilin
+dataZilin,
+dataImbalance,
+dataOverfitting,
+dataUnderfitting
 
 var allData;
 // Loading data
@@ -25,18 +28,27 @@ Promise.all([
   d3.json('data/data_ike.json'),
   d3.json('data/data_wp.json'),
   d3.json('data/data_zilin.json'),
+  d3.json('data/data_imbalance.json'),
+  d3.json('data/data_overfitting.json'),
+  d3.json('data/data_underfitting.json'),
 ]).then(data => {
     [
       dataBen,
       dataIke,
       dataWp,
-      dataZilin
+      dataZilin,
+      dataImbalance,
+      dataOverfitting,
+      dataUnderfitting
     ] = data.map(parseData);
 
     allData = [dataBen,
       dataIke,
       dataWp,
-      dataZilin];
+      dataZilin,
+      dataImbalance,
+      dataOverfitting,
+      dataUnderfitting];
 
     // new LearningCurveVis("vis", dataBen.learningCurve, {});
     // new HistogramVis("vis", dataBen.data, {});
