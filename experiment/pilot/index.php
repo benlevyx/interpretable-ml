@@ -286,7 +286,18 @@ require_once("survey.php");
 
     <h1>Instructions</h1>
     <p>In this study, each question asks you to identify errors of different models 
-    trained on different datasets. All of these models have at least one model error. 
+    trained on different datasets. All of these models have at least one model error.
+    </p>
+
+    <p>
+    The model is a *logistic regression*, which is a kind of linear model. Each of 
+    the features is used to predict the class of each data point, with weights that are
+    learned during training. The model can also learn to combine features in complex
+    ways through *interactions* and learn non-linear relationships between variables
+    by squaring or cubing the features.   
+    </p>
+
+    <p>
     The following is a list of visualizations that you will see for all models. Please
     read all instructions before proceeding.</p>
 
@@ -419,14 +430,14 @@ Here, each of the 4 plots corresponds to a feature dimension, the x-axis corresp
                 class="w3-button w3-large w3-display-topright">&times;</span>
                 <h2>vis</h2>
             </header>
-            <div id="d3Vis">
-                
-            </div>
+
             <footer class="w3-container w3-teal">
                 <p></p>
             </footer>
             </div>
         </div>
+    </div>
+    <div id="d3Vis">
     </div>
 </div>
 <script>

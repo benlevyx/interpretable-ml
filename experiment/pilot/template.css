@@ -142,11 +142,11 @@ img, a img {
 }
 
 #d3Vis {
+    width: 100%;
+    height: 100%;
+    position: relative;
 }
 
-.c3 {
-    margin: 100px;
-}
 
 text.c3-axis-x-label,
 text.c3-axis-y-label {

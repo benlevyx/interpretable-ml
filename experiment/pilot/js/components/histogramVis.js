@@ -2,9 +2,12 @@ class HistogramVis extends Vis {
   initVis() {
     const vis = this;
 
-    this.kernel = vis.config.kernel || .5;
+    console.log(vis.data);
+
+    this.kernel = vis.config.kernel || .7;
     const kernel = kernelEpanechnikov(vis.kernel)
-    vis.numFeatures = Object.keys(vis.data.train[0]).length - 1 // Removing the class label column;
+    // Number of features is number of keys that are numeric
+    vis.numFeatures = Object.keys(vis.data.train[0]).filter(d => !Number.isNaN(+d)).length
     vis.childWidth = d3.select(vis.parentElement).node().getBoundingClientRect().width / vis.numFeatures;
     console.log(vis.data, vis.numFeatures);
     const allData = vis.data.train.concat(vis.data.test);
@@ -45,6 +48,8 @@ class HistogramVis extends Vis {
   updateVis() {
     var vis = this;
 
+    const parentDiv = d3.select(vis.parentElement)
+      .classed('grid', true);
     d3.range(vis.numFeatures).forEach(i => {
       const div = d3.select(vis.parentElement).append('div');
 
@@ -61,11 +66,13 @@ class HistogramVis extends Vis {
               value: (value, ratio, id) => d3.format(".2f")(value)
           }
         },
-        point: {
-          show: false
-        },
-        size: {
-          width: vis.childWidth
+        point: {show: false},
+        size: {width: vis.childWidth},
+        padding: {
+          top: 40,
+          bottom: 40,
+          left: 40,
+          right: 40
         }
       })
       div.insert('h4', ":first-child").text(`Feature ${i}`).attr('class', 'title')

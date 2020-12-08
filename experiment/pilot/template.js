@@ -134,7 +134,7 @@ function sampleTest() {
 
             currentQuestion += 1;
             $('#numQ').text(currentQuestion);
-
+            $("#d3Vis").empty();
             $(".vis").click(visClick);
 
             $(".vis").addClass("w3-black");
@@ -195,9 +195,10 @@ function visClick() {
   else if ($(this).attr('id') == "bt5") {
     updateVis(HistogramVis, data.data);
   }
-  document.getElementById('id01').style.display='block';
+  //document.getElementById('id01').style.display='block';
   $(this).off("click");
   $(this).removeClass("w3-black");
+
 
 
   $('input[name=sequence]').val($('input[name=sequence]').val() + $(this).attr('id'));

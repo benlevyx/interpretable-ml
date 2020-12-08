@@ -9,8 +9,9 @@ class ConfusionMatrixVis extends Vis {
       bottom: 10,
       right: 10
     }
-    vis.width = Math.min(bbox.width, bbox.height) - vis.margin.left - vis.margin.right;
-    vis.height = vis.width - vis.margin.top - vis.margin.bottom;
+    const length = vis.config.length || 400;
+    vis.width = length - vis.margin.left - vis.margin.right;
+    vis.height = length - vis.margin.top - vis.margin.bottom;
 
     makeSvg(vis);
 
@@ -111,6 +112,26 @@ class ConfusionMatrixVis extends Vis {
         .attr('alignment-baseline', 'middle')
         .attr('text-anchor', 'middle')
         .text(d => d.count)
+
+      cells
+        .on('mouseover', function(d) {
+          const selection = d3.select(this);
+          selection.append('rect')
+            .attr('class', 'hover-rect')
+            .style('stroke', 'black')
+            .style('stroke-width', 3)
+            .style('fill', 'none')
+            .attr('width', vis.x.bandwidth())
+            .attr('height', vis.y.bandwidth())
+          selection.select('text')
+            .attr('fill', vis.opacity(d.count) >= 0.5 ? 'white' : 'black')
+      })
+        .on('mouseout', function(d) {
+          const selection = d3.select(this);
+          selection.selectAll('rect.hover-rect').remove();
+          selection.select('text')
+            .attr('fill', 'black')
+        })
       
       // Labels
       vis.gLabels = vis.svg.append('g')

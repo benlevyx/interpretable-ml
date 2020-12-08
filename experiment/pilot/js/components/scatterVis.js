@@ -49,6 +49,9 @@ class ScatterVis extends Vis {
           value: (value, ratio, id) => d3.format(".2f")(value)
         }
       },
+      point: {
+        r: 5
+      },
       ...vis.c3Defaults
     })
   }
