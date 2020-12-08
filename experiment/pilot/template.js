@@ -12,14 +12,12 @@ var progressBar = null;
 
 var currentQuestion = 0;
 var currentTime = 0;
-const MAX_QUESTIONS = 7;
+const MAX_QUESTIONS = 6;
 var dataBen,
 dataIke,
 dataWp,
 dataZilin,
-dataImbalance,
-dataOverfitting,
-dataUnderfitting
+dataImbalance;
 
 var allData;
 // Loading data
@@ -36,7 +34,7 @@ Promise.all([
       dataBen,
       dataIke,
       dataWp,
-      dataZilin,
+      dataZilin,      
       dataImbalance,
       dataOverfitting,
       dataUnderfitting
@@ -45,7 +43,7 @@ Promise.all([
     allData = [dataBen,
       dataIke,
       dataWp,
-      dataZilin,
+      dataZilin,      
       dataImbalance,
       dataOverfitting,
       dataUnderfitting];

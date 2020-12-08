@@ -35,7 +35,7 @@ function parseData(data, preds) {
   parsedData.data = {}
   parsedData.data.train = [];
   parsedData.data.test = [];
-  columns = [0, 1, 2, 3, 'class', 'pred']
+  const columns = Object.keys(data.data).filter(d => d !== 'dataset');
   d3.range(data.data.class.length).forEach(i => {
     const datum = {};
     columns.forEach(c => datum[c] = data.data[c][i]);
