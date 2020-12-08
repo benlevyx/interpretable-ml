@@ -123,7 +123,7 @@ function sampleTest() {
             console.log(timeInterval);
 
             currentQuestion += 1;
-
+            $('#numQ').text(currentQuestion);
 
             $(".vis").click(visClick);
 

@@ -137,18 +137,9 @@ require_once("survey.php");
 
     <div>
         <!-- TODO fill out the contents of the splash page -->
-        <H1>The test!</H1>
-        <p>
-            Typical structure:<br/>
-
-            Ask some question, e.g., how good is your nutrition knowledge?<br/>
-
-            Promise an answer and social comparison, e.g., Find out and compare yourself to others!<br/>
-
-            How long will this test take? E.g., This test takes 12 minutes to complete on average.<br/>
-
-            Any device or other restrictions, e.g., this test requires a large screen: it will work on a tablet or a laptop, but probably not on a phone.<br/>
-
+        <H1>Model Visualization Quiz!</H1>
+        <p>In this study, you will interact with a list of visualization and then 
+            diagnose model errors with these visualizations. 
             <?php
             // Optionally, tell people how many others have taken this test so far
             $numParticipants = getAutoIncrementValueForTable(DATABASE, "participants");
@@ -169,7 +160,7 @@ require_once("survey.php");
 <div id="consent_page" class="page w800">
     <div class="separator2"></div>
 
-    <h1><!-- TODO --> name of the test goes here</h1>
+    <h1><!-- TODO --> Model Visualization Quiz</h1>
     <p></p>
 
     <p><em>Please read the following information carefully before proceeding.</em></p>
@@ -374,7 +365,7 @@ Here, each of the 4 plots corresponds to a feature dimension, the x-axis corresp
 
     <!-- TODO this is entirely yours to fill out, but here is an example of a survey page -->
     <h4>Can you figure out the model error according to the following visualizations? You can only view a visualization about the model once. Therefore think about what's the most important vis to you in this task!</h4>
-
+    <h3><span id='numQ'></span>/4 Questions left</h3>
     <form name="demo" id="actual_test" action="task.php" method="POST">
 
         <input type="hidden" name="participant_id" />
