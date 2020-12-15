@@ -4,7 +4,7 @@ require_once("../utils/php/utils.php");
 
 // TODO names of the form fields from the demographics questionnaire 
 // that are to be captured and saved into the database
-$participantFormFields = array("error", "confidence", "time", "participant_id");
+$participantFormFields = array("error", "confidence", "time", 'sequence', "participant_id");
 
 // save the user agent
 $ua = mysqli_real_escape_string($mysqli, $_SERVER["HTTP_USER_AGENT"]);

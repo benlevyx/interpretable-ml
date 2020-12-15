@@ -138,6 +138,7 @@ require_once("survey.php");
     <div>
         <!-- TODO fill out the contents of the splash page -->
         <H1>Model Visualization Quiz!</H1>
+
         <p>In this study, you will interact with a list of visualization and then 
             diagnose model errors with these visualizations. 
             <?php
@@ -400,8 +401,8 @@ Here, each of the 4 plots corresponds to a feature dimension, the x-axis corresp
             <option value="1">Completely confident</option>
             <option value="2">Fairly confident</option>
             <option value="3">Somewhat confident</option>
-            <option value="4">Fairly confident</option>
-            <option value="5">Completely confident</option>
+            <option value="4">Slightly confident</option>
+            <option value="5">Not confident at all</option>
         </select>
 
         <input type="hidden" name="time" id="time" />
@@ -414,13 +415,14 @@ Here, each of the 4 plots corresponds to a feature dimension, the x-axis corresp
         </p>
     </form>
 
+        <div class="separator"> &nbsp; </div>
     <div class="w3-container container" id="listOfVis">
-        <h2>List of visualizations</h2>
+        <h2>List of visualizations (you need to view each vis for 10s before viewing another)</h2>
 
         <button id="bt1" class="w3-button w3-black vis">Learning Curve</button>
         <button id="bt2" class="w3-button w3-black vis">PCA</button>
         <button id="bt3" class="w3-button w3-black vis">Confusion Matrix</button>
-        <button id="bt4" class="w3-button w3-black vis">Feature Importance</button>
+        
         <button id="bt5" class="w3-button w3-black vis">Data Distribution</button>
 
         <div id="id01" class="w3-modal w3-animate-opacity">
@@ -441,11 +443,29 @@ Here, each of the 4 plots corresponds to a feature dimension, the x-axis corresp
     </div>
 </div>
 <script>
+
+        var isSubmit = false;
+        $("#confidence").change(function () {
+            if(document.forms['actual_test'].confidence.value != ' ' && document.forms['actual_test'].error.value != ' ') {
+                $("#experiment_button").show();
+                isSubmit = true;
+                console.log("new challenger")
+            };
+        })
+
+        $("#error").change(function () {
+            if(document.forms['actual_test'].confidence.value != ' ' && document.forms['actual_test'].error.value != ' ') {
+                $("#experiment_button").show();
+                isSubmit = true;
+                console.log("new challenger")
+            };
+        })
         $(function() {
+            
             $("#actual_test").ajaxForm({
                 success: function (data) {
                     console.log("received response from the server for demographics: " + data);
-
+                    $('input[name=sequence]').val('');
                     document.getElementById("actual_test").reset();
                     $('input[name=participant_id]').val(participantID);
                 }

@@ -20,6 +20,7 @@ dataZilin,
 dataImbalance;
 
 var allData;
+
 // Loading data
 Promise.all([
   d3.json('data/data_ben.json'),
@@ -79,13 +80,20 @@ function sampleTest() {
         },    
 
         {
-            element: "#submitButton",
-            intro: "Submit your choices when ready."
+            intro: "Submit all your choices when ready. The quiz starts after you click on 'Done'. "
         },
 
       ],
       showStepNumbers:false
     });
+
+
+    intro.onexit(function() {
+      console.log('complete');
+      console.log('test start');
+      currentTime = new Date();
+      $('input[name=time]').val(currentTime);
+    })
 
     var initializeUI = function() {
 
@@ -119,28 +127,29 @@ function sampleTest() {
         });
         litwSurvey("nfc_survey").onSurveyCompletion(function() {viewPage("#experiment_page2")});
         
-        onViewPage(function() {
-            currentTime = new Date();
-            $('input[name=time]').val(currentTime);
-
-        }, "#experiment_page2");
-
+        $("#experiment_button").hide();
         $("#experiment_button").click(function () {
+            isSubmit = false;
             console.log("next")
             var timeInterval = new Date() - currentTime;
             currentTime = new Date();
-            $('input[name=time]').val(timeInterval);
+
+            $('input[name=sequence]').val($('input[name=sequence]').val() + timeInterval);
+
+            $('input[name=time]').val(111000);
             console.log(timeInterval);
 
             currentQuestion += 1;
             $('#numQ').text(currentQuestion);
             $("#d3Vis").empty();
-            $(".vis").click(visClick);
+            //$(".vis").click(visClick);
 
-            $(".vis").addClass("w3-black");
+            //$(".vis").addClass("w3-black");
             if (currentQuestion > MAX_QUESTIONS) {
                 viewPage("#comments_page");
             }
+            $(".vis").show();
+            $("#experiment_button").hide();
 
         });
 
@@ -196,10 +205,23 @@ function visClick() {
     updateVis(HistogramVis, data.data);
   }
   //document.getElementById('id01').style.display='block';
-  $(this).off("click");
-  $(this).removeClass("w3-black");
+  //$(this).off("click");
+  //$(this).removeClass("w3-black");
+
+  $(".vis").hide();
+  $("#experiment_button").hide();
+  setTimeout(function() {
+    if(isSubmit){
+      $("#experiment_button").show();
+    }
+    $(".vis").show();
+  }, 10000)
 
 
+  $('input[name=sequence]').val($('input[name=sequence]').val() + $(this).attr('id') + ',');
 
-  $('input[name=sequence]').val($('input[name=sequence]').val() + $(this).attr('id'));
+  var timeInterval = new Date() - currentTime;
+  currentTime = new Date();
+
+  $('input[name=sequence]').val($('input[name=sequence]').val() + timeInterval + ',');
 }
