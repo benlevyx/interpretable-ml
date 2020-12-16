@@ -96,9 +96,6 @@ function sampleTest() {
     })
 
     var initializeUI = function() {
-
-
-
         // TODO configure progress bar
         progressBar = progress(); // creating progressBar object
         // defining the steps in the study and the page IDs that they correspond to
