@@ -26,6 +26,8 @@ var getUrlParameter = function getUrlParameter(sParam) {
 
 condition = (getUrlParameter('ver') ? parseInt(getUrlParameter('ver')): Math.floor(Math.random() * Math.floor(2)));
 
+var dataReceiver = './data.php'
+
 console.log(condition);
 // global progress bar variable (could be made private)
 var progressBar = null;
@@ -92,35 +94,68 @@ function updateVis(visDiv, visName, data) {
 
 function sampleTest() {
     var intro = introJs();
-    intro.setOptions({
-      steps: [
-        {
-            element: "#listOfVis",
-            intro: "In here you will be able to see different visualizations about the model and the dataset. You can only view each visualization once. "
-        },  
-        {
-            element: "#modelError",
-            intro: "After viewing the visualizations, you can select what the model errors are. Indicate your choices in the drop down menu. "
-          },       
+    if (condition == 0) {
+      intro.setOptions({
+        steps: [
+          {
+              element: "#listOfVis",
+              intro: "In here you will be able to see different visualizations about the model and the dataset. You are able to view the visualizations for however many times you want, but you have to view them for a certain amount of time before proceeding. "
+          },  
+          {
+              element: "#modelError",
+              intro: "After viewing the visualizations, you can select what the model errors are. Indicate your choices in the drop down menu. "
+            },       
+  
+          {
+              element: "#confidence",
+              intro: "We are also interested in how confidently you make the decisons"
+          },    
+  
+          {
+            element: "#preference",
+            intro: "Which visualization do you think is the most useful?"
+          },    
+  
+          {
+              intro: "Submit all your choices when ready. The quiz starts after you click on 'Done'. "
+          },
+  
+        ],
+        showStepNumbers:false
+      });
+    } else {
 
-        {
-            element: "#confidence",
-            intro: "We are also interested in how confident you make the decisons"
-        },    
 
-        {
-          element: "#preference",
-          intro: "Which visualization do you think is the most useful?"
-        },    
-
-        {
-            intro: "Submit all your choices when ready. The quiz starts after you click on 'Done'. "
-        },
-
-      ],
-      showStepNumbers:false
-    });
-
+      intro.setOptions({
+        steps: [
+          {
+              element: "#carouselExampleIndicators",
+              intro: "In here you will be able to see different visualizations about the model and the dataset. You will view them in a sequence, and then you can check all of them at the end. "
+          },  
+          {
+              element: "#modelError",
+              intro: "After viewing the visualizations, you can select what the model errors are. Indicate your choices in the drop down menu. "
+            },       
+  
+          {
+              element: "#confidence",
+              intro: "We are also interested in how confident you make the decisons"
+          },    
+  
+          {
+            element: "#preference",
+            intro: "Which visualization do you think is the most useful?"
+          },    
+  
+          {
+              intro: "Submit all your choices when ready. The quiz starts after you click on 'Done'. "
+          },
+  
+        ],
+        showStepNumbers:false
+      });
+  
+    }
 
     intro.onexit(function() {
       console.log('complete');

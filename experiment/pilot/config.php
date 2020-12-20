@@ -74,3 +74,12 @@ ensureTable("comments", "CREATE TABLE `comments` (
   KEY `cheatingBool` (`cheatingBool`),
   KEY `technicalBool` (`technicalBool`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;");
+
+ensureTable("additional_data", "CREATE TABLE `additional_data` (
+  `data_id` int(11) NOT NULL AUTO_INCREMENT,
+  `participant_id` int(11) NOT NULL,
+  `entry_name` text(11),
+  `value` int(11),
+  `text_value` text,
+  PRIMARY KEY (`data_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;");

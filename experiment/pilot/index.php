@@ -273,6 +273,24 @@ require_once("survey.php");
                         sessionFlow.setParticipantID(participantID);
                     if (debug)
                         console.log("received response from the server for demographics: " + data);
+
+
+                    $.ajax({
+                        url: dataReceiver,
+                        type: "POST",
+                        data: {"additional_data": JSON.stringify({
+                            participant_id: participantID,
+                            entry_name: "conditions",
+                            value: condition,
+                            text_value:"",
+                        })}, 
+                        success: function(data) {
+                            console.log("Successfully transmitted conditions.");
+                        },
+                        error: function() {
+                            console.log("Failed to transmit results to server");
+                        }
+                        });
                 }
             })
         })
@@ -313,7 +331,7 @@ The horizontal axis corresponds to the first dimension of the projection, and th
     </p>
 
     <img src="./images/tutorials/image3.png" width="100%">
-    <p>This visualization shows the distribution of the feature values between train and test sets. A good model should be trained on a dataset that is similar to the data it will be deployed on, so the distributions in the train and test sets should look similar.  
+    <p>This visualization shows the distribution of the feature values between train (blue) and test (orange) sets. A good model should be trained on a dataset that is similar to the data it will be deployed on, so the distributions in the train and test sets should look similar.  
 Here, each of the 4 plots corresponds to a feature dimension, the x-axis corresponds to the value of the feature, and the y-axis corresponds to how likely the feature is to take that particular value.  The blue distribution corresponds to the data the model was trained on (the train set) and the orange distribution corresponds to the data the model will be deployed on (the test set).
 
 </p>
@@ -549,6 +567,7 @@ Here, each of the 4 plots corresponds to a feature dimension, the x-axis corresp
                     $('input[name=sequence]').val('');
                     document.getElementById("actual_test").reset();
                     $('input[name=participant_id]').val(participantID);
+
                 }
             })
         })
