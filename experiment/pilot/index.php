@@ -286,12 +286,12 @@ require_once("survey.php");
 
 
     <h1>Instructions</h1>
-    <p>In this study, each question asks you to identify errors of different models 
+    <p>In this study, each question asks you to identify the problem with the model 
     trained on different datasets. All of these models have at least one model error.
     </p>
 
     <p>
-    The model is a *logistic regression*, which is a kind of linear model. Each of 
+    The model is a <b>logistic regression</b>, which is a kind of linear model. Each of 
     the features is used to predict the class of each data point, with weights that are
     learned during training. The model can also learn to combine features in complex
     ways through *interactions* and learn non-linear relationships between variables
@@ -304,23 +304,12 @@ require_once("survey.php");
 
     <!-- TODO instructions for your experiment go here -->
     <img src="./images/tutorials/image1.png" width="100%">
-    <p>This graph shows a low-dimensional projection of the data colored by the true class label of each data point.  A model trained on this dataset will generally perform well if there is a simple line that can be drawn to separate points from the 2 classes.  
-The horizontal axis corresponds to the first dimension of the projection, and the vertical axis corresponds to the second dimension of the projection.  Each data point corresponds to a data point in the dataset used to train and test the model projected into this 2 dimensional space.  Blue points have class label 0 and orange points have class label 1.
+    <p>This graph shows a two-dimensional representation projection of the data colored by the true class  of each data point.  A model trained on this dataset will generally perform well if there is a simple line that can be drawn to separate points from the 2 classes.  
+The horizontal axis corresponds to the first dimension of the projection, and the vertical axis corresponds to the second dimension of the projection.  Each point represents an observation in the training dataset.  Blue points have class label 0 and orange points have class label 1.
 </p>
 
     <img src="./images/tutorials/image2.png" width="100%">
-    <p>This graph shows the confusion matrix, which highlights how 
-    points are being mis-classified. A good model makes mostly correct 
-    predictions, which are shown as large numbers and deep red squares
-    on the main diagonal like in the figure above, while a bad model
-    will also have larger numbers on any or all of the off-diagonal
-    squares.  This visualization can also show problems related to class
-    imbalance if most errors are coming from mis-classifying one specific
-    class. In this visualization, the vertical axis corresponds to the
-    class predicted by the model, and the horizontal axis corresponds
-    to the true class.  The number of each square and the intensity
-    of the red shading correspond to how many errors are made for 
-    this particular set of true and predicted class labels.
+    <p>n this visualization, the row of a box corresponds to the class predicted by the model, while the column corresponds to the true class; the number and colour intensity of each square corresponds to how many observations from the column class were predicted to be in the row class. Diagonal elements represent correct predictions while off-diagonal elements represent incorrect predictions.
     </p>
 
     <img src="./images/tutorials/image3.png" width="100%">
@@ -371,39 +360,90 @@ Here, each of the 4 plots corresponds to a feature dimension, the x-axis corresp
 
 </div>
 <!-- ********************* EXPERIMENT PAGE 2 *********************** -->
-<div id="experiment_page2" class="page w800">
+<div id="experiment_page2" class="page">
     <div class="separator2"></div>
 
 
     <!-- TODO this is entirely yours to fill out, but here is an example of a survey page -->
     <h4>Can you figure out the model error according to the following visualizations? You can only view a visualization about the model once. Therefore think about what's the most important vis to you in this task!</h4>
-    <h3><span id='numQ'>0</span>/7 Questions</h3>
+    <h3><span id='numQ'>0</span> out of 7 questions answered.</h3>
     <form name="demo" id="actual_test" action="task.php" method="POST">
 
         <input type="hidden" name="participant_id" />
+
+        <b>What's the model error?</b>
         <div id="modelError">        
-            <label for="error">What's the mode error?</label>
-            <select id="error" name="error" >
-                <option value=" "> </option>
-                <option value="0">Out of Distribution</option>
-                <option value="1">Overfitting</option>
-                <option value="2">Underfitting</option>
-                <option value="3">Class Imbalance</option>
-            </select>
-            <b>(important)</b>
-            <br><br>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" id="radio1" name="error" value="0">
+                <label class="form-check-label" for="radio1">Out of Distribution</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" id="radio2" name="error" value="1">
+                <label class="form-check-label" for="radio2">Overfitting</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" id="radio3" name="error" value="2">
+                <label class="form-check-label" for="radio3">Underfitting</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" id="radio4" name="error" value="3">
+                <label class="form-check-label" for="radio4">Class Imbalance</label>
+            </div>
         </div>
 
 
-        <p>How confident are you?</p>
-        <select name="confidence" id="confidence">
-            <option value=" "></option>
-            <option value="1">Completely confident</option>
-            <option value="2">Fairly confident</option>
-            <option value="3">Somewhat confident</option>
-            <option value="4">Slightly confident</option>
-            <option value="5">Not confident at all</option>
-        </select>
+        <b>How confident are you?</b>
+        <div  id="confidence">
+            <label> Completely confident</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="inradio1" name="confidence" value="0">
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="inradio2" name="confidence" value="1">
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="inradio3" name="confidence" value="2">
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="inradio4" name="confidence" value="3">
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="inradio5" name="confidence" value="4">
+            </div>
+
+            <label> Not confident at all</label>
+        </div>
+
+        <b>Which visualization do you think is the most important?</b>
+        <div id="preference">        
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="preference" value="0">
+                <label class="form-check-label">Learning Curve</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="preference" value="1">
+                <label class="form-check-label" >PCA</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="preference" value="2">
+                <label class="form-check-label">Confusion Matrix</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="preference" value="3">
+                <label class="form-check-label">Data Distribution</label>
+            </div>
+            <br><br>
+        </div>
 
         <input type="hidden" name="time" id="time" />
         <input type="hidden" name="sequence" id="sequence" />
@@ -416,13 +456,40 @@ Here, each of the 4 plots corresponds to a feature dimension, the x-axis corresp
     </form>
 
         <div class="separator"> &nbsp; </div>
+        
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" class="active"></li>
+            <li data-target="#carouselExampleIndicators" ></li>
+            <li data-target="#carouselExampleIndicators" ></li>
+            <li data-target="#carouselExampleIndicators" ></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div id='slide-0' class='carousel-vis'></div>
+            </div>
+            <div class="carousel-item" >
+                <div id='slide-1' class='carousel-vis'></div>
+            </div>
+            <div class="carousel-item">
+                <div id='slide-2' class='carousel-vis'></div>
+            </div>
+            <div class="carousel-item">
+                <div id='slide-3' class='carousel-vis'></div>
+            </div>
+        </div>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <button class="btn btn-primary btn-lg">Next vis</button>
+        </a>
+    </div>
+
+
     <div class="w3-container container" id="listOfVis">
-        <h2>List of visualizations (you need to view each vis for 10s before viewing another)</h2>
+        <h2>List of visualizations (you need to view each vis for <span id="viewTime">6</span> seconds before viewing another)</h2>
 
         <button id="bt1" class="w3-button w3-black vis">Learning Curve</button>
         <button id="bt2" class="w3-button w3-black vis">PCA</button>
         <button id="bt3" class="w3-button w3-black vis">Confusion Matrix</button>
-        
         <button id="bt5" class="w3-button w3-black vis">Data Distribution</button>
 
         <div id="id01" class="w3-modal w3-animate-opacity">
@@ -446,19 +513,33 @@ Here, each of the 4 plots corresponds to a feature dimension, the x-axis corresp
 
         var isSubmit = false;
         $("#confidence").change(function () {
-            if(document.forms['actual_test'].confidence.value != ' ' && document.forms['actual_test'].error.value != ' ') {
+            if(document.forms['actual_test'].preference.value != '' && document.forms['actual_test'].confidence.value != '' && document.forms['actual_test'].error.value != '') {
                 $("#experiment_button").show();
                 isSubmit = true;
                 console.log("new challenger")
+            }else {
+                $("#experiment_button").hide();
             };
         })
 
-        $("#error").change(function () {
-            if(document.forms['actual_test'].confidence.value != ' ' && document.forms['actual_test'].error.value != ' ') {
+        $("#preference").change(function () {
+            if(document.forms['actual_test'].preference.value != '' && document.forms['actual_test'].confidence.value != '' && document.forms['actual_test'].error.value != '') {
                 $("#experiment_button").show();
                 isSubmit = true;
                 console.log("new challenger")
-            };
+            }else {
+                $("#experiment_button").hide();
+            };;
+        })
+
+        $("#error").change(function () {
+            if(document.forms['actual_test'].preference.value != '' && document.forms['actual_test'].confidence.value != '' && document.forms['actual_test'].error.value != '') {
+                $("#experiment_button").show();
+                isSubmit = true;
+                console.log("new challenger")
+            }else {
+                $("#experiment_button").hide();
+            };;
         })
         $(function() {
             

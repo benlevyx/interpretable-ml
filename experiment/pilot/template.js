@@ -7,17 +7,46 @@
 // global debug variable
 var debug = 1;
 
+var condition = 0
+
+var getUrlParameter = function getUrlParameter(sParam) {
+  var sPageURL = window.location.search.substring(1),
+      sURLVariables = sPageURL.split('&'),
+      sParameterName,
+      i;
+
+  for (i = 0; i < sURLVariables.length; i++) {
+      sParameterName = sURLVariables[i].split('=');
+
+      if (sParameterName[0] === sParam) {
+          return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+      }
+  }
+};
+
+condition = (getUrlParameter('ver') ? parseInt(getUrlParameter('ver')): Math.floor(Math.random() * Math.floor(2)));
+
+console.log(condition);
 // global progress bar variable (could be made private)
 var progressBar = null;
 
 var currentQuestion = 0;
 var currentTime = 0;
 const MAX_QUESTIONS = 6;
+
+const VIEW_TIME = 10;
+
+$('#viewTime').text(VIEW_TIME/ 1000);
 var dataBen,
 dataIke,
 dataWp,
 dataZilin,
 dataImbalance;
+
+var visSequence = [LearningCurveVis, HistogramVis, ConfusionMatrixVis, ScatterVis];
+var visName = ['Learning Curve', 'Data Distribution', 'Confusion Matrix', 'PCA'];
+
+
 
 var allData;
 
@@ -56,9 +85,9 @@ Promise.all([
     // new FeatureImportanceVis("vis", dataBen.featureImportance, {})
 })
 
-function updateVis(visName, data) {
-    $("#d3Vis").empty();
-    new visName("d3Vis", data, {});
+function updateVis(visDiv, visName, data) {
+    $(visDiv).empty();
+    new visName(visDiv, data, {});
 }
 
 function sampleTest() {
@@ -80,6 +109,11 @@ function sampleTest() {
         },    
 
         {
+          element: "#preference",
+          intro: "Which visualization do you think is the most useful?"
+        },    
+
+        {
             intro: "Submit all your choices when ready. The quiz starts after you click on 'Done'. "
         },
 
@@ -93,6 +127,9 @@ function sampleTest() {
       console.log('test start');
       currentTime = new Date();
       $('input[name=time]').val(currentTime);
+      setTimeout(function(){
+        $('.carousel-control-next').show();
+      }, VIEW_TIME);
     })
 
     var initializeUI = function() {
@@ -137,8 +174,13 @@ function sampleTest() {
             console.log(timeInterval);
 
             currentQuestion += 1;
+
+            $(".carousel-vis").empty();
+            updateSlidesVis();
+
             $('#numQ').text(currentQuestion);
             $("#d3Vis").empty();
+
             //$(".vis").click(visClick);
 
             //$(".vis").addClass("w3-black");
@@ -147,7 +189,19 @@ function sampleTest() {
             }
             $(".vis").show();
             $("#experiment_button").hide();
+            
+            $('.carousel-control-next').hide();
+            setTimeout(function(){
+              $('.carousel-control-next').show();
+            }, VIEW_TIME);
 
+            if(condition == 1 ) {
+              $(".carousel").carousel(0)
+        
+              $('.carousel').show();
+              $('.carousel').carousel('pause');
+              $('#listOfVis').hide()
+            }
         });
 
         $("#comments_button").click(function () {
@@ -159,10 +213,36 @@ function sampleTest() {
 
         $(".vis").click(visClick);
 
+        // condition initialization
+        if(condition == 0) {
+          $('.carousel').hide();
+        } else if(condition == 1) {
+          $('.carousel').show();
+          $('#listOfVis').hide();
+        }
+        // carousel initialization
+
+        $('.carousel-control-next').click(function(){
+          console.log('hide Buttons')
+          $('.carousel-control-next').hide()
+          setTimeout(function(){
+            $('.carousel-control-next').show();
+          }, VIEW_TIME);
+
+          let currentIndex = $('div.active').index() + 1;
+          if(currentIndex == 4){
+              $('.carousel').hide()
+              $('#listOfVis').show();
+          }
+          }
+        )
     };
 
     onViewPage(function() {
-        console.log("hi");
+        updateSlidesVis();
+
+        $('.carousel-control-next').hide();
+        $('.carousel').carousel('pause');
         intro.start();
     }, "#experiment_page2")
 
@@ -176,6 +256,43 @@ $(function() {
     test.initializeUI();
 });
 
+function updateSlidesVis() {
+  visSequence.forEach(function (v, i, arr) {
+    /**
+     *
+     *   if($(this).attr('id') == "bt1" ) { // LC
+            updateVis('d3Vis',LearningCurveVis, data.learningCurve);
+          } else if ($(this).attr('id') == "bt2") {
+            updateVis('d3Vis',ScatterVis, data.data.train);
+          }
+          else if ($(this).attr('id') == "bt3") {
+            updateVis('d3Vis',ConfusionMatrixVis, data.data.test);
+          }
+          else if ($(this).attr('id') == "bt4") {
+            updateVis('d3Vis',FeatureImportanceVis, data.featureImportance);
+          }
+          else if ($(this).attr('id') == "bt5") {
+            updateVis('d3Vis',HistogramVis, data.data);
+          }
+
+          var visSequence = [LearningCurveVis, HistogramVis, ConfusionMatrixVis, ScatterVis]
+
+     */
+    let data = allData[currentQuestion];
+    if (i == 0) {
+      data = data.learningCurve;
+    } else if (i == 1) {
+      data = data.data;
+    } else if (i == 2) {
+      data = data.data.test;
+    } else if (i == 3) {
+      data = data.data.train;
+    }
+
+    updateVis("slide-" + i, v, data);
+  });
+}
+
 function visClick() {
   // change the vis here
 
@@ -187,19 +304,21 @@ function visClick() {
   // new FeatureImportanceVis("vis", dataBen.featureImportance, {})
 
   let data = allData[currentQuestion];
+
+  $("#d3Vis").empty();
   if($(this).attr('id') == "bt1" ) { // LC
-    updateVis(LearningCurveVis, data.learningCurve);
+    updateVis('d3Vis',LearningCurveVis, data.learningCurve);
   } else if ($(this).attr('id') == "bt2") {
-    updateVis(ScatterVis, data.data.train);
+    updateVis('d3Vis',ScatterVis, data.data.train);
   }
   else if ($(this).attr('id') == "bt3") {
-    updateVis(ConfusionMatrixVis, data.data.test);
+    updateVis('d3Vis',ConfusionMatrixVis, data.data.test);
   }
   else if ($(this).attr('id') == "bt4") {
-    updateVis(FeatureImportanceVis, data.featureImportance);
+    updateVis('d3Vis',FeatureImportanceVis, data.featureImportance);
   }      
   else if ($(this).attr('id') == "bt5") {
-    updateVis(HistogramVis, data.data);
+    updateVis('d3Vis',HistogramVis, data.data);
   }
   //document.getElementById('id01').style.display='block';
   //$(this).off("click");
@@ -212,7 +331,7 @@ function visClick() {
       $("#experiment_button").show();
     }
     $(".vis").show();
-  }, 10000)
+  }, VIEW_TIME);
 
 
   $('input[name=sequence]').val($('input[name=sequence]').val() + $(this).attr('id') + ',');

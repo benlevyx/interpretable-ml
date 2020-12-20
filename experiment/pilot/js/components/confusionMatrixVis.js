@@ -56,6 +56,8 @@ class ConfusionMatrixVis extends Vis {
   wrangleData() {
     var vis = this;
 
+    console.log(vis.data)
+
     vis.classes = [...new Set(vis.data.map(d => d.class))];
     vis.numClasses = vis.classes.length;
 

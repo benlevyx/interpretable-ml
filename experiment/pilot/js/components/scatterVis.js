@@ -4,16 +4,17 @@ class ScatterVis extends Vis {
 
     vis.classes = [...new Set(vis.data.map(d => d.class))];
 
+    const numFeatures = Object.keys(vis.data).filter(k => !isNaN(+k)).length;
     // PCA projection
     const points = vis.data.map(d => {
       return d3.range(4).map(i => d[i])
-    })
-    const eigenvectors = PCA.getEigenVectors(points);
-    const pcaScoresX = PCA.computeAdjustedData(points, eigenvectors[0]).adjustedData[0]
-    const pcaScoresY = PCA.computeAdjustedData(points, eigenvectors[1]).adjustedData[0]
+    });
+    const eigenvectors = PCA.getEigenVectors(points),
+          pcaScoresX = PCA.computeAdjustedData(points, eigenvectors[0]).adjustedData[0],
+          pcaScoresY = PCA.computeAdjustedData(points, eigenvectors[1]).adjustedData[0]
 
-    const displayData = [];
-    const xs = {};
+    const displayData = [],
+          xs = {};
     vis.classes.forEach(cls => {
       const xName = `Class ${cls}_x`;
       const yName = `Class ${cls}`

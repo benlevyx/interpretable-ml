@@ -147,12 +147,20 @@ img, a img {
     position: relative;
 }
 
-
-text.c3-axis-x-label,
-text.c3-axis-y-label {
-    font-size: 16px !important;
+.carousel-vis {
+    width: 100%;
+    height: 100%;
+    position: relative;
 }
 
+text.c3-axis-x-label,
+text.c3-axis-y-label,
+g.tick tspan {
+    font-size: 16px !important;
+}
+g.c3-legend-item text {
+    font-size: 14px;
+}
 
 
 .title {
@@ -166,17 +174,18 @@ text.c3-axis-y-label {
     margin: 0 0 1rem 0;
 }
 .grid > div {
+    height: 400px;
     min-width: 10px;
 }
 
-rect.cell-rect:hover {
+/* rect.cell-rect:hover {
     stroke: black;
     stroke-width: 3px;
-}
+} */
 
-g.cell:hover text {
+/* g.cell:hover text {
     fill: white;
-}
+} */
 
 g.labels text.label,
 g.labels text.title {
@@ -189,10 +198,9 @@ g.labels text.title {
 }
 
 div.tooltip {
-    background-color: white;
-    border: solid;
-    border-width: 2px;
-    border-radius: 5px;
-    padding: 5px;
     position: absolute;
+}
+
+path.c3-line {
+    stroke-width: 3px;
 }
