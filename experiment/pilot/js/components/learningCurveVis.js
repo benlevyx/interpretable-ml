@@ -14,7 +14,8 @@ class LearningCurveVis extends Vis {
         const testData = ['Test', ...vis.data.test];
         const iterations = ['Iteration', ...Array.from(d3.range(trainData.length))];
 
-        const xTickValues = d3.range(0, trainData.length, 20)
+        const xTickValues = d3.ticks(0, trainData.length - 10, 10)
+        // const xTickValues = d3.range(0, trainData.length, 20)
 
         c3.generate({
             data: {

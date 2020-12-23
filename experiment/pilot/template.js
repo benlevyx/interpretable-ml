@@ -36,7 +36,7 @@ var currentQuestion = 0;
 var currentTime = 0;
 const MAX_QUESTIONS = 6;
 
-const VIEW_TIME = 10;
+const VIEW_TIME = 6000;
 
 $('#viewTime').text(VIEW_TIME/ 1000);
 var dataBen,
@@ -259,6 +259,8 @@ function sampleTest() {
 
         $('.carousel-control-next').click(function(){
           console.log('hide Buttons')
+          $( "#carouselExampleIndicators" ).focus();
+
           $('.carousel-control-next').hide()
           setTimeout(function(){
             $('.carousel-control-next').show();

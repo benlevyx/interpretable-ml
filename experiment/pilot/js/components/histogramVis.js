@@ -50,8 +50,15 @@ class HistogramVis extends Vis {
 
     const parentDiv = d3.select(vis.parentElement)
       .classed('grid', true);
+
+    let xTickValues;
+    const allData = [...vis.data.train, ...vis.data.test]
     d3.range(vis.numFeatures).forEach(i => {
+
       const div = d3.select(vis.parentElement).append('div');
+
+      const extent = d3.extent(allData, d => d[i]);
+      xTickValues = d3.ticks(...extent, 5);
 
       vis.chart = c3.generate({
         data: {
@@ -73,6 +80,13 @@ class HistogramVis extends Vis {
           bottom: 40,
           left: 40,
           right: 40
+        },
+        axis: {
+          x: {
+            tick: {
+              values: xTickValues
+            }
+          }
         }
       })
       div.insert('h4', ":first-child").text(`Feature ${i}`).attr('class', 'title')

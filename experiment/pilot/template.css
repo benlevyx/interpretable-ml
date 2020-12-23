@@ -146,12 +146,15 @@ img, a img {
     height: 100%;
     position: relative;
 }
+.carousel-item {
+    width: 1200px;
+}
 
 .carousel-vis {
-    width: 100%;
+    width: 1200px;
     height: 100%;
-    position: relative;
 }
+
 
 text.c3-axis-x-label,
 text.c3-axis-y-label,
