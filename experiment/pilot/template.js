@@ -34,7 +34,7 @@ var progressBar = null;
 
 var currentQuestion = 0;
 var currentTime = 0;
-const MAX_QUESTIONS = 6;
+const MAX_QUESTIONS = 7;
 
 const VIEW_TIME = 6000;
 
@@ -209,7 +209,10 @@ function sampleTest() {
             console.log(timeInterval);
 
             currentQuestion += 1;
-
+            if (currentQuestion >= MAX_QUESTIONS) {
+              viewPage("#comments_page");
+              return;
+          }
             $(".carousel-vis").empty();
             updateSlidesVis();
 
@@ -219,9 +222,7 @@ function sampleTest() {
             //$(".vis").click(visClick);
 
             //$(".vis").addClass("w3-black");
-            if (currentQuestion >= MAX_QUESTIONS) {
-                viewPage("#comments_page");
-            }
+
             $(".vis").show();
             $("#experiment_button").hide();
             
