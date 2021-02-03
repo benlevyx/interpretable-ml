@@ -7,6 +7,7 @@ figs = root / 'figs'
 notebooks = root / 'notebooks'
 data = root / 'data'
 code = root / 'code'
+results = root / 'results'
 ia_feats_file = data / 'ia_feats.csv'
 ia_layouts_file = data / 'ia_layouts.json'
 
