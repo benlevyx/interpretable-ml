@@ -8,7 +8,9 @@ class HistogramVis extends Vis {
     const kernel = kernelEpanechnikov(vis.kernel)
     // Number of features is number of keys that are numeric
     vis.numFeatures = Object.keys(vis.data.train[0]).filter(d => !Number.isNaN(+d)).length
-    vis.childWidth = d3.select(vis.parentElement).node().getBoundingClientRect().width / vis.numFeatures;
+
+    const parentWidth = vis.config.width || d3.select(vis.parentElement).node().getBoundingClientRect().width;
+    vis.childWidth = parentWidth / vis.numFeatures;
     console.log(vis.data, vis.numFeatures);
     const allData = vis.data.train.concat(vis.data.test);
     

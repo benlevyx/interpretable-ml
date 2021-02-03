@@ -2,7 +2,7 @@ class Vis {
   constructor(parentElement, data, config) {
     this.parentElement = '#' + parentElement;
     this.data = data;
-    this.config = config;
+    this.config = config || {};
 
     this.c3Defaults = {
       zoom: {

@@ -87,9 +87,9 @@ Promise.all([
     // new FeatureImportanceVis("vis", dataBen.featureImportance, {})
 })
 
-function updateVis(visDiv, visName, data) {
+function updateVis(visDiv, visName, data, config = {}) {
     $(visDiv).empty();
-    new visName(visDiv, data, {});
+    new visName(visDiv, data, config);
 }
 
 function sampleTest() {
@@ -316,17 +316,19 @@ function updateSlidesVis() {
 
      */
     let data = allData[currentQuestion];
+    let config;
     if (i == 0) {
       data = data.learningCurve;
     } else if (i == 1) {
       data = data.data;
+      config = {width: 1200};
     } else if (i == 2) {
       data = data.data.test;
     } else if (i == 3) {
       data = data.data.train;
     }
 
-    updateVis("slide-" + i, v, data);
+    updateVis("slide-" + i, v, data, config);
   });
 }
 
