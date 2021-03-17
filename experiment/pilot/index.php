@@ -299,56 +299,142 @@ require_once("survey.php");
 
 
 <!-- ********************* INSTRUCTIONS PAGE *********************** -->
-<div id="instructions_page" class="page w800">
+<div id="instructions_page1" class="page w800">
     <div class="separator2"></div>
 
 
-    <h1>Instructions</h1>
-    <p>In this study, each question asks you to identify the problem with the model 
-    trained on different datasets. All of these models have at least one model error.
-    </p>
-
+    <h1>Overview</h1>
+    
     <p>
-    The model is a <b>logistic regression</b>, which is a kind of linear model. Each of 
-    the features is used to predict the class of each data point, with weights that are
-    learned during training. The model can also learn to combine features in complex
-    ways through *interactions* and learn non-linear relationships between variables
-    by squaring or cubing the features.   
+    In this study, each question asks you to identify the most salient error of a specific machine learning model given a series of visualizations corresponding to different properties of the model and the dataset it was trained on.  
+    In the following pages, you will be shown you will be given a brief tutorial on how to interpret each of the visualizations, then an example of how to complete the task.
+
     </p>
 
+    <p align="right"><button class="btn btn-primary btn-lg" id="instructions_button1">
+            Got it.  Let's start! <span class="material-icons">navigate_next</span>
+        </button> </p>
+</div>
+
+
+<!-- ********************* INSTRUCTIONS PAGE *********************** -->
+<div id="instructions_page2" class="page w800">
+    <div class="separator2"></div>
+
+
+    <h1>Overview</h1>
+    
     <p>
-    The following is a list of visualizations that you will see for all models. Please
-    read all instructions before proceeding.</p>
+    In this study, each question asks you to identify the most salient error of a specific machine learning model given a series of visualizations corresponding to different properties of the model and the dataset it was trained on.  
+    In the following pages, you will be shown you will be given a brief tutorial on how to interpret each of the visualizations, then an example of how to complete the task.
 
-    <!-- TODO instructions for your experiment go here -->
-    <img src="./images/tutorials/image1.png" width="100%">
-    <p>This graph shows a two-dimensional representation projection of the data colored by the true class  of each data point.  A model trained on this dataset will generally perform well if there is a simple line that can be drawn to separate points from the 2 classes.  
-The horizontal axis corresponds to the first dimension of the projection, and the vertical axis corresponds to the second dimension of the projection.  Each point represents an observation in the training dataset.  Blue points have class label 0 and orange points have class label 1.
-</p>
-
-    <img src="./images/tutorials/image2.png" width="100%">
-    <p>n this visualization, the row of a box corresponds to the class predicted by the model, while the column corresponds to the true class; the number and colour intensity of each square corresponds to how many observations from the column class were predicted to be in the row class. Diagonal elements represent correct predictions while off-diagonal elements represent incorrect predictions.
     </p>
 
-    <img src="./images/tutorials/image3.png" width="100%">
-    <p>This visualization shows the distribution of the feature values between train (blue) and test (orange) sets. A good model should be trained on a dataset that is similar to the data it will be deployed on, so the distributions in the train and test sets should look similar.  
-Here, each of the 4 plots corresponds to a feature dimension, the x-axis corresponds to the value of the feature, and the y-axis corresponds to how likely the feature is to take that particular value.  The blue distribution corresponds to the data the model was trained on (the train set) and the orange distribution corresponds to the data the model will be deployed on (the test set).
+    <p align="right"><button class="btn btn-primary btn-lg" id="instructions_button2">
+            Got it.  Let's start! <span class="material-icons">navigate_next</span>
+        </button> </p>
+</div>
 
-</p>
 
-    <img src="./images/tutorials/image4.png" width="100%">
-    <p>This visualization shows the learning curve as the model 
-    trains--i.e. the loss as a function of the number of iterations
-     of training. A good model should have low values of the loss 
-     --suggesting that it is not underfit, and the model should perform 
-    similarly on the data it was trained on (train set) and the data 
-    it will be deployed on (test set)--suggesting that it is not 
-    overfit to the train set. The y-axis shows the loss--lower is better,
-    the x-axis shows the training iteration, and the blue and orange 
-    lines correspond to the train and test sets respectively.
+<!-- ********************* INSTRUCTIONS PAGE *********************** -->
+<div id="instructions_page3" class="page w800">
+    <div class="separator2"></div>
+
+
+    <h1>2-Dimensionsonal Projection</h1>
+    
+    <p>
+    This visualization shows a 2-dimensional projection of the training data colored by the true class label of each data point.  A model trained on this dataset will generally perform well if there is a simple line that can be drawn to separate points from the 2 classes (see illustration below).
+    <img src='./images/goodbad.png' width="500"/><p></p>
+    The visualization below is an example from the task.  The horizontal axis corresponds to the first dimension of the projection, and the vertical axis corresponds to the second dimension of the projection.  Each point corresponds to a data point in the dataset used to train the model projected into this 2 dimensional space.  Blue points have class label 0 and orange points have class label 1.
+    <img src='./images/task.png' width="700"/><p></p>
+
     </p>
 
-    <p align="right"><button class="btn btn-primary btn-lg" id="instructions_button">
+    <p align="right"><button class="btn btn-primary btn-lg" id="instructions_button3">
+            Got it.  Let's start! <span class="material-icons">navigate_next</span>
+        </button> </p>
+</div>
+
+
+<!-- ********************* INSTRUCTIONS PAGE *********************** -->
+<div id="instructions_page4" class="page w800">
+    <div class="separator2"></div>
+
+
+    <h1>Learning Curve</h1>
+    
+    <p>
+    This visualization shows the learning curve as the model trains--i.e. the loss as a function of the number of iterations of training. A good model should have both train and test losses monotonically decreasing, as an increasing test loss suggests the model has started to overfit (see illustration below).
+    <img src='./images/goodbad1.png' width="500"/><p></p>
+    Below is an example from the task.  The y-axis shows the loss--lower is better, the x-axis shows the training iteration, and the blue and orange lines correspond to the train and test sets respectively.
+    <p></p><img src='./images/task1.png' width="700"/><p></p>
+
+    </p>
+
+    <p align="right"><button class="btn btn-primary btn-lg" id="instructions_button4">
+            Got it.  Let's start! <span class="material-icons">navigate_next</span>
+        </button> </p>
+</div>
+
+
+<!-- ********************* INSTRUCTIONS PAGE *********************** -->
+<div id="instructions_page5" class="page w800">
+    <div class="separator2"></div>
+
+
+    <h1>Confusion Matrix</h1>
+    
+    <p>
+    This visualization shows the confusion matrix, which highlights how points are being mis-classified. A good model makes mostly correct predictions, which are shown as large numbers (deep orange squares) on the main diagonal, while a bad model will also have larger numbers on any or all of the off-diagonal squares (see illustration below).  This visualization can also show problems related to class imbalance if most errors are coming from mis-classifying one specific class. 
+    <img src='./images/goodbad2.png' width="500"/><p></p>
+    The visualization below shows an example from the task. The vertical axis corresponds to the class predicted by the model, and the horizontal axis corresponds to the true class.  The number of each square and the intensity of the orange shading correspond to how many errors are made for this particular set of true and predicted class labels, and the percent in each square corresponds to the percent of the total errors this makes up.
+    <p></p><img src='./images/task2.png' width="700"/>
+
+
+    </p>
+
+    <p align="right"><button class="btn btn-primary btn-lg" id="instructions_button5">
+            Got it.  Let's start! <span class="material-icons">navigate_next</span>
+        </button> </p>
+</div>
+
+
+<!-- ********************* INSTRUCTIONS PAGE *********************** -->
+<div id="instructions_page6" class="page w800">
+    <div class="separator2"></div>
+
+
+    <h1>Data Distribution</h1>
+    
+    <p>
+    This visualization shows the distribution of the feature values between train (blue) and test (orange) sets. A good model should be trained on a dataset that is similar to the data it will be deployed on, so the distributions in the train and test sets should look similar (see illustration below)
+    <img src='./images/goodbad3.png' width="500"/><p></p>
+    The figure below is an example from the task.  Each of the 4 plots corresponds to a feature dimension, the x-axis corresponds to the value of the feature, and the y-axis corresponds to how likely the feature is to take that particular value.  The blue distribution corresponds to the data the model was trained on (the train set) and the orange distribution corresponds to the data the model will be deployed on (the test set).
+    <p></p><img src='./images/task3.png' width="700"/>
+
+
+    </p>
+
+    <p align="right"><button class="btn btn-primary btn-lg" id="instructions_button6">
+            Got it.  Let's start! <span class="material-icons">navigate_next</span>
+        </button> </p>
+</div>
+
+<!-- ********************* INSTRUCTIONS PAGE *********************** -->
+<div id="instructions_page7" class="page w800">
+    <div class="separator2"></div>
+
+
+    <h1>Data Distribution</h1>
+    
+    <p>
+    Each model will have at least one error, and you must choose exactly one error to fix.  If you believe there are multiple errors, or an error that could be addressed in multiple ways, please choose the single model fix that will improve performance as much as possible.
+In the example below, there are 2 problems, class imbalance and underfitting.  While fixing both would improve the model the most, you are only able to choose one to fix.  In this case, choosing to fix underfitting by increasing model capacity is the right choice because that may allow the model to better model the existing data, while fixing the class imbalance will not help because the classes will still not be separable.
+<img src='./images/akk.png' width="700"/><p></p>
+    </p>
+
+    <p align="right"><button class="btn btn-primary btn-lg" id="instructions_button7">
             Got it.  Let's start! <span class="material-icons">navigate_next</span>
         </button> </p>
 </div>

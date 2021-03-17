@@ -29,7 +29,7 @@ function kernelEpanechnikov(k) {
   };
 }
 
-function parseData(data, preds) {
+function parseData(data) {
   const parsedData = {}
   // data
   parsedData.data = {}
@@ -50,10 +50,10 @@ function parseData(data, preds) {
   parsedData.learningCurve = data.learning_curve;
 
   // feature importances
-  parsedData.featureImportance = d3.range(data.feature_importance.feature.length).map(i => {
+  parsedData.featureImportance = d3.range(data.feat_importance.feature.length).map(i => {
     return {
-      feature: data.feature_importance.feature[i],
-      value: data.feature_importance.value[i]
+      feature: data.feat_importance.feature[i],
+      value: data.feat_importance.value[i]
     };
   })
   return parsedData

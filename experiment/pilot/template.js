@@ -165,7 +165,7 @@ function sampleTest() {
         // defining the steps in the study and the page IDs that they correspond to
         progressBar.addStep("Consent", "#consent_page", 1, 1) // the first number indicates how much space this step should take visually
             .addStep("About you", "#demographics_page", 1, 1) // the second number indicates how many substeps are in that stage
-            .addStep("The test", "#instructions_page", 4, 20) // see utils/js/progress.js for more documentation
+            .addStep("The test", "#instructions_page1", 4, 20) // see utils/js/progress.js for more documentation
             .addStep("Final questions", "#comments_page", 1, 1)
             .addStep("Results!", "#results_page", 0, 1);
 
@@ -179,12 +179,42 @@ function sampleTest() {
             viewPage("#demographics_page")
         });
         $("#demographics_button").click(function () {
-            viewPage("#instructions_page")
+            viewPage("#instructions_page1")
         });
-        $("#instructions_button").click(function () {
-            viewPage("#experiment_page");
-            // visually show that progress has been made through "The test" step on the progress bar
-            progressBar.incrementStepProgress();
+        $("#instructions_button1").click(function () {
+          viewPage("#instructions_page3");
+          // visually show that progress has been made through "The test" step on the progress bar
+          progressBar.incrementStepProgress();
+      });
+      $("#instructions_button2").click(function () {
+        viewPage("#instructions_page3");
+        // visually show that progress has been made through "The test" step on the progress bar
+        progressBar.incrementStepProgress();
+        });
+        $("#instructions_button3").click(function () {
+          viewPage("#instructions_page4");
+          // visually show that progress has been made through "The test" step on the progress bar
+          progressBar.incrementStepProgress();
+      });
+        $("#instructions_button4").click(function () {
+          viewPage("#instructions_page5");
+          // visually show that progress has been made through "The test" step on the progress bar
+          progressBar.incrementStepProgress();
+          });
+        $("#instructions_button5").click(function () {
+          viewPage("#instructions_page6");
+          // visually show that progress has been made through "The test" step on the progress bar
+          progressBar.incrementStepProgress();
+        });
+        $("#instructions_button6").click(function () {
+          viewPage("#instructions_page7");
+          // visually show that progress has been made through "The test" step on the progress bar
+          progressBar.incrementStepProgress();
+        });
+        $("#instructions_button7").click(function () {
+          viewPage("#experiment_page");
+          // visually show that progress has been made through "The test" step on the progress bar
+          progressBar.incrementStepProgress();
         });
         litwSurvey("nfc_survey").onSurveyCompletion(function() {viewPage("#experiment_page2")});
         
@@ -342,16 +372,16 @@ function visClick() {
   if($(this).attr('id') == "bt1" ) { // LC
     updateVis('d3Vis',LearningCurveVis, data.learningCurve);
   } else if ($(this).attr('id') == "bt2") {
-    updateVis('d3Vis',ScatterVis, data.data.train);
+    updateVis('d3Vis', ScatterVis, data.data.train);
   }
   else if ($(this).attr('id') == "bt3") {
     updateVis('d3Vis',ConfusionMatrixVis, data.data.test);
   }
   else if ($(this).attr('id') == "bt4") {
-    updateVis('d3Vis',FeatureImportanceVis, data.featureImportance);
+    updateVis('d3Vis', FeatureImportanceVis, data.featureImportance);
   }      
   else if ($(this).attr('id') == "bt5") {
-    updateVis('d3Vis',HistogramVis, data.data);
+    updateVis('d3Vis', HistogramVis, data.data);
   }
   //document.getElementById('id01').style.display='block';
   //$(this).off("click");
