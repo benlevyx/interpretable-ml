@@ -46,6 +46,14 @@ class ConfusionMatrixVis extends Vis {
             <td class="name">Count</td>
             <td class="value" id="count"></td>
           </tr>
+          <tr>
+            <td class="name">Percent of predicted class</td>
+            <td class="value" id="pctPred"></td>
+          </tr>
+          <tr>
+            <td class="name">Percent of true class</td>
+            <td class="value" id="pctTrue"></td>
+          </tr>
         </tbody>
       `)
 
@@ -64,7 +72,20 @@ class ConfusionMatrixVis extends Vis {
     vis.confMat = vis.classes.map(i => {
       return vis.classes.map(j => {
         const count = vis.data.filter(d => d.pred === i && d.class === j).length;
-        return {predClass: i, trueClass: j, count: count};
+        const nAll = vis.data.length;
+        const nPred = vis.data.filter(d => d.pred === i).length;
+        const nTrue = vis.data.filter(d => d.class === j).length;
+        const pctAll = (count / nAll * 100).toFixed(1);
+        const pctPred = (count / nPred * 100).toFixed(1);
+        const pctTrue = (count / nTrue * 100).toFixed(1);
+        return {
+          predClass: i,
+          trueClass: j,
+          count: count,
+          pctAll: pctAll,
+          pctPred: pctPred,
+          pctTrue: pctTrue,
+        };
       })
     })
 
@@ -113,7 +134,7 @@ class ConfusionMatrixVis extends Vis {
         .attr('y', vis.y.bandwidth() / 2)
         .attr('alignment-baseline', 'middle')
         .attr('text-anchor', 'middle')
-        .text(d => d.count)
+        .text(d => `${d.count} (${d.pctAll}%)`)
 
       cells
         .on('mouseover', function(d) {
@@ -167,9 +188,11 @@ class ConfusionMatrixVis extends Vis {
 
   showTooltip(vis, d, arr) {
     vis.tooltip.style('display', 'block')
-    vis.tooltip.select('#true-class').text(d.trueClass)
-    vis.tooltip.select('#pred-class').text(d.predClass)
-    vis.tooltip.select('#count').text(d.count)
+    vis.tooltip.select('#true-class').text(d.trueClass);
+    vis.tooltip.select('#pred-class').text(d.predClass);
+    vis.tooltip.select('#count').text(d.count);
+    vis.tooltip.select('#pctPred').text(`${d.pctPred}%`)
+    vis.tooltip.select('#pctTrue').text(`${d.pctTrue}%`)
   }
 
   hideTooltip(vis) {

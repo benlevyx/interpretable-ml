@@ -4,7 +4,7 @@ class FeatureImportanceVis extends Vis {
     
     const data = [
       ['x', ...vis.data.map(d => d.feature)],
-      ['feature_importance', ...vis.data.map(d => d.value)]
+      ['feature_importance', ...vis.data.map(d => Math.abs(d.value))]
     ];
 
     vis.chart = c3.generate({

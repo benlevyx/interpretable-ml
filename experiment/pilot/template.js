@@ -54,31 +54,23 @@ var allData;
 
 // Loading data
 Promise.all([
-  d3.json('data/data_ben.json'),
-  d3.json('data/data_ike.json'),
-  d3.json('data/data_wp.json'),
-  d3.json('data/data_zilin.json'),
-  d3.json('data/data_imbalance.json'),
-  d3.json('data/data_overfitting.json'),
-  d3.json('data/data_underfitting.json'),
+  d3.json('data/class_imbalance_vs_underfitting.json'),
+  d3.json('data/ood_vs_class_imbalance.json'),
+  d3.json('data/ood_vs_overfitting.json'),
+  d3.json('data/undertraining_vs_overfitting.json'),
 ]).then(data => {
     [
-      dataBen,
-      dataIke,
-      dataWp,
-      dataZilin,      
-      dataImbalance,
-      dataOverfitting,
-      dataUnderfitting
+      class_imbalance_vs_underfitting,
+      ood_vs_class_imbalance,
+      ood_vs_overfitting,
+      undertraining_vs_overfitting,      
     ] = data.map(parseData);
 
-    allData = [dataBen,
-      dataIke,
-      dataWp,
-      dataZilin,      
-      dataImbalance,
-      dataOverfitting,
-      dataUnderfitting];
+    allData = [class_imbalance_vs_underfitting,
+      ood_vs_class_imbalance,
+      ood_vs_overfitting,
+      undertraining_vs_overfitting
+    ];
 
     // new LearningCurveVis("vis", dataBen.learningCurve, {});
     // new HistogramVis("vis", dataBen.data, {});
