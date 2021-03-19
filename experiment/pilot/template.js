@@ -34,7 +34,7 @@ var progressBar = null;
 
 var currentQuestion = 0;
 var currentTime = 0;
-const MAX_QUESTIONS = 7;
+const MAX_QUESTIONS = 9;
 
 const VIEW_TIME = 6000;
 
