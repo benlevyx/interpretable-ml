@@ -426,7 +426,7 @@ require_once("survey.php");
     <div class="separator2"></div>
 
 
-    <h1>Data Distribution</h1>
+    <h1>Task Example</h1>
     
     <p>
     Each model will have at least one error, and you must choose exactly one error to fix.  If you believe there are multiple errors, or an error that could be addressed in multiple ways, please choose the single model fix that will improve performance as much as possible.
@@ -469,8 +469,13 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
 
 
     <!-- TODO this is entirely yours to fill out, but here is an example of a survey page -->
-    <h4>Can you figure out the model error according to the following visualizations? You can only view a visualization about the model once. Therefore think about what's the most important vis to you in this task!</h4>
+
     <h3><span id='numQ'>0</span> out of 7 questions answered.</h3>
+    <h4>Can you figure out the model error according to the following visualizations? You can only view a visualization about the model once. Therefore think about what's the most important vis to you in this task!</h4>
+    
+
+    
+    <p id="modelDesc">The model used in this analysis is a logistic regression model with a high dimensional polynomial decision boundary with polynomial features of degree 15.</p>
     <form name="demo" id="actual_test" action="task.php" method="POST">
 
         <input type="hidden" name="participant_id" />

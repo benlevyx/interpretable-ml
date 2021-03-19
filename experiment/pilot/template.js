@@ -54,22 +54,39 @@ var allData;
 
 // Loading data
 Promise.all([
-  d3.json('data/class_imbalance_vs_underfitting.json'),
+  d3.json('data/ood.json'),
+  d3.json('data/class_imbalance.json'),
+  d3.json('data/underfitting_vs_ood.json'),
+  d3.json('data/underfitting.json'),
   d3.json('data/ood_vs_class_imbalance.json'),
+  d3.json('data/overfitting.json'),
+  d3.json('data/class_imbalance_vs_underfitting.json'),
   d3.json('data/ood_vs_overfitting.json'),
   d3.json('data/undertraining_vs_overfitting.json'),
+  
 ]).then(data => {
     [
-      class_imbalance_vs_underfitting,
+      ood, 
+      class_imbalance,
+      underfitting_vs_ood, 
+      underfitting,
       ood_vs_class_imbalance,
+      overfitting,
+      class_imbalance_vs_underfitting,
       ood_vs_overfitting,
-      undertraining_vs_overfitting,      
+      undertraining_vs_overfitting      
     ] = data.map(parseData);
 
-    allData = [class_imbalance_vs_underfitting,
+    allData = [      
+      ood, 
+      class_imbalance,
+      underfitting_vs_ood, 
+      underfitting,
       ood_vs_class_imbalance,
+      overfitting,
+      class_imbalance_vs_underfitting,
       ood_vs_overfitting,
-      undertraining_vs_overfitting
+      undertraining_vs_overfitting 
     ];
 
     // new LearningCurveVis("vis", dataBen.learningCurve, {});
@@ -79,6 +96,10 @@ Promise.all([
     // new FeatureImportanceVis("vis", dataBen.featureImportance, {})
 })
 
+const modelDesc = [
+  "The model used in this analysis is a logistic regression model with a high dimensional polynomial decision boundary with polynomial features of degree 15.",
+  "The model used in this analysis is a logistic regression model with a linear decision boundary."
+]
 function updateVis(visDiv, visName, data, config = {}) {
     $(visDiv).empty();
     new visName(visDiv, data, config);
@@ -229,7 +250,11 @@ function sampleTest() {
 
             $('input[name=time]').val(111000);
             console.log(timeInterval);
-
+            if(currentQuestion == 0 || currentQuestion == 7) {
+              $("#modelDesc").text(modelDesc[0])
+            } else {
+              $("#modelDesc").text(modelDesc[1])
+            }
             currentQuestion += 1;
             if (currentQuestion >= MAX_QUESTIONS) {
               viewPage("#comments_page");
