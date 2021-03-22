@@ -34,7 +34,10 @@ var progressBar = null;
 
 var currentQuestion = 0;
 var currentTime = 0;
-const MAX_QUESTIONS = 9;
+
+var currentTimeC = 0;
+
+const MAX_QUESTIONS = 8;
 
 const VIEW_TIME = 6000;
 
@@ -62,7 +65,7 @@ Promise.all([
   d3.json('data/overfitting.json'),
   d3.json('data/class_imbalance_vs_underfitting.json'),
   d3.json('data/ood_vs_overfitting.json'),
-  d3.json('data/undertraining_vs_overfitting.json'),
+  //d3.json('data/undertraining_vs_overfitting.json'),
   
 ]).then(data => {
     [
@@ -74,7 +77,7 @@ Promise.all([
       overfitting,
       class_imbalance_vs_underfitting,
       ood_vs_overfitting,
-      undertraining_vs_overfitting      
+      //undertraining_vs_overfitting      
     ] = data.map(parseData);
 
     allData = [      
@@ -86,7 +89,7 @@ Promise.all([
       overfitting,
       class_imbalance_vs_underfitting,
       ood_vs_overfitting,
-      undertraining_vs_overfitting 
+      //undertraining_vs_overfitting 
     ];
 
     // new LearningCurveVis("vis", dataBen.learningCurve, {});
@@ -174,6 +177,7 @@ function sampleTest() {
       console.log('complete');
       console.log('test start');
       currentTime = new Date();
+      currentTimeC = new Date();
       $('input[name=time]').val(currentTime);
       setTimeout(function(){
         $('.carousel-control-next').show();
@@ -250,7 +254,7 @@ function sampleTest() {
 
             $('input[name=time]').val(111000);
             console.log(timeInterval);
-            if(currentQuestion == 0 || currentQuestion == 7) {
+            if(currentQuestion == 5 || currentQuestion == 7) {
               $("#modelDesc").text(modelDesc[0])
             } else {
               $("#modelDesc").text(modelDesc[1])
@@ -313,8 +317,20 @@ function sampleTest() {
           setTimeout(function(){
             $('.carousel-control-next').show();
           }, VIEW_TIME);
-
+          
+          
           let currentIndex = $('div.active').index() + 1;
+          $('input[name=sequence]').val($('input[name=sequence]').val() + "car" + currentIndex + ',');
+
+          var timeInterval = new Date() - currentTimeC;
+          currentTimeC = new Date();
+
+          $('input[name=sequence]').val($('input[name=sequence]').val() + timeInterval + ',');
+
+
+          
+
+
           if(currentIndex == 4){
               $('.carousel').hide()
               $('#listOfVis').show();
