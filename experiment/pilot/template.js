@@ -254,7 +254,7 @@ function sampleTest() {
 
             $('input[name=time]').val(111000);
             console.log(timeInterval);
-            if(currentQuestion == 5 || currentQuestion == 7) {
+            if(currentQuestion == 4 || currentQuestion == 6) {
               $("#modelDesc").text(modelDesc[0])
             } else {
               $("#modelDesc").text(modelDesc[1])
