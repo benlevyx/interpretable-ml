@@ -100,8 +100,8 @@ Promise.all([
 })
 
 const modelDesc = [
-  "The model used in this analysis is a logistic regression model with a high dimensional polynomial decision boundary with polynomial features of degree 15.",
-  "The model used in this analysis is a logistic regression model with a linear decision boundary."
+  `The model used in this analysis is a <b>logistic regression</b> model with a <b>high dimensional polynomial decision boundary</b> with polynomial features of degree 5.`,
+  `The model used in this analysis is a <b>logistic regression</b> model with a <b>linear decision boundary</b>.`
 ]
 function updateVis(visDiv, visName, data, config = {}) {
     $(visDiv).empty();
@@ -255,9 +255,9 @@ function sampleTest() {
             $('input[name=time]').val(111000);
             console.log(timeInterval);
             if(currentQuestion == 4 || currentQuestion == 6) {
-              $("#modelDesc").text(modelDesc[0])
+              $("#modelDesc").html(modelDesc[0])
             } else {
-              $("#modelDesc").text(modelDesc[1])
+              $("#modelDesc").html(modelDesc[1])
             }
             currentQuestion += 1;
             if (currentQuestion >= MAX_QUESTIONS) {
@@ -267,7 +267,7 @@ function sampleTest() {
             $(".carousel-vis").empty();
             updateSlidesVis();
 
-            $('#numQ').text(currentQuestion);
+            $('#numQ').text(currentQuestion + 1);
             $("#d3Vis").empty();
 
             //$(".vis").click(visClick);
