@@ -48,11 +48,19 @@ class HistogramVis extends Vis {
   updateVis() {
     var vis = this;
 
-    const parentDiv = d3.select(vis.parentElement)
+    const outerDiv = d3.select(vis.parentElement)
+      .attr('class', 'flex-top-to-bottom');
+    const parentDiv = outerDiv
+      .append('div')
       .classed('grid', true);
+    const legendDiv = outerDiv
+      .append('div')
+      .style('margin', '50px')
 
     let xTickValues;
     const allData = [...vis.data.train, ...vis.data.test]
+    const charts = [];
+    let chart;
     d3.range(vis.numFeatures).forEach(i => {
 
       const div = parentDiv.append('div');
@@ -60,7 +68,7 @@ class HistogramVis extends Vis {
       const extent = d3.extent(allData, d => d[i]);
       xTickValues = d3.ticks(...extent, 5);
 
-      vis.chart = c3.generate({
+      chart = c3.generate({
         data: {
           columns: vis.c3Data[i],
           x: 'x',
@@ -88,10 +96,58 @@ class HistogramVis extends Vis {
             }
           }
         },
-        ...vis.c3Defaults
+        ...vis.c3Defaults,
+        legend: { show: false }
       })
-      div.insert('h4', ":first-child").text(`Feature ${i}`).attr('class', 'title')
-    })
+      div.insert('h4', ":first-child").text(`Feature ${i}`).attr('class', 'title');
+
+      charts.push(chart);
+    });
+
+    // Single legend
+    const legendDivWidth = legendDiv.node().getBoundingClientRect().width
+    const legendItems = legendDiv.append('svg')
+      .attr('height', 100)
+      .attr('width', legendDivWidth)
+      .append('g')
+        .attr('class', 'g-legend')
+        .attr('transform', `translate(${legendDivWidth / 2},25)`)
+      .selectAll('g.c3-legend-item')
+      .data(['train', 'test'])
+      .enter()
+        .append('g')
+        .attr('class', d => `c3-legend-item c3-legend-item-${d}`)
+        .attr('transform', (d, i) => `translate(${(i - 0.5) * 50},0)`);
+    
+    legendItems
+      .append('text')
+      .text(d => d)
+      .style('pointer-events', 'none')
+      .style('alignment-baseline', 'middle')
+    
+    legendItems
+      .append('line')
+      .attr('class', 'c3-legend-item-tile')
+      .attr('y1', 0)
+      .attr('y2', 0)
+      .attr('x1', -15)
+      .attr('x2', -5)
+      .style('stroke-width', 10)
+      .style('point-events', 'none')
+      .each(function(d) {
+        d3.select(this).style('stroke', charts[0].color(d))
+      });
+
+    legendItems
+      .append('rect')
+      .attr('class', 'c3-legend-item-event')
+      .attr('width', d => d.length * 12)
+      .attr('height', 20)
+      .attr('x', -20)
+      .attr('y', -10)
+      .style('fill-opacity', 0)
+      .on('mouseover', d => charts.forEach(c => c.focus(d)))
+      .on('mouseout', () => charts.forEach(c => c.revert()));
 
   }
 }

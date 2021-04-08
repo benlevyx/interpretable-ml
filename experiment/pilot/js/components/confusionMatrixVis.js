@@ -73,14 +73,15 @@ class ConfusionMatrixVis extends Vis {
       return vis.classes.map(j => {
         const count = vis.data.filter(d => d.pred === i && d.class === j).length;
         const nAll = vis.data.length;
-        const nPred = vis.data.filter(d => d.pred === i).length;
-        const nTrue = vis.data.filter(d => d.class === j).length;
+        // Rows are true, cols are pred
+        const nTrue = vis.data.filter(d => d.class === i).length;
+        const nPred = vis.data.filter(d => d.pred === j).length;
         const pctAll = (count / nAll * 100).toFixed(1);
         const pctPred = (count / nPred * 100).toFixed(1);
         const pctTrue = (count / nTrue * 100).toFixed(1);
         return {
-          predClass: i,
-          trueClass: j,
+          trueClass: i,
+          predClass: j,
           count: count,
           pctAll: pctAll,
           pctPred: pctPred,
@@ -130,17 +131,18 @@ class ConfusionMatrixVis extends Vis {
         .on('mousemove', () => vis.moveTooltip(vis));
       
       cells.append('text')
+        .attr('class', 'vis-text')
         .attr('x', vis.x.bandwidth() / 2)
         .attr('y', vis.y.bandwidth() / 2)
         .attr('alignment-baseline', 'middle')
         .attr('text-anchor', 'middle')
-        .text(d => `${d.count} (${d.pctAll}%)`)
+        .text(d => `${d.count} (${d.pctTrue}%)`)
 
       cells
         .on('mouseover', function(d) {
           const selection = d3.select(this);
           selection.append('rect')
-            .attr('class', 'hover-rect')
+            .attr('class', 'hover-rect vis-text')
             .style('stroke', 'black')
             .style('stroke-width', 3)
             .style('fill', 'none')
@@ -177,12 +179,12 @@ class ConfusionMatrixVis extends Vis {
       // Titles
       vis.gLabels.append('text')
         .attr('class', 'title')
-        .text('True class')
+        .text('Predicted class')
         .attr('transform', `translate(${vis.width / 2},-30)`)
       
       vis.gLabels.append('text')
         .attr('class', 'title')
-        .text('Predicted class')
+        .text('True class')
         .attr('transform', `translate(-30, ${vis.height / 2}) rotate(-90)`)
   }
 

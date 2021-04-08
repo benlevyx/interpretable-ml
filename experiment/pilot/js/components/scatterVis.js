@@ -34,7 +34,11 @@ class ScatterVis extends Vis {
       data: {
         xs: xs,
         columns: displayData,
-        type: 'scatter'
+        type: 'scatter',
+        colors: {
+          "Class 0": "blue",
+          "Class 1": "red"
+        }
       },
       axis: {
         x: {
