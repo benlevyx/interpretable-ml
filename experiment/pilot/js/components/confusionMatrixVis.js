@@ -69,16 +69,20 @@ class ConfusionMatrixVis extends Vis {
     vis.classes = [...new Set(vis.data.map(d => d.class))];
     vis.numClasses = vis.classes.length;
 
+    // rows: true (i)
+    // cols: predicted (j)
+    const nAll = vis.data.length;
     vis.confMat = vis.classes.map(i => {
       return vis.classes.map(j => {
-        const count = vis.data.filter(d => d.pred === i && d.class === j).length;
-        const nAll = vis.data.length;
-        // Rows are true, cols are pred
         const nTrue = vis.data.filter(d => d.class === i).length;
         const nPred = vis.data.filter(d => d.pred === j).length;
+        const count = vis.data.filter(d => (d.class === i) && (d.pred === j)).length;
+        // Rows are true, cols are pred
+
         const pctAll = (count / nAll * 100).toFixed(1);
         const pctPred = (count / nPred * 100).toFixed(1);
         const pctTrue = (count / nTrue * 100).toFixed(1);
+
         return {
           trueClass: i,
           predClass: j,
@@ -93,6 +97,8 @@ class ConfusionMatrixVis extends Vis {
     vis.x.domain(vis.classes);
     vis.y.domain(vis.classes);
     vis.opacity.domain([0, d3.max(vis.confMat, d => d3.max(d, e => e.count))]);
+
+    console.log(vis.confMat)
 
     vis.updateVis();
   }

@@ -51,6 +51,58 @@ dataImbalance;
 var visSequence = [LearningCurveVis, HistogramVis, ConfusionMatrixVis, ScatterVis];
 var visName = ['Learning Curve', 'Data Distribution', 'Confusion Matrix', 'PCA'];
 
+const QtoVisSequence = [
+    [HistogramVis, LearningCurveVis, ConfusionMatrixVis, ScatterVis],
+    // Class imbalance:
+    // Easy: Confusion matrix, 2-d vis, feature distributions, training curve
+    // Hard: training curve, feature distributions, 2-d vis, confusion
+    [ConfusionMatrixVis, ScatterVis, HistogramVis, LearningCurveVis],
+    /* Underfitting vs. OOD:
+      Easy: feature distributions, confusion matrix, training curve, 2-d vis
+      Hard: 2-d vis, training curve, confusion matrix, feature distributions
+    */    
+    [HistogramVis, ConfusionMatrixVis, LearningCurveVis, ScatterVis],
+    /* 
+      Underfitting:
+      Easy: 2-d vis, feature distributions, training curve, confusion matrix
+      Hard: confusion matrix, training curve, feature distributions, 2-d vis
+
+     */
+    [ScatterVis, HistogramVis, LearningCurveVis, ConfusionMatrixVis],
+    /* 
+      OOD vs. Class imbalance:
+      Easy: feature distributions, training curve, 2-d vis, confusion matrix
+      Hard: confusion matrix, 2-d vis, training curve, feature distributions
+    */
+    [HistogramVis, LearningCurveVis, ScatterVis, ConfusionMatrixVis ],
+    /* 
+      Overfitting:
+      Easy: Training curve, 2-d vis, feature distributions, confusion matrix
+      Hard: confusion matrix, feature distributions, 2-d vis, training curve
+    */
+    [LearningCurveVis, ScatterVis, HistogramVis, ConfusionMatrixVis],
+    /* 
+      Class imbalance vs. Underfitting:
+      Easy: 2-d vis, training curve, feature importances, confusion matrix
+      Hard: confusion matrix, feature importances, training curve, 2-d vis
+     */
+    [ScatterVis, LearningCurveVis, HistogramVis, ConfusionMatrixVis],
+
+    /* 
+      OOD vs. Overfitting:
+      Easy: Feature distributions, confusion matrix, 2-d vis, training curve, 
+      Hard: training curve, 2-d vis, confusion matrix, feature distributions
+
+    */
+    [HistogramVis, ConfusionMatrixVis, ScatterVis, LearningCurveVis]
+
+
+  ]
+
+
+
+
+
 
 
 var allData;
@@ -358,6 +410,8 @@ $(function() {
 });
 
 function updateSlidesVis() {
+
+  visSequence = QtoVisSequence[currentQuestion];
   visSequence.forEach(function (v, i, arr) {
     /**
      *

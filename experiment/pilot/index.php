@@ -471,7 +471,7 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
     <!-- TODO this is entirely yours to fill out, but here is an example of a survey page -->
 
     <h3><span id='numQ'>1</span> out of 8 questions answered.</h3>
-    <h4>Can you figure out the model error according to the following visualizations? You can only view a visualization about the model once. Therefore think about what's the most important vis to you in this task!</h4>
+    <h4>Can you figure out the model error according to the following visualizations?</h4>
     
 
     
@@ -506,7 +506,7 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
 
         <b>How confident are you?</b>
         <div  id="confidence">
-            <label> Completely confident</label>
+            <label> Not confident at all</label>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" id="inradio1" name="confidence" value="0">
             </div>
@@ -526,7 +526,7 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
                 <input class="form-check-input" type="radio" id="inradio5" name="confidence" value="4">
             </div>
 
-            <label> Not confident at all</label>
+            <label>Completely confident</label>
         </div>
 
         <b>Which visualization do you think is the most important?</b>

@@ -42,13 +42,13 @@ class ScatterVis extends Vis {
       },
       axis: {
         x: {
-          label: "Dimension 1",
+          label: "Feature 1",
           tick: {
             fit: false
           }
         },
         y: {
-          label: "Dimension 2"
+          label: "Feature 2"
         }
       },
       tooltip: {
