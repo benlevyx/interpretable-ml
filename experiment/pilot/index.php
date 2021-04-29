@@ -634,6 +634,10 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
     <div id="d3Vis">
     </div>
 
+    <div>
+        Resize the window if the data distribution appears buggy.
+    </div>
+
 </div>
 
 
