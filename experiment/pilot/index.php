@@ -149,7 +149,7 @@ require_once("survey.php");
         </p>
         <p align="right">
             <button class="btn btn-primary btn-lg" id="splash_button">
-                Start the test! <span class="material-icons">navigate_next</span>
+                Start the test! <span class="material-icons"></span>
             </button>
         </p>
     </div>
@@ -172,7 +172,7 @@ require_once("survey.php");
         and agree to take part in this research. Your participation is voluntary and you are free
         to leave the experiment at any time by simply closing the web browser.</p>
     <p align="right"><button class="btn btn-primary btn-lg" id="consent_button">
-            I agree <span class="material-icons">navigate_next</span>
+            I agree <span class="material-icons"></span>
         </button> </p>
 </div><!-- end consent_page -->
 
@@ -247,7 +247,7 @@ require_once("survey.php");
 
         <p align="right">
             <button id="demographics_button" type="submit" class="btn btn-primary btn-lg">
-                Submit <span class="material-icons">navigate_next</span>
+                Submit <span class="material-icons"></span>
             </button>
         </p>
     </form>
@@ -291,6 +291,22 @@ require_once("survey.php");
                             console.log("Failed to transmit results to server");
                         }
                         });
+                    $.ajax({
+                    url: dataReceiver,
+                    type: "POST",
+                    data: {"additional_data": JSON.stringify({
+                        participant_id: participantID,
+                        entry_name: "reversed",
+                        value: reverse,
+                        text_value:"",
+                    })}, 
+                    success: function(data) {
+                        console.log("Successfully transmitted conditions.");
+                    },
+                    error: function() {
+                        console.log("Failed to transmit results to server");
+                    }
+                    });
                 }
             })
         })
@@ -312,7 +328,7 @@ require_once("survey.php");
     </p>
 
     <p align="right"><button class="btn btn-primary btn-lg" id="instructions_button1">
-            Got it.  Let's start! <span class="material-icons">navigate_next</span>
+            Got it.  Let's start! <span class="material-icons"></span>
         </button> </p>
 </div>
 
@@ -331,7 +347,7 @@ require_once("survey.php");
     </p>
 
     <p align="right"><button class="btn btn-primary btn-lg" id="instructions_button2">
-            Got it.  Let's start! <span class="material-icons">navigate_next</span>
+            Got it.  Let's start! <span class="material-icons"></span>
         </button> </p>
 </div>
 
@@ -352,7 +368,7 @@ require_once("survey.php");
     </p>
 
     <p align="right"><button class="btn btn-primary btn-lg" id="instructions_button3">
-            Got it.  Let's start! <span class="material-icons">navigate_next</span>
+            Got it.  Let's start! <span class="material-icons"></span>
         </button> </p>
 </div>
 
@@ -373,7 +389,7 @@ require_once("survey.php");
     </p>
 
     <p align="right"><button class="btn btn-primary btn-lg" id="instructions_button4">
-            Got it.  Let's start! <span class="material-icons">navigate_next</span>
+            Got it.  Let's start! <span class="material-icons"></span>
         </button> </p>
 </div>
 
@@ -395,7 +411,7 @@ require_once("survey.php");
     </p>
 
     <p align="right"><button class="btn btn-primary btn-lg" id="instructions_button5">
-            Got it.  Let's start! <span class="material-icons">navigate_next</span>
+            Got it.  Let's start! <span class="material-icons"></span>
         </button> </p>
 </div>
 
@@ -417,7 +433,7 @@ require_once("survey.php");
     </p>
 
     <p align="right"><button class="btn btn-primary btn-lg" id="instructions_button6">
-            Got it.  Let's start! <span class="material-icons">navigate_next</span>
+            Got it.  Let's start! <span class="material-icons"></span>
         </button> </p>
 </div>
 
@@ -435,7 +451,7 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
     </p>
 
     <p align="right"><button class="btn btn-primary btn-lg" id="instructions_button7">
-            Got it.  Let's start! <span class="material-icons">navigate_next</span>
+            Got it.  Let's start! <span class="material-icons"></span>
         </button> </p>
 </div>
 
@@ -558,14 +574,14 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
 
         <p align="right" id="submitButton">
             <button id="experiment_button" type="submit" class="btn btn-primary btn-lg">
-                Submit <span class="material-icons">navigate_next</span>
+                Submit <span class="material-icons"></span>
             </button>
         </p>
     </form>
 
         <div class="separator"> &nbsp; </div>
         
-    <h3 id="modelDesc">The model used in this analysis is a logistic regression model with a linear decision boundary.</h3>
+    <h3 id="modelDesc">The model used in this analysis is a <b>logistic regression </b>model with a <b>linear decision boundary</b>.</h3>
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" class="active"></li>
@@ -617,7 +633,10 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
     </div>
     <div id="d3Vis">
     </div>
+
 </div>
+
+
 <script>
 
         var isSubmit = false;
@@ -625,7 +644,6 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
             if(document.forms['actual_test'].preference.value != '' && document.forms['actual_test'].confidence.value != '' && document.forms['actual_test'].error.value != '') {
                 $("#experiment_button").show();
                 isSubmit = true;
-                console.log("new challenger")
             }else {
                 $("#experiment_button").hide();
             };
@@ -635,7 +653,6 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
             if(document.forms['actual_test'].preference.value != '' && document.forms['actual_test'].confidence.value != '' && document.forms['actual_test'].error.value != '') {
                 $("#experiment_button").show();
                 isSubmit = true;
-                console.log("new challenger")
             }else {
                 $("#experiment_button").hide();
             };;
@@ -645,7 +662,6 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
             if(document.forms['actual_test'].preference.value != '' && document.forms['actual_test'].confidence.value != '' && document.forms['actual_test'].error.value != '') {
                 $("#experiment_button").show();
                 isSubmit = true;
-                console.log("new challenger")
             }else {
                 $("#experiment_button").hide();
             };;
@@ -701,7 +717,7 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
         <br/>
 
         <p align="right"><button class="btn btn-primary btn-lg" id="comments_button">
-                Done! <span class="material-icons">navigate_next</span>
+                Done! <span class="material-icons"></span>
             </button> </p>
     </form><br>
 

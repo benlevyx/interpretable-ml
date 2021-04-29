@@ -148,8 +148,13 @@ img, a img {
 }
 .carousel-item {
     width: 1200px;
+    height: 500px;
 }
 
+
+#carouselExampleIndicators {
+    height: 500px;
+}
 .carousel-vis {
     width: 1200px;
     height: 100%;
@@ -164,12 +169,17 @@ g.tick tspan {
 g.c3-legend-item text {
     font-size: 14px;
 }
-
+span, td, th, text, tspan, h1, h2, h3, h4 {
+    font-family: 'Roboto', sans-serif !important;
+}
 
 .title {
     text-align: center;
 }
-
+.flex-top-to-bottom {
+    display: flex;
+    flex-direction: column;
+}
 .grid {
     display: grid;
     gap: 1rem;
@@ -191,13 +201,17 @@ g.c3-legend-item text {
 } */
 
 g.labels text.label,
-g.labels text.title {
+g.labels text.title,
+g.labels text.suptitle {
     alignment-baseline: bottom;
     text-anchor: middle;
 }
 
 g.labels text.title {
-    font-size: 24px
+    font-size: 20px;
+}
+g.labels text.suptitle {
+    font-size: 26px;
 }
 
 div.tooltip {
@@ -206,4 +220,12 @@ div.tooltip {
 
 path.c3-line {
     stroke-width: 3px;
+}
+
+text.vis-text {
+    font-size: 20px !important;
+}
+
+.c3-legend-item text {
+    font-size: 16px !important;
 }

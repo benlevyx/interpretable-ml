@@ -149,7 +149,7 @@ require_once("survey.php");
         </p>
         <p align="right">
             <button class="btn btn-primary btn-lg" id="splash_button">
-                Start the test! <span class="material-icons">navigate_next</span>
+                Start the test! <span class="material-icons"></span>
             </button>
         </p>
     </div>

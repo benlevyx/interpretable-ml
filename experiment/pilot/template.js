@@ -8,7 +8,7 @@
 var debug = 1;
 
 var condition = 0
-
+var reverse = 0;
 var getUrlParameter = function getUrlParameter(sParam) {
   var sPageURL = window.location.search.substring(1),
       sURLVariables = sPageURL.split('&'),
@@ -25,6 +25,13 @@ var getUrlParameter = function getUrlParameter(sParam) {
 };
 
 condition = (getUrlParameter('ver') ? parseInt(getUrlParameter('ver')): Math.floor(Math.random() * Math.floor(2)));
+if (Math.random() > 0.5) {
+  reverse = 1;
+}
+else {
+  reverse = 0;
+}
+
 
 var dataReceiver = './data.php'
 
@@ -52,6 +59,8 @@ var visSequence = [LearningCurveVis, HistogramVis, ConfusionMatrixVis, ScatterVi
 var visName = ['Learning Curve', 'Data Distribution', 'Confusion Matrix', 'PCA'];
 
 const QtoVisSequence = [
+
+  
     [HistogramVis, LearningCurveVis, ConfusionMatrixVis, ScatterVis],
     // Class imbalance:
     // Easy: Confusion matrix, 2-d vis, feature distributions, training curve
@@ -95,7 +104,6 @@ const QtoVisSequence = [
 
     */
     [HistogramVis, ConfusionMatrixVis, ScatterVis, LearningCurveVis]
-
 
   ]
 
@@ -156,6 +164,7 @@ const modelDesc = [
   `The model used in this analysis is a <b>logistic regression</b> model with a <b>linear decision boundary</b>.`
 ]
 function updateVis(visDiv, visName, data, config = {}) {
+    console.log(visName);
     $(visDiv).empty();
     new visName(visDiv, data, config);
 }
@@ -317,6 +326,12 @@ function sampleTest() {
               return;
           }
             $(".carousel-vis").empty();
+            // just incase 
+            $("#slide-0").empty();
+            $("#slide-1").empty();
+            $("#slide-2").empty();
+            $("#slide-3").empty();
+
             updateSlidesVis();
 
             $('#numQ').text(currentQuestion + 1);
@@ -410,9 +425,26 @@ $(function() {
 });
 
 function updateSlidesVis() {
+  
+  // randomize first 2
+  if(Math.random() > 0.5) {
+    let dum = visSequence[1];
+    visSequence[1] = visSequence[0];
+    visSequence[0] = dum;
+  };
 
-  visSequence = QtoVisSequence[currentQuestion];
+
+  if (reverse) {
+    visSequence = QtoVisSequence[currentQuestion].reverse();
+  }
+  else {
+    visSequence = QtoVisSequence[currentQuestion];
+  }
+  
+
+
   visSequence.forEach(function (v, i, arr) {
+    
     /**
      *
      *   if($(this).attr('id') == "bt1" ) { // LC
@@ -436,14 +468,14 @@ function updateSlidesVis() {
     let data = allData[currentQuestion];
     console.log(currentQuestion);
     let config;
-    if (i == 0) {
+    if (v.name == "HistogramVis") {
+      data = data.data;
+    } else if (v.name == "LearningCurveVis") {
       data = data.learningCurve;
-    } else if (i == 1) {
+    } else if (v.name == "ConfusionMatrixVis") {
       data = data.data;
       config = {width: 1200};
-    } else if (i == 2) {
-      data = data.data.test;
-    } else if (i == 3) {
+    } else if (v.name == "ScatterVis") {
       data = data.data.train;
     }
 
@@ -470,7 +502,7 @@ function visClick() {
     updateVis('d3Vis', ScatterVis, data.data.train);
   }
   else if ($(this).attr('id') == "bt3") {
-    updateVis('d3Vis',ConfusionMatrixVis, data.data.test);
+    updateVis('d3Vis',ConfusionMatrixVis, data.data);
   }
   else if ($(this).attr('id') == "bt4") {
     updateVis('d3Vis', FeatureImportanceVis, data.featureImportance);

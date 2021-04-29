@@ -3,6 +3,15 @@ class ScatterVis extends Vis {
     var vis = this;
 
     vis.classes = [...new Set(vis.data.map(d => d.class))];
+    vis.aspectRatio = vis.config.aspectRatio || 4 / 3;
+    const bbox = d3.select(vis.parentElement).node().getBoundingClientRect();
+    if (bbox.width > bbox.height * vis.aspectRatio) {
+      vis.height = bbox.height;
+      vis.width = bbox.height * vis.aspectRatio
+    } else {
+      vis.width = bbox.width;
+      vis.height = bbox.width / vis.aspectRatio;
+    }
 
     const numFeatures = Object.keys(vis.data).filter(k => !isNaN(+k)).length;
     // PCA projection
@@ -31,6 +40,10 @@ class ScatterVis extends Vis {
 
     vis.chart = c3.generate({
       bindto: vis.parentElement,
+      size: {
+        height: vis.height,
+        width: vis.width
+      },
       data: {
         xs: xs,
         columns: displayData,

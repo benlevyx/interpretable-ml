@@ -1,9 +1,10 @@
-function makeSvg(vis) {
+function makeSvg(vis, element) {
   vis.margin = vis.margin || { top: 20, bottom: 40, left: 40, right: 20 };
   vis.width = vis.width || d3.select(vis.parentElement).node().getBoundingClientRect().width - vis.margin.left - vis.margin.right;
   vis.height = vis.height || 400 - vis.margin.top - vis.margin.bottom;
+  element = element || d3.select(vis.parentElement);
 
-  vis.svg = d3.select(vis.parentElement)
+  return element
     .append('svg')
       .attr('width', vis.width + vis.margin.left + vis.margin.right)
       .attr('height', vis.height + vis.margin.top + vis.margin.bottom)
@@ -57,5 +58,9 @@ function parseData(data) {
     };
   })
   return parsedData
-  
+}
+
+const capitalize = (s) => {
+  if (typeof s !== 'string') return '';
+  return s.charAt(0).toUpperCase() + s.slice(1);
 }

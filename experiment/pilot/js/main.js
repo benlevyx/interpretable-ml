@@ -24,7 +24,7 @@ Promise.all([
 
     // new LearningCurveVis("vis", dataUnderfittingVsOod.learningCurve, {});
     // new HistogramVis("vis", dataOodVsClassImbalance.data, {});
-    // new ConfusionMatrixVis("vis", dataClassImbalance.data.test, {width: "400px"});
-    new ScatterVis("vis", dataOodVsOverfitting.data.train, {})
+    // new ConfusionMatrixVis("vis", dataOodVsClassImbalance.data, {width: "400px"});
+    new ScatterVis("vis", dataOod.data.train, {})
     // new FeatureImportanceVis("vis", dataOodVsOverfitting.featureImportance, {})
 })
