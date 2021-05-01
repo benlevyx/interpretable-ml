@@ -19,7 +19,7 @@ require_once("survey.php");
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head lang="en">
-    <title>Model Visualization Quiz</title>
+    <title>ML Pipeline Debugging Quiz</title>
 
 
     <meta charset="UTF-8">
@@ -137,7 +137,7 @@ require_once("survey.php");
 
     <div>
         <!-- TODO fill out the contents of the splash page -->
-        <H1>Model Visualization Quiz!</H1>
+        <H1>ML Pipeline Debugging Quiz</H1>
 
         <p>In this study, you will interact with a list of visualization and then 
             diagnose model errors with these visualizations. 
@@ -161,7 +161,7 @@ require_once("survey.php");
 <div id="consent_page" class="page w800">
     <div class="separator2"></div>
 
-    <h1><!-- TODO --> Model Visualization Quiz</h1>
+    <h1><!-- TODO --> ML Pipeline Debugging Quiz</h1>
     <p></p>
 
     <p><em>Please read the following information carefully before proceeding.</em></p>
@@ -291,6 +291,24 @@ require_once("survey.php");
                             console.log("Failed to transmit results to server");
                         }
                         });
+
+                    $.ajax({
+                    url: dataReceiver,
+                    type: "POST",
+                    data: {"additional_data": JSON.stringify({
+                        participant_id: participantID,
+                        entry_name: "sequence",
+                        value: 0,
+                        text_value:sequence.toString(),
+                    })}, 
+                    success: function(data) {
+                        console.log("Successfully transmitted conditions.");
+                    },
+                    error: function() {
+                        console.log("Failed to transmit results to server");
+                    }
+                    });
+
                     $.ajax({
                     url: dataReceiver,
                     type: "POST",
@@ -323,7 +341,7 @@ require_once("survey.php");
     
     <p>
     In this study, each question asks you to identify the most salient error of a specific machine learning model given a series of visualizations corresponding to different properties of the model and the dataset it was trained on.  
-    In the following pages, you will be shown you will be given a brief tutorial on how to interpret each of the visualizations, then an example of how to complete the task.
+    In the following pages, you will be given a brief tutorial on how to interpret each of the visualizations, then an example of how to complete the task.
 
     </p>
 
@@ -545,7 +563,7 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
             <label>Completely confident</label>
         </div>
 
-        <b>Which visualization do you think is the most important?</b>
+        <b>Which visualization made you to make the decision?</b>
         <div id="preference">        
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="preference" value="0">
@@ -582,6 +600,7 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
         <div class="separator"> &nbsp; </div>
         
     <h3 id="modelDesc">The model used in this analysis is a <b>logistic regression </b>model with a <b>linear decision boundary</b>.</h3>
+    <h3 id="seqVisDesc" hidden>The visualizations below will be shown in sequence. Click on next vis when you are down with one visualization.</h3>
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" class="active"></li>
@@ -613,7 +632,7 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
         <h2>List of visualizations (you need to view each vis for <span id="viewTime">6</span> seconds before viewing another)</h2>
 
         <button id="bt1" class="w3-button w3-black vis">Learning Curve</button>
-        <button id="bt2" class="w3-button w3-black vis">PCA</button>
+        <button id="bt2" class="w3-button w3-black vis">Scatter plots</button>
         <button id="bt3" class="w3-button w3-black vis">Confusion Matrix</button>
         <button id="bt5" class="w3-button w3-black vis">Data Distribution</button>
 

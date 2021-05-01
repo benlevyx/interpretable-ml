@@ -222,7 +222,8 @@ path.c3-line {
     stroke-width: 3px;
 }
 
-text.vis-text {
+text.vis-text,
+text.c3-title {
     font-size: 20px !important;
 }
 

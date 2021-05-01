@@ -4,13 +4,16 @@ class ScatterVis extends Vis {
 
     vis.classes = [...new Set(vis.data.map(d => d.class))];
     vis.aspectRatio = vis.config.aspectRatio || 4 / 3;
-    const bbox = d3.select(vis.parentElement).node().getBoundingClientRect();
-    if (bbox.width > bbox.height * vis.aspectRatio) {
-      vis.height = bbox.height;
-      vis.width = bbox.height * vis.aspectRatio
+    let { width, height } = d3.select(vis.parentElement).node().getBoundingClientRect();
+    width = width == 0 ? 600 : width;
+    height = height == 0 ? 400 : height;
+
+    if (width > height * vis.aspectRatio) {
+      vis.height = height;
+      vis.width = height * vis.aspectRatio
     } else {
-      vis.width = bbox.width;
-      vis.height = bbox.width / vis.aspectRatio;
+      vis.width = width;
+      vis.height = width / vis.aspectRatio;
     }
 
     const numFeatures = Object.keys(vis.data).filter(k => !isNaN(+k)).length;
@@ -44,6 +47,10 @@ class ScatterVis extends Vis {
         height: vis.height,
         width: vis.width
       },
+      title: {
+        text: 'Training data',
+        fontsize: 24
+      },
       data: {
         xs: xs,
         columns: displayData,
@@ -74,6 +81,16 @@ class ScatterVis extends Vis {
         r: 5
       },
       ...vis.c3Defaults
-    })
+    });
+
+    console.log(vis.height);
+    // Adding title
+    // d3.select(`${vis.parentElement} svg`)
+    // .append('g')
+    // .attr('transform', `translate(${vis.width / 2}, 20)`)
+    // .append('text')
+    // .text('Training data')
+    // .attr('class', 'vis-text')
+    // .style('text-anchor', 'middle')
   }
 }

@@ -32,6 +32,10 @@ else {
   reverse = 0;
 }
 
+if (condition == 1) {
+  $("#seqVisDesc").show();
+}
+
 
 var dataReceiver = './data.php'
 
@@ -56,59 +60,105 @@ dataZilin,
 dataImbalance;
 
 var visSequence = [LearningCurveVis, HistogramVis, ConfusionMatrixVis, ScatterVis];
-var visName = ['Learning Curve', 'Data Distribution', 'Confusion Matrix', 'PCA'];
+var visName = ['Learning Curve', 'Data Distribution', 'Confusion Matrix', 'Scatter plots'];
 
-const QtoVisSequence = [
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
 
-  
-    [HistogramVis, LearningCurveVis, ConfusionMatrixVis, ScatterVis],
-    // Class imbalance:
-    // Easy: Confusion matrix, 2-d vis, feature distributions, training curve
-    // Hard: training curve, feature distributions, 2-d vis, confusion
-    [ConfusionMatrixVis, ScatterVis, HistogramVis, LearningCurveVis],
-    /* Underfitting vs. OOD:
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+
+const easySeq = shuffle([
+  {name: "OOD", "seq":[HistogramVis, LearningCurveVis, ConfusionMatrixVis, ScatterVis]},
+  // Class imbalance:
+  // Easy: Confusion matrix, 2-d vis, feature distributions, training curve
+  // Hard: training curve, feature distributions, 2-d vis, confusion
+  {name: "class imbalance", "seq":[ConfusionMatrixVis, ScatterVis, HistogramVis, LearningCurveVis]},
+  /* 
+    Underfitting:
+    Easy: 2-d vis, feature distributions, training curve, confusion matrix
+    Hard: confusion matrix, training curve, feature distributions, 2-d vis
+
+    */
+    {name: "Underfitting", "seq":[ScatterVis, HistogramVis, LearningCurveVis, ConfusionMatrixVis]},
+  /* 
+    Overfitting:
+    Easy: Training curve, 2-d vis, feature distributions, confusion matrix
+    Hard: confusion matrix, feature distributions, 2-d vis, training curve
+  */
+    {name: "Overfitting", "seq":[LearningCurveVis, ScatterVis, HistogramVis, ConfusionMatrixVis]},
+
+]);
+
+const hardSeq = shuffle([
+      /* Underfitting vs. OOD:
       Easy: feature distributions, confusion matrix, training curve, 2-d vis
       Hard: 2-d vis, training curve, confusion matrix, feature distributions
     */    
-    [HistogramVis, ConfusionMatrixVis, LearningCurveVis, ScatterVis],
-    /* 
-      Underfitting:
-      Easy: 2-d vis, feature distributions, training curve, confusion matrix
-      Hard: confusion matrix, training curve, feature distributions, 2-d vis
+      {name: "Underfitting vs. OOD", "seq":[ScatterVis, ConfusionMatrixVis, LearningCurveVis, HistogramVis]},
 
-     */
-    [ScatterVis, HistogramVis, LearningCurveVis, ConfusionMatrixVis],
-    /* 
+          /* 
       OOD vs. Class imbalance:
       Easy: feature distributions, training curve, 2-d vis, confusion matrix
       Hard: confusion matrix, 2-d vis, training curve, feature distributions
     */
-    [HistogramVis, LearningCurveVis, ScatterVis, ConfusionMatrixVis ],
-    /* 
-      Overfitting:
-      Easy: Training curve, 2-d vis, feature distributions, confusion matrix
-      Hard: confusion matrix, feature distributions, 2-d vis, training curve
-    */
-    [LearningCurveVis, ScatterVis, HistogramVis, ConfusionMatrixVis],
-    /* 
+      {name: "OOD vs. Class imbalance", "seq":[HistogramVis, LearningCurveVis, ScatterVis, ConfusionMatrixVis ]},
+
+        /* 
       Class imbalance vs. Underfitting:
       Easy: 2-d vis, training curve, feature importances, confusion matrix
       Hard: confusion matrix, feature importances, training curve, 2-d vis
      */
-    [ScatterVis, LearningCurveVis, HistogramVis, ConfusionMatrixVis],
+      {name: "Class imbalance vs. Underfitting", "seq":[ScatterVis, LearningCurveVis, HistogramVis, ConfusionMatrixVis]},
 
-    /* 
-      OOD vs. Overfitting:
-      Easy: Feature distributions, confusion matrix, 2-d vis, training curve, 
-      Hard: training curve, 2-d vis, confusion matrix, feature distributions
-
-    */
-    [HistogramVis, ConfusionMatrixVis, ScatterVis, LearningCurveVis]
-
-  ]
-
+      /* 
+        OOD vs. Overfitting:
+        Easy: Feature distributions, confusion matrix, 2-d vis, training curve, 
+        Hard: training curve, 2-d vis, confusion matrix, feature distributions
+  
+      */
+        {name: "OOD vs. Overfitting", "seq":[HistogramVis, ConfusionMatrixVis, ScatterVis, LearningCurveVis]}
+]);
 
 
+
+
+const QtoVisSequence = [
+  easySeq[0]['seq'],
+  easySeq[1]['seq'],
+  hardSeq[0]['seq'],
+  easySeq[2]['seq'],
+  hardSeq[1]['seq'],
+  easySeq[3]['seq'],
+  hardSeq[2]['seq'],
+  hardSeq[3]['seq']
+
+]
+
+const sequence = [
+  easySeq[0]['name'],
+  easySeq[1]['name'],
+  hardSeq[0]['name'],
+  easySeq[2]['name'],
+  hardSeq[1]['name'],
+  easySeq[3]['name'],
+  hardSeq[2]['name'],
+  hardSeq[3]['name']
+]
 
 
 
