@@ -23,8 +23,13 @@ var getUrlParameter = function getUrlParameter(sParam) {
       }
   }
 };
+if (Math.random() > 0.3333) {
+  condition = 0;
 
-condition = (getUrlParameter('ver') ? parseInt(getUrlParameter('ver')): Math.floor(Math.random() * Math.floor(2)));
+}
+else {
+  condition = 1; 
+}
 if (Math.random() > 0.5) {
   reverse = 1;
 }

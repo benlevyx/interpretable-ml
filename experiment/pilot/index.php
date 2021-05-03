@@ -601,7 +601,7 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
         
     <h3 id="modelDesc">The model used in this analysis is a <b>logistic regression </b>model with a <b>linear decision boundary</b>.</h3>
     <h3 id="seqVisDesc" hidden>The visualizations below will be shown in sequence. Click on next vis when you are down with one visualization.</h3>
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <div id="carouselExampleIndicators" class="carousel slide" data-interval="false" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" class="active"></li>
             <li data-target="#carouselExampleIndicators" ></li>
