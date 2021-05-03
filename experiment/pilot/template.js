@@ -293,7 +293,6 @@ function sampleTest() {
       console.log('complete');
       console.log('test start');
       currentTime = new Date();
-      currentTimeC = new Date();
       $('input[name=time]').val(currentTime);
       setTimeout(function(){
         $('.carousel-control-next').show();
@@ -363,7 +362,7 @@ function sampleTest() {
         $("#experiment_button").click(function () {
             isSubmit = false;
             console.log("next")
-            var timeInterval = new Date() - currentTime;
+            let timeInterval = new Date() - currentTime;
             currentTime = new Date();
 
             $('input[name=sequence]').val($('input[name=sequence]').val() + timeInterval);
@@ -440,16 +439,14 @@ function sampleTest() {
             $('.carousel-control-next').show();
           }, VIEW_TIME);
           
-          
+
+
+          let timeInterval = new Date() - currentTime;
+          currentTime = new Date();
           let currentIndex = $('div.active').index() + 1;
           $('input[name=sequence]').val($('input[name=sequence]').val() + "car" + currentIndex + ',');
-
-          var timeInterval = new Date() - currentTimeC;
-          currentTimeC = new Date();
-
+          
           $('input[name=sequence]').val($('input[name=sequence]').val() + timeInterval + ',');
-
-
           
 
 
@@ -579,10 +576,11 @@ function visClick() {
   }, VIEW_TIME);
 
 
-  $('input[name=sequence]').val($('input[name=sequence]').val() + $(this).attr('id') + ',');
-
   var timeInterval = new Date() - currentTime;
   currentTime = new Date();
 
   $('input[name=sequence]').val($('input[name=sequence]').val() + timeInterval + ',');
+
+  $('input[name=sequence]').val($('input[name=sequence]').val() + $(this).attr('id') + ',');
+
 }

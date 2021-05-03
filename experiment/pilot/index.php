@@ -600,7 +600,8 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
         <div class="separator"> &nbsp; </div>
         
     <h3 id="modelDesc">The model used in this analysis is a <b>logistic regression </b>model with a <b>linear decision boundary</b>.</h3>
-    <h3 id="seqVisDesc" hidden>The visualizations below will be shown in sequence. Click on next vis when you are down with one visualization.</h3>
+    <h3 id="seqVisDesc">The visualizations below will be shown in sequence. Click on next vis when you are done with one visualization.
+        Resize the window if the data distribution appears buggy.</h3>
     <div id="carouselExampleIndicators" class="carousel slide" data-interval="false" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" class="active"></li>
@@ -653,9 +654,7 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
     <div id="d3Vis">
     </div>
 
-    <div>
-        Resize the window if the data distribution appears buggy.
-    </div>
+
 
 </div>
 
