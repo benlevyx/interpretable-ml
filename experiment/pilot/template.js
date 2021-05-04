@@ -58,7 +58,7 @@ var currentTimeC = 0;
 var currentIndex = 0; // current index of the visualization
 const MAX_QUESTIONS = 8;
 
-const VIEW_TIME = 600;
+const VIEW_TIME = 6000;
 
 $('#viewTime').text(VIEW_TIME/ 1000);
 var dataBen,
