@@ -44,7 +44,8 @@ if (condition == 1) {
 
 var dataReceiver = './data.php'
 
-console.log(condition);
+console.log({condition, reverse});
+
 // global progress bar variable (could be made private)
 var progressBar = null;
 
