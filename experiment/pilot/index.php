@@ -614,7 +614,7 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
         </div>
 
         <input type="hidden" name="time" id="time" />
-        <input type="hidden" name="sequence" id="sequence" />
+        <input name="sequence" id="sequence" />
 
         <p align="right" id="submitButton">
             <button id="experiment_button" type="submit" class="btn btn-primary btn-lg">

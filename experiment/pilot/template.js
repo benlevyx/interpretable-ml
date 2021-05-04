@@ -58,7 +58,7 @@ var currentTimeC = 0;
 var currentIndex = 0; // current index of the visualization
 const MAX_QUESTIONS = 8;
 
-const VIEW_TIME = 6000;
+const VIEW_TIME = 600;
 
 $('#viewTime').text(VIEW_TIME/ 1000);
 var dataBen,
@@ -420,7 +420,9 @@ function sampleTest() {
             console.log("next")
             let timeInterval = new Date() - currentTime;
             currentTime = new Date();
-
+            if (condition === 1 && currentIndex < 4) {
+              $('input[name=sequence]').val($('input[name=sequence]').val() + QtoVisSequenceNames[currentQuestion][currentIndex]) + ',';
+            }
             $('input[name=sequence]').val($('input[name=sequence]').val() + timeInterval);
 
             $('input[name=time]').val(0);
@@ -514,7 +516,6 @@ function sampleTest() {
             if(currentIndex == 4){
                 $('#slides').hide()
                 $('#listOfVis').show();
-                currentIndex = 0;
                 return;
             }
 
