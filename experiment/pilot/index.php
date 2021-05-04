@@ -627,15 +627,21 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
         
     <h3 id="modelDesc">The model used in this analysis is a <b>logistic regression </b>model with a <b>linear decision boundary</b>.</h3>
 
-
     <div id="slides">
-        <div id='slide-0' class='carousel-vis'></div>
-        <div id='slide-1' class='carousel-vis'></div>
-        <div id='slide-2' class='carousel-vis'></div>
-        <div id='slide-3' class='carousel-vis'></div>
-        <button id="next_vis" class="btn btn-primary btn-lg">
-                Next</span>
-        </button>
+
+    <div>
+            <button id="next_vis" class="btn btn-primary btn-lg">
+                    Next</span>
+            </button>
+        </div>
+        <div id="slidesCollection">
+            <div id='slide-0' class='carousel-vis'></div>
+            <div id='slide-1' class='carousel-vis'></div>
+            <div id='slide-2' class='carousel-vis'></div>
+            <div id='slide-3' class='carousel-vis'></div>
+
+        </div>
+
     </div>
 
 

@@ -71,44 +71,45 @@ var visSequence = [LearningCurveVis, HistogramVis, ConfusionMatrixVis, ScatterVi
 var visName = ['Learning Curve', 'Data Distribution', 'Confusion Matrix', 'Scatter plots'];
 
 function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
+  let index = array.length, temporaryValue, randomIndex;
 
   // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
+  while (0 !== index) {
 
     // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
+    randomIndex = Math.floor(Math.random() * index);
+    index -= 1;
 
     // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
+    temporaryValue = array[index];
+    array[index] = array[randomIndex];
     array[randomIndex] = temporaryValue;
   }
 
   return array;
 }
+var allData;
 
 
 const easySeq = shuffle([
-  {name: "OOD", "seq":[HistogramVis, LearningCurveVis, ConfusionMatrixVis, ScatterVis]},
+  {name: "OOD", "seq":[HistogramVis, LearningCurveVis, ConfusionMatrixVis, ScatterVis], "dataIndex": 0},
   // Class imbalance:
   // Easy: Confusion matrix, 2-d vis, feature distributions, training curve
   // Hard: training curve, feature distributions, 2-d vis, confusion
-  {name: "class imbalance", "seq":[ConfusionMatrixVis, ScatterVis, HistogramVis, LearningCurveVis]},
+  {name: "class imbalance", "seq":[ConfusionMatrixVis, ScatterVis, HistogramVis, LearningCurveVis], "dataIndex": 1},
   /* 
     Underfitting:
     Easy: 2-d vis, feature distributions, training curve, confusion matrix
     Hard: confusion matrix, training curve, feature distributions, 2-d vis
 
     */
-    {name: "Underfitting", "seq":[ScatterVis, HistogramVis, LearningCurveVis, ConfusionMatrixVis]},
+    {name: "Underfitting", "seq":[ScatterVis, HistogramVis, LearningCurveVis, ConfusionMatrixVis], "dataIndex": 3},
   /* 
     Overfitting:
     Easy: Training curve, 2-d vis, feature distributions, confusion matrix
     Hard: confusion matrix, feature distributions, 2-d vis, training curve
   */
-    {name: "Overfitting", "seq":[LearningCurveVis, ScatterVis, HistogramVis, ConfusionMatrixVis]},
+    {name: "Overfitting", "seq":[LearningCurveVis, ScatterVis, HistogramVis, ConfusionMatrixVis], "dataIndex": 5},
 
 ]);
 
@@ -117,21 +118,21 @@ const hardSeq = shuffle([
       Easy: feature distributions, confusion matrix, training curve, 2-d vis
       Hard: 2-d vis, training curve, confusion matrix, feature distributions
     */    
-      {name: "Underfitting vs. OOD", "seq":[ScatterVis, LearningCurveVis, ConfusionMatrixVis, HistogramVis]},
+      {name: "Underfitting vs. OOD", "seq":[ScatterVis, LearningCurveVis, ConfusionMatrixVis, HistogramVis], "dataIndex": 2},
 
           /* 
       OOD vs. Class imbalance:
       Easy: feature distributions, training curve, 2-d vis, confusion matrix
       Hard: confusion matrix, 2-d vis, training curve, feature distributions
     */
-      {name: "OOD vs. Class imbalance", "seq":[HistogramVis, LearningCurveVis, ScatterVis, ConfusionMatrixVis ]},
+      {name: "OOD vs. Class imbalance", "seq":[HistogramVis, LearningCurveVis, ScatterVis, ConfusionMatrixVis ], "dataIndex": 4},
 
         /* 
       Class imbalance vs. Underfitting:
       Easy: 2-d vis, training curve, feature importances, confusion matrix
       Hard: confusion matrix, feature importances, training curve, 2-d vis
      */
-      {name: "Class imbalance vs. Underfitting", "seq":[ScatterVis, LearningCurveVis, HistogramVis, ConfusionMatrixVis]},
+      {name: "Class imbalance vs. Underfitting", "seq":[ScatterVis, LearningCurveVis, HistogramVis, ConfusionMatrixVis], "dataIndex": 6},
 
       /* 
         OOD vs. Overfitting:
@@ -139,7 +140,7 @@ const hardSeq = shuffle([
         Hard: training curve, 2-d vis, confusion matrix, feature distributions
   
       */
-        {name: "OOD vs. Overfitting", "seq":[HistogramVis, ConfusionMatrixVis, ScatterVis, LearningCurveVis]}
+        {name: "OOD vs. Overfitting", "seq":[HistogramVis, ConfusionMatrixVis, ScatterVis, LearningCurveVis], "dataIndex": 7}
 ]);
 var qvs = []
 
@@ -195,6 +196,18 @@ const QtoVisSequenceNames = [
 
 ]
 
+const qToDataIndex = [
+    easySeq[0]['dataIndex'],
+    easySeq[1]['dataIndex'],
+    hardSeq[0]['dataIndex'],
+    easySeq[2]['dataIndex'],
+    hardSeq[1]['dataIndex'],
+    easySeq[3]['dataIndex'],
+    hardSeq[2]['dataIndex'],
+    hardSeq[3]['dataIndex']
+  ];
+
+
 function randomizeQuestions(visSequence) {
   // randomize first 2
   if(Math.random() > 0.5) {
@@ -208,7 +221,8 @@ function randomizeQuestions(visSequence) {
 
 
 console.log({sequence, QtoVisSequenceNames})
-var allData;
+
+
 
 // Loading data
 Promise.all([
@@ -231,8 +245,7 @@ Promise.all([
       ood_vs_class_imbalance,
       overfitting,
       class_imbalance_vs_underfitting,
-      ood_vs_overfitting,
-      //undertraining_vs_overfitting      
+      ood_vs_overfitting,    
     ] = data.map(parseData);
 
     allData = [      
@@ -244,15 +257,17 @@ Promise.all([
       overfitting,
       class_imbalance_vs_underfitting,
       ood_vs_overfitting,
-      //undertraining_vs_overfitting 
     ];
-
+    let allDataCppy = qToDataIndex.map(item => {return allData[item]})
+    allData = allDataCppy;
     // new LearningCurveVis("vis", dataBen.learningCurve, {});
     // new HistogramVis("vis", dataBen.data, {});
     // new ConfusionMatrixVis("vis", dataBen.data.test);
     // new ScatterVis("vis", dataBen.data.train, {})
     // new FeatureImportanceVis("vis", dataBen.featureImportance, {})
 })
+
+
 
 const modelDesc = [
   `The model used in this analysis is a <b>logistic regression</b> model with a <b>high dimensional polynomial decision boundary</b> with polynomial features of degree 5.`,
@@ -490,7 +505,7 @@ function sampleTest() {
             let timeInterval = new Date() - currentTime;
             currentTime = new Date();
 
-            $('input[name=sequence]').val($('input[name=sequence]').val() + "car" + currentIndex + ',');
+            $('input[name=sequence]').val($('input[name=sequence]').val() + QtoVisSequenceNames[currentQuestion][currentIndex]+ ',');
             
             $('input[name=sequence]').val($('input[name=sequence]').val() + timeInterval + ',');
             currentIndex += 1;
@@ -499,6 +514,7 @@ function sampleTest() {
             if(currentIndex == 4){
                 $('#slides').hide()
                 $('#listOfVis').show();
+                currentIndex = 0;
                 return;
             }
 
@@ -519,7 +535,14 @@ function sampleTest() {
     onViewPage(function() {
         updateSlidesVis();
         $('#next_vis').hide();
-        $(".carousel-vis").hide();
+        $("#slide-0").show();
+
+        $("#slide-1").hide();
+
+        $("#slide-2").hide();
+
+        $("#slide-3").hide();
+
         intro.start();
         
     }, "#experiment_page2")
@@ -579,7 +602,7 @@ function updateSlidesVis() {
       data = data.data.train;
     }
     $("#slide-" + i).empty();
-    updateVis("slide-" + i, v, data, config);
+    updateVis("slide-" + i, v, data);
   });
 }
 
@@ -594,21 +617,26 @@ function visClick() {
   // new FeatureImportanceVis("vis", dataBen.featureImportance, {})
 
   let data = allData[currentQuestion];
-
+  let n = ""
   $("#d3Vis").empty();
   if($(this).attr('id') == "bt1" ) { // LC
     updateVis('d3Vis',LearningCurveVis, data.learningCurve);
+    n = 'LearningCurveVis';
   } else if ($(this).attr('id') == "bt2") {
     updateVis('d3Vis', ScatterVis, data.data.train);
+    n = 'ScatterVis';
   }
   else if ($(this).attr('id') == "bt3") {
     updateVis('d3Vis',ConfusionMatrixVis, data.data);
+    n = 'ConfusionMatrixVis';
   }
   else if ($(this).attr('id') == "bt4") {
     updateVis('d3Vis', FeatureImportanceVis, data.featureImportance);
+    n = 'FeatureImportanceVis';
   }      
   else if ($(this).attr('id') == "bt5") {
     updateVis('d3Vis', HistogramVis, data.data);
+    n = 'HistogramVis';
   }
   //document.getElementById('id01').style.display='block';
   //$(this).off("click");
@@ -629,6 +657,6 @@ function visClick() {
 
   $('input[name=sequence]').val($('input[name=sequence]').val() + timeInterval + ',');
 
-  $('input[name=sequence]').val($('input[name=sequence]').val() + $(this).attr('id') + ',');
+  $('input[name=sequence]').val($('input[name=sequence]').val() + n + ',');
 
 }

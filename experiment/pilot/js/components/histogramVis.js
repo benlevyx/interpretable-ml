@@ -8,7 +8,7 @@ class HistogramVis extends Vis {
     const kernel = kernelEpanechnikov(vis.kernel)
     // Number of features is number of keys that are numeric
     vis.numFeatures = Object.keys(vis.data.train[0]).filter(d => !Number.isNaN(+d)).length
-    vis.childWidth = Math.min(d3.select(vis.parentElement).node().getBoundingClientRect().width / vis.numFeatures, 500);
+    vis.childWidth = 500;
     console.log(vis.data, vis.numFeatures);
     const allData = vis.data.train.concat(vis.data.test);
     
@@ -49,7 +49,7 @@ class HistogramVis extends Vis {
     var vis = this;
 
     const outerDiv = d3.select(vis.parentElement)
-      .attr('class', 'flex-top-to-bottom');
+      .attr('class', 'flex-top-to-bottom carousel-vis');
     const parentDiv = outerDiv
       .append('div')
       .classed('grid', true);
