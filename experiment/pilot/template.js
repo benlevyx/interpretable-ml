@@ -270,8 +270,8 @@ Promise.all([
 
 
 const modelDesc = [
-  `The model used in this analysis is a <b>logistic regression</b> model with a <b>high dimensional polynomial decision boundary</b> with polynomial features of degree 5.`,
-  `The model used in this analysis is a <b>logistic regression</b> model with a <b>linear decision boundary</b>.`
+  `The model used in this analysis is a <h4>logistic regression</h4> model with a <b>high dimensional polynomial decision boundary</b> with polynomial features of degree 5.`,
+  `The model used in this analysis is a <h4>logistic regression</h4> model with a <b>linear decision boundary</b>.`
 ]
 function updateVis(visDiv, visName, data, config = {}) {
     console.log(visName);
@@ -427,7 +427,7 @@ function sampleTest() {
             console.log(timeInterval);
 
             // change model description
-            if(currentQuestion == 4 || currentQuestion == 6) {
+            if(sequence[currentQuestion] === "Overfitting" || sequence[currentQuestion] === "OOD vs. Overfitting") {
               $("#modelDesc").html(modelDesc[0])
             } else {
               $("#modelDesc").html(modelDesc[1])
