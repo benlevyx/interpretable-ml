@@ -422,8 +422,8 @@ require_once("survey.php");
     <p>
     This visualization shows the confusion matrix, which highlights how points are being mis-classified. A good model makes mostly correct predictions, which are shown as large numbers (deep orange squares) on the main diagonal, while a bad model will also have larger numbers on any or all of the off-diagonal squares (see illustration below).  This visualization can also show problems related to class imbalance if most errors are coming from mis-classifying one specific class. 
     <img src='./images/goodbad2.png' width="500"/><p></p>
-    The visualization below shows an example from the task. The vertical axis corresponds to the class predicted by the model, and the horizontal axis corresponds to the true class.  The number of each square and the intensity of the orange shading correspond to how many errors are made for this particular set of true and predicted class labels, and the percent in each square corresponds to the percent of the total errors this makes up.
-    <p></p><img src='./images/task2.png' width="700"/>
+    The visualization below shows an example from the task. The vertical axis corresponds to the true class, and the horizontal axis corresponds to the class predicted by the model.  The number in each square and the intensity of the red shading correspond to how many errors are made for this particular set of true and predicted class labels, and the percent in each square corresponds to the percent of the total number of points with the true class label classified as the predicted class (the percents in each row sum to 100%).
+<p></p><img src='./images/task2.png' width="700"/>
 
 
     </p>
@@ -446,7 +446,6 @@ require_once("survey.php");
     <img src='./images/goodbad3.png' width="500"/><p></p>
     The figure below is an example from the task.  Each of the 4 plots corresponds to a feature dimension, the x-axis corresponds to the value of the feature, and the y-axis corresponds to how likely the feature is to take that particular value.  The blue distribution corresponds to the data the model was trained on (the train set) and the orange distribution corresponds to the data the model will be deployed on (the test set).
     <p></p><img src='./images/task3.png' width="700"/>
-
 
     </p>
 
@@ -572,7 +571,7 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
 
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="preference" value="1">
-                <label class="form-check-label" >PCA</label>
+                <label class="form-check-label" >Scatter Plot</label>
             </div>
 
             <div class="form-check">

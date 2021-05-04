@@ -24,11 +24,11 @@ var getUrlParameter = function getUrlParameter(sParam) {
   }
 };
 if (Math.random() > 0.3333) {
-  condition = 0;
+  condition = 1;
 
 }
 else {
-  condition = 1; 
+  condition = 0; 
 }
 if (Math.random() > 0.5) {
   reverse = 1;
@@ -115,7 +115,7 @@ const hardSeq = shuffle([
       Easy: feature distributions, confusion matrix, training curve, 2-d vis
       Hard: 2-d vis, training curve, confusion matrix, feature distributions
     */    
-      {name: "Underfitting vs. OOD", "seq":[ScatterVis, ConfusionMatrixVis, LearningCurveVis, HistogramVis]},
+      {name: "Underfitting vs. OOD", "seq":[ScatterVis, LearningCurveVis, ConfusionMatrixVis, HistogramVis]},
 
           /* 
       OOD vs. Class imbalance:
@@ -139,21 +139,36 @@ const hardSeq = shuffle([
       */
         {name: "OOD vs. Overfitting", "seq":[HistogramVis, ConfusionMatrixVis, ScatterVis, LearningCurveVis]}
 ]);
+var qvs = []
 
-
-
-
-const QtoVisSequence = [
-  easySeq[0]['seq'],
-  easySeq[1]['seq'],
-  hardSeq[0]['seq'],
-  easySeq[2]['seq'],
-  hardSeq[1]['seq'],
-  easySeq[3]['seq'],
-  hardSeq[2]['seq'],
-  hardSeq[3]['seq']
-
-]
+if (reverse == 0) {
+  qvs = [
+    easySeq[0]['seq'],
+    easySeq[1]['seq'],
+    hardSeq[0]['seq'],
+    easySeq[2]['seq'],
+    hardSeq[1]['seq'],
+    easySeq[3]['seq'],
+    hardSeq[2]['seq'],
+    hardSeq[3]['seq']
+  
+  ]
+  
+}
+else {
+  qvs = [
+    easySeq[0]['seq'].reverse(),
+    easySeq[1]['seq'].reverse(),
+    hardSeq[0]['seq'].reverse(),
+    easySeq[2]['seq'].reverse(),
+    hardSeq[1]['seq'].reverse(),
+    easySeq[3]['seq'].reverse(),
+    hardSeq[2]['seq'].reverse(),
+    hardSeq[3]['seq'].reverse()
+  
+  ]
+}
+const QtoVisSequence = qvs.map(randomizeQuestions);
 
 const sequence = [
   easySeq[0]['name'],
@@ -166,9 +181,31 @@ const sequence = [
   hardSeq[3]['name']
 ]
 
+const QtoVisSequenceNames = [
+  easySeq[0]['seq'].map(function(d) {return d.name}),
+  easySeq[1]['seq'].map(function(d) {return d.name}),
+  hardSeq[0]['seq'].map(function(d) {return d.name}),
+  easySeq[2]['seq'].map(function(d) {return d.name}),
+  hardSeq[1]['seq'].map(function(d) {return d.name}),
+  easySeq[3]['seq'].map(function(d) {return d.name}),
+  hardSeq[2]['seq'].map(function(d) {return d.name}),
+  hardSeq[3]['seq'].map(function(d) {return d.name})
+
+]
+
+function randomizeQuestions(visSequence) {
+  // randomize first 2
+  if(Math.random() > 0.5) {
+    let dum = visSequence[1];
+    visSequence[1] = visSequence[0];
+    visSequence[0] = dum;
+  };
+
+  return visSequence;
+}
 
 
-
+console.log({sequence, QtoVisSequenceNames})
 var allData;
 
 // Loading data
@@ -479,21 +516,11 @@ $(function() {
 
 function updateSlidesVis() {
   
-  // randomize first 2
-  if(Math.random() > 0.5) {
-    let dum = visSequence[1];
-    visSequence[1] = visSequence[0];
-    visSequence[0] = dum;
-  };
 
 
-  if (reverse) {
-    visSequence = QtoVisSequence[currentQuestion].reverse();
-  }
-  else {
-    visSequence = QtoVisSequence[currentQuestion];
-  }
-  
+
+  visSequence = QtoVisSequence[currentQuestion];
+
 
 
   visSequence.forEach(function (v, i, arr) {
