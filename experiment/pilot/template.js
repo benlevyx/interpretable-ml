@@ -270,8 +270,8 @@ Promise.all([
 
 
 const modelDesc = [
-  `The model used in this analysis is a <h4>logistic regression</h4> model with a <b>high dimensional polynomial decision boundary</b> with polynomial features of degree 5.`,
-  `The model used in this analysis is a <h4>logistic regression</h4> model with a <b>linear decision boundary</b>.`
+  `The model used in this analysis is a <b>logistic regression</b> model with a <b>high dimensional polynomial decision boundary</b> with polynomial features of degree 5.`,
+  `The model used in this analysis is a <b>logistic regression</b> model with a <b>linear decision boundary</b>.`
 ]
 function updateVis(visDiv, visName, data, config = {}) {
     console.log(visName);
@@ -425,14 +425,14 @@ function sampleTest() {
 
             $('input[name=time]').val(0);
             console.log(timeInterval);
-
+            currentQuestion += 1;
             // change model description
             if(sequence[currentQuestion] === "Overfitting" || sequence[currentQuestion] === "OOD vs. Overfitting") {
               $("#modelDesc").html(modelDesc[0])
             } else {
               $("#modelDesc").html(modelDesc[1])
             }
-            currentQuestion += 1;
+
             if (currentQuestion >= MAX_QUESTIONS) {
               viewPage("#comments_page");
               return;
@@ -542,7 +542,11 @@ function sampleTest() {
         $("#slide-2").hide();
 
         $("#slide-3").hide();
-
+        if(sequence[currentQuestion] === "Overfitting" || sequence[currentQuestion] === "OOD vs. Overfitting") {
+          $("#modelDesc").html(modelDesc[0])
+        } else {
+          $("#modelDesc").html(modelDesc[1])
+        }
         intro.start();
         
     }, "#experiment_page2")
