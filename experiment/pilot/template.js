@@ -54,9 +54,11 @@ var currentTime = 0;
 
 var currentTimeC = 0;
 
+
+var currentIndex = 0; // current index of the visualization
 const MAX_QUESTIONS = 8;
 
-const VIEW_TIME = 6000;
+const VIEW_TIME = 600;
 
 $('#viewTime').text(VIEW_TIME/ 1000);
 var dataBen,
@@ -299,7 +301,7 @@ function sampleTest() {
       intro.setOptions({
         steps: [
           {
-              element: "#carouselExampleIndicators",
+              element: "#slides",
               intro: "In here you will be able to see different visualizations about the model and the dataset. You will view them in a sequence, and then you can check all of them at the end. "
           },  
           {
@@ -333,7 +335,8 @@ function sampleTest() {
       currentTime = new Date();
       $('input[name=time]').val(currentTime);
       setTimeout(function(){
-        $('.carousel-control-next').show();
+        console.log("show");
+        $('#next_vis').show();
       }, VIEW_TIME);
     })
 
@@ -405,8 +408,10 @@ function sampleTest() {
 
             $('input[name=sequence]').val($('input[name=sequence]').val() + timeInterval);
 
-            $('input[name=time]').val(111000);
+            $('input[name=time]').val(0);
             console.log(timeInterval);
+
+            // change model description
             if(currentQuestion == 4 || currentQuestion == 6) {
               $("#modelDesc").html(modelDesc[0])
             } else {
@@ -417,37 +422,38 @@ function sampleTest() {
               viewPage("#comments_page");
               return;
           }
-            $(".carousel-vis").empty();
+/*             //$(".carousel-vis").empty();
             // just incase 
             $("#slide-0").empty();
             $("#slide-1").empty();
             $("#slide-2").empty();
-            $("#slide-3").empty();
+            $("#slide-3").empty(); */
 
             updateSlidesVis();
 
             $('#numQ').text(currentQuestion + 1);
             $("#d3Vis").empty();
 
-            //$(".vis").click(visClick);
-
-            //$(".vis").addClass("w3-black");
-
             $(".vis").show();
             $("#experiment_button").hide();
             
-            $('.carousel-control-next').hide();
+            $('#next_vis').hide();
             setTimeout(function(){
-              $('.carousel-control-next').show();
+              $('#next_vis').show();
             }, VIEW_TIME);
 
             if(condition == 1 ) {
-              $(".carousel").carousel(0)
-        
-              $('.carousel').show();
-              $('.carousel').carousel('pause');
+              $('#slides').show();
               $('#listOfVis').hide()
             }
+
+
+            currentIndex = 0;
+            $('#slide-0').show();
+            $('#slide-1').hide();
+            $('#slide-2').hide();
+            $('#slide-3').hide();
+
         });
 
         $("#comments_button").click(function () {
@@ -461,47 +467,61 @@ function sampleTest() {
 
         // condition initialization
         if(condition == 0) {
-          $('.carousel').hide();
+          $('#slides').hide();
+          $('#listOfVis').show();
         } else if(condition == 1) {
-          $('.carousel').show();
+          $('#slides').show();
           $('#listOfVis').hide();
         }
         // carousel initialization
 
-        $('.carousel-control-next').click(function(){
-          console.log('hide Buttons')
-          $( "#carouselExampleIndicators" ).focus();
+        $('#next_vis').click(function(){
+            console.log('hide Buttons')
 
-          $('.carousel-control-next').hide()
-          setTimeout(function(){
-            $('.carousel-control-next').show();
-          }, VIEW_TIME);
-          
-
-
-          let timeInterval = new Date() - currentTime;
-          currentTime = new Date();
-          let currentIndex = $('div.active').index() + 1;
-          $('input[name=sequence]').val($('input[name=sequence]').val() + "car" + currentIndex + ',');
-          
-          $('input[name=sequence]').val($('input[name=sequence]').val() + timeInterval + ',');
-          
+            $('#next_vis').hide()
+            setTimeout(function(){
+              $('#next_vis').show();
+            }, VIEW_TIME);
+            
+            // hide vis that is not showing
 
 
-          if(currentIndex == 4){
-              $('.carousel').hide()
-              $('#listOfVis').show();
-          }
+
+            let timeInterval = new Date() - currentTime;
+            currentTime = new Date();
+
+            $('input[name=sequence]').val($('input[name=sequence]').val() + "car" + currentIndex + ',');
+            
+            $('input[name=sequence]').val($('input[name=sequence]').val() + timeInterval + ',');
+            currentIndex += 1;
+
+
+            if(currentIndex == 4){
+                $('#slides').hide()
+                $('#listOfVis').show();
+                return;
+            }
+
+            let i;
+            for (i = 0; i < 4; i++) {
+
+              $("#slide-" + i).hide();
+              if (i == currentIndex) {
+                console.log("show");
+                $("#slide-" + i).show();
+              }
+            }
+
           }
         )
     };
 
     onViewPage(function() {
         updateSlidesVis();
-
-        $('.carousel-control-next').hide();
-        $('.carousel').carousel('pause');
+        $('#next_vis').hide();
+        $(".carousel-vis").hide();
         intro.start();
+        
     }, "#experiment_page2")
 
     return {
@@ -558,7 +578,7 @@ function updateSlidesVis() {
     } else if (v.name == "ScatterVis") {
       data = data.data.train;
     }
-
+    $("#slide-" + i).empty();
     updateVis("slide-" + i, v, data, config);
   });
 }

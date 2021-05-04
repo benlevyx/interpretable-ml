@@ -166,7 +166,32 @@ require_once("survey.php");
 
     <p><em>Please read the following information carefully before proceeding.</em></p>
 
-    <!-- TODO consent form goes here -->
+    <div id="consent">
+  <h3>ML Pipeline Debugging Quiz: Informed Consent for Research</h3>
+  <p>
+    The purpose of this study is to evaluate how useful different visualizations are for debugging machine learning models. The experiment will consist of a short demographic questionnaire, a series of instructions on what we would like you to do in the task, and the participation in tasks related to the debugging a series of machine learning models.
+  </p>
+  <p>
+    In total your participation in this experiment will take about 20 minutes. You must be at least 18 years of age to participate. Your participation in any part of this study is voluntary. You have the right to refuse to participate, or withdraw from the study at any time without any repercussions. There are no known risks associated with your participation in this research beyond those of everyday life.  
+  </p>
+  <p>
+    As a research participant, you will receive extra credit for participating in this experiment. If you complete the study you will receive a code at the end. Please email this code to weiweipan@g.harvard.edu to receive your extra credit.
+  </p>
+  <p>
+    Confidentiality of the research records will be strictly maintained. The data will be collected on a secure server. The output of the study will be based on an aggregation of data collected from multiple informants. Diligent care will be taken to protect identities and sensitive information. Your university or group affiliation would also be disguised under pseudonyms.
+  </p>
+  <p>
+    Research team members, who will sign a confidentiality agreement, will have access to the content of your answers as will the IRB at the governing research institution. Even though we will take every effort to protect your privacy, a breach of confidentiality may become a risk due to unforeseen events. If you have questions, concerns, or complaints, or think the research has hurt you, please feel free to contact the study investigator, Finale Doshi-Velez.  For questions, concerns, suggestions, or complaints that are not being addressed by the researcher, or research-related harm, you can contact the Committee on the Use of Human Subjects in Research at Harvard University, 1414 Massachusetts Avenue, Second Floor, Cambridge, MA 02138 (Phone:617-496-2847; Email: cuhs@fas.harvard.edu).
+  </p>
+  <p>
+    You may print this copy of the Consent Document for your records.
+  </p>
+  <p>
+    If you are interested in participating in the study, check the box below and hit "Start Experiment".  
+  </p>
+
+
+</div>
 
     <p>By clicking the "I agree" button you confirm that you have read and understood the above
         and agree to take part in this research. Your participation is voluntary and you are free
@@ -325,6 +350,8 @@ require_once("survey.php");
                         console.log("Failed to transmit results to server");
                     }
                     });
+
+                    $("#userCode").text("ed896b" + participantID + "e8aead");
                 }
             })
         })
@@ -599,32 +626,16 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
         <div class="separator"> &nbsp; </div>
         
     <h3 id="modelDesc">The model used in this analysis is a <b>logistic regression </b>model with a <b>linear decision boundary</b>.</h3>
-    <h3 id="seqVisDesc">The visualizations below will be shown in sequence. Click on next vis when you are done with one visualization.
-        Resize the window if the data distribution appears buggy.</h3>
-    <div id="carouselExampleIndicators" class="carousel slide" data-interval="false" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" class="active"></li>
-            <li data-target="#carouselExampleIndicators" ></li>
-            <li data-target="#carouselExampleIndicators" ></li>
-            <li data-target="#carouselExampleIndicators" ></li>
-        </ol>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <div id='slide-0' class='carousel-vis'></div>
-            </div>
-            <div class="carousel-item" >
-                <div id='slide-1' class='carousel-vis'></div>
-            </div>
-            <div class="carousel-item">
-                <div id='slide-2' class='carousel-vis'></div>
-            </div>
-            <div class="carousel-item">
-                <div id='slide-3' class='carousel-vis'></div>
-            </div>
-        </div>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <button class="btn btn-primary btn-lg">Next vis</button>
-        </a>
+
+
+    <div id="slides">
+        <div id='slide-0' class='carousel-vis'></div>
+        <div id='slide-1' class='carousel-vis'></div>
+        <div id='slide-2' class='carousel-vis'></div>
+        <div id='slide-3' class='carousel-vis'></div>
+        <button id="next_vis" class="btn btn-primary btn-lg">
+                Next</span>
+        </button>
     </div>
 
 
@@ -766,6 +777,8 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
 
 <!-- ********************* RESULTS PAGE *********************** -->
 <div id="results_page" class="page w800">
+
+
     <div class="header">
         <img src="https://www.labinthewild.org/studies/common/img/logo.png" alt="logo" class="logo">
         <span class="share_text">Tell your friends about this test!</span>
@@ -780,8 +793,8 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
     <!-- TODO this is entirely yours to fill out -->
 
 
-    <h2>Enjoyed this study?</h2>
-    <p>If so...</p>
+    <h2 id="userCode"></h2>
+    <p>Please email this code to weiweipan@g.harvard.edu to receive your extra credit.</p>
     <p><b>1.</b> You can <a href="https://www.facebook.com/LabInTheWild" target="_new" class="sessionFlow" id="link_to_litw_fb_page">follow us on Facebook</a> to see results of our studies and to be among the first to hear about new tests.</p>
 
 
