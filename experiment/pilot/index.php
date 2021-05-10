@@ -373,7 +373,7 @@ require_once("survey.php");
     </p>
 
     <p align="right"><button class="btn btn-primary btn-lg" id="instructions_button1">
-            Got it.  Let's start! <span class="material-icons"></span>
+            Next <span class="material-icons"></span>
         </button> </p>
 </div>
 
@@ -392,7 +392,7 @@ require_once("survey.php");
     </p>
 
     <p align="right"><button class="btn btn-primary btn-lg" id="instructions_button2">
-            Got it.  Let's start! <span class="material-icons"></span>
+    Next <span class="material-icons"></span>
         </button> </p>
 </div>
 
@@ -413,7 +413,7 @@ require_once("survey.php");
     </p>
 
     <p align="right"><button class="btn btn-primary btn-lg" id="instructions_button3">
-            Got it.  Let's start! <span class="material-icons"></span>
+    Next<span class="material-icons"></span>
         </button> </p>
 </div>
 
@@ -434,7 +434,7 @@ require_once("survey.php");
     </p>
 
     <p align="right"><button class="btn btn-primary btn-lg" id="instructions_button4">
-            Got it.  Let's start! <span class="material-icons"></span>
+    Next <span class="material-icons"></span>
         </button> </p>
 </div>
 
@@ -456,7 +456,7 @@ require_once("survey.php");
     </p>
 
     <p align="right"><button class="btn btn-primary btn-lg" id="instructions_button5">
-            Got it.  Let's start! <span class="material-icons"></span>
+    Next<span class="material-icons"></span>
         </button> </p>
 </div>
 
@@ -471,13 +471,13 @@ require_once("survey.php");
     <p>
     This visualization shows the distribution of the feature values between train (blue) and test (orange) sets. A good model should be trained on a dataset that is similar to the data it will be deployed on, so the distributions in the train and test sets should look similar (see illustration below)
     <img src='./images/goodbad3.png' width="500"/><p></p>
-    The figure below is an example from the task.  Each of the 4 plots corresponds to a feature dimension, the x-axis corresponds to the value of the feature, and the y-axis corresponds to how likely the feature is to take that particular value.  The blue distribution corresponds to the data the model was trained on (the train set) and the orange distribution corresponds to the data the model will be deployed on (the test set).
+    The figure below is an example from the task.  Each of the 2 plots corresponds to a feature dimension, the x-axis corresponds to the value of the feature, and the y-axis corresponds to how likely the feature is to take that particular value.  The blue distribution corresponds to the data the model was trained on (the train set) and the orange distribution corresponds to the data the model will be deployed on (the test set).
     <p></p><img src='./images/task3.png' width="700"/>
 
     </p>
 
     <p align="right"><button class="btn btn-primary btn-lg" id="instructions_button6">
-            Got it.  Let's start! <span class="material-icons"></span>
+    Next <span class="material-icons"></span>
         </button> </p>
 </div>
 
@@ -500,29 +500,7 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
 </div>
 
 
-<!-- ********************* EXPERIMENT PAGE *********************** -->
-<div id="experiment_page" class="page w800">
-    <div class="separator2"></div>
 
-    <!-- TODO this is entirely yours to fill out, but here is an example of a survey page -->
-
-
-    <?php
-    // see utils/survey/survey.php for more details about the API
-    $nfcSurvey = (new Survey("nfc_survey", 0.1))
-        ->addItem((new SurveyPage("Please tell us about yourself", "", "", "", "nfc_page"))
-            ->addItem(new ScaleItem("I would prefer complex to simple problems", "", "NFC", "nfc", "nfc1", "Strongly disagree", "Strongly agree"))
-            ->addItem(new ScaleItem("I find satisfaction in deliberating hard and for long hours", "", "NFC", "nfc", "nfc6", "Strongly disagree", "Strongly agree"))
-            ->addItem(new ScaleItem("Thinking is not my idea of fun", "", "NFC", "nfc", "nfc3", "Strongly disagree", "Strongly agree",
-                ["reverseCoded" => true]))
-            ->addItem(new ScaleItem("I would rather do something that requires little thought than something that is sure to challenge my thinking abilities", "", "NFC", "nfc", "nfc4", "Strongly disagree", "Strongly agree",
-                ["reverseCoded" => true]))
-        )
-        ->render();
-    ?>
-
-
-</div>
 <!-- ********************* EXPERIMENT PAGE 2 *********************** -->
 <div id="experiment_page2" class="page">
     <div class="separator2"></div>
@@ -540,6 +518,7 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
         <input type="hidden" name="participant_id" />
 
         <b>What's the model error?</b>
+        
         <div id="modelError">        
 
             <div class="form-check">
@@ -615,7 +594,8 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
 
         <input type="hidden" name="time" id="time" />
         <input type="hidden" name="sequence" id="sequence" />
-
+        <p> Before you can submit, you need to answer all questions. If you checked another visualization, you need to update your 
+        answer.</p>
         <p align="right" id="submitButton">
             <button id="experiment_button" type="submit" class="btn btn-primary btn-lg">
                 Submit <span class="material-icons"></span>
@@ -626,7 +606,7 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
         <div class="separator"> &nbsp; </div>
         
     <h3 id="modelDesc">The model used in this analysis is a <b>logistic regression </b>model with a <b>linear decision boundary</b>.</h3>
-
+    <p>you need to view each vis for <span id="viewTime">6</span> seconds before viewing another</p>
     <div id="slides">
 
     <div>
@@ -717,6 +697,32 @@ In the example below, there are 2 problems, class imbalance and underfitting.  W
             })
         })
     </script>
+
+<!-- ********************* EXPERIMENT PAGE *********************** -->
+<div id="experiment_page" class="page w800">
+    <div class="separator2"></div>
+
+    <!-- TODO this is entirely yours to fill out, but here is an example of a survey page -->
+
+
+    <?php
+    // see utils/survey/survey.php for more details about the API
+    $nfcSurvey = (new Survey("nfc_survey", 0.1))
+        ->addItem((new SurveyPage("Please tell us about yourself", "", "", "", "nfc_page"))
+            ->addItem(new ScaleItem("I would prefer complex to simple problems", "", "NFC", "nfc", "nfc1", "Strongly disagree", "Strongly agree"))
+            ->addItem(new ScaleItem("I find satisfaction in deliberating hard and for long hours", "", "NFC", "nfc", "nfc6", "Strongly disagree", "Strongly agree"))
+            ->addItem(new ScaleItem("Thinking is not my idea of fun", "", "NFC", "nfc", "nfc3", "Strongly disagree", "Strongly agree",
+                ["reverseCoded" => true]))
+            ->addItem(new ScaleItem("I would rather do something that requires little thought than something that is sure to challenge my thinking abilities", "", "NFC", "nfc", "nfc4", "Strongly disagree", "Strongly agree",
+                ["reverseCoded" => true]))
+            ->addItem(new ScaleItem("How familiar are you with Machine Learning?", "", "ML", "ml", "ml", "Not familar at all", "Expert",
+                ["reverseCoded" => true]))
+        )
+        ->render();
+    ?>
+
+
+</div>
 
 <!-- ********************* COMMENTS PAGE *********************** -->
 <div id="comments_page" class="page w800">

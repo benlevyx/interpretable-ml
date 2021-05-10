@@ -408,11 +408,11 @@ function sampleTest() {
           progressBar.incrementStepProgress();
         });
         $("#instructions_button7").click(function () {
-          viewPage("#experiment_page");
+          viewPage("#experiment_page2");
           // visually show that progress has been made through "The test" step on the progress bar
           progressBar.incrementStepProgress();
         });
-        litwSurvey("nfc_survey").onSurveyCompletion(function() {viewPage("#experiment_page2")});
+        litwSurvey("nfc_survey").onSurveyCompletion(function() {viewPage("#comments_page")});
         
         $("#experiment_button").hide();
         $("#experiment_button").click(function () {
@@ -436,7 +436,7 @@ function sampleTest() {
             }
 
             if (currentQuestion >= MAX_QUESTIONS) {
-              viewPage("#comments_page");
+              viewPage("#experiment_page");
               return;
           }
 /*             //$(".carousel-vis").empty();
